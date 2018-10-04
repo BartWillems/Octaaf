@@ -188,7 +188,7 @@ func where(message *OctaafMessage) error {
 	span.Finish()
 
 	if !found {
-		return reply(message, "This place does not exist 🙈🙈🙈🤔🤔�")
+		return message.Reply("This place does not exist 🙈🙈🙈🤔🤔�")
 	}
 
 	msg := tgbotapi.NewLocation(message.Chat.ID, location.Lat, location.Lng)
@@ -201,21 +201,21 @@ func what(message *OctaafMessage) error {
 	query := message.CommandArguments()
 	resp, err := http.Get(fmt.Sprintf("https://api.duckduckgo.com/?q=%v&format=json&no_html=1&skip_disambig=1", query))
 	if err != nil {
-		return reply(message, "Just what is this?")
+		return message.Reply("Just what is this?")
 	}
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return reply(message, "Just what is this?")
+		return message.Reply("Just what is this?")
 	}
 
 	result := gjson.Get(string(body), "AbstractText").String()
 
 	if len(result) == 0 {
-		return reply(message, fmt.Sprintf("What is this %v you speak of?", Markdown(query, mdbold)))
+		return message.Reply(fmt.Sprintf("What is this %v you speak of?", Markdown(query, mdbold)))
 	}
 
-	return reply(message, fmt.Sprintf("%v: %v", Markdown(query, mdbold), result))
+	return message.Reply(fmt.Sprintf("%v: %v", Markdown(query, mdbold), result))
 }
 
 func weather(message *OctaafMessage) error {
@@ -279,7 +279,7 @@ func sendImage(message *OctaafMessage) error {
 	key := fmt.Sprintf("images_%v", message.Chat.ID)
 	if !more {
 		if len(message.CommandArguments()) == 0 {
-			return reply(message, fmt.Sprintf("What am I to do, @%v? 🤔🤔🤔🤔", message.From.UserName))
+			return message.Reply(fmt.Sprintf("What am I to do, @%v? 🤔🤔🤔🤔", message.From.UserName))
 		}
 
 		fetchSpan := message.Span.Tracer().StartSpan(
@@ -291,7 +291,7 @@ func sendImage(message *OctaafMessage) error {
 		if err != nil {
 			fetchSpan.SetTag("error", err)
 			fetchSpan.Finish()
-			return reply(message, "Something went wrong!")
+			return message.Reply("Something went wrong!")
 		}
 
 		fetchSpan.Finish()
@@ -303,7 +303,7 @@ func sendImage(message *OctaafMessage) error {
 		})
 	} else {
 		if err := Cache.Get(key, &images); err != nil {
-			return reply(message, "I can't fetch them for you right now.")
+			return message.Reply("I can't fetch them for you right now.")
 		}
 
 		// Randomly order images for a different /more
@@ -351,13 +351,13 @@ func sendImage(message *OctaafMessage) error {
 
 		if err == nil {
 			imgSpan.Finish()
-			return nil
+			return err
 		}
 		imgSpan.SetTag("error", err)
 		imgSpan.Finish()
 	}
 
-	return reply(message, "I did not find images for the query: `"+message.CommandArguments()+"`")
+	return message.Reply("I did not find images for the query: `" + message.CommandArguments() + "`")
 }
 
 func xkcd(message *OctaafMessage) error {
@@ -432,7 +432,7 @@ func nextLaunch(message *OctaafMessage) error {
 
 	if err != nil {
 		fetchSpan.SetTag("error", err)
-		return reply(message, "Unable to fetch launch data")
+		return message.Reply("Unable to fetch launch data")
 	}
 
 	defer res.Body.Close()
@@ -440,7 +440,7 @@ func nextLaunch(message *OctaafMessage) error {
 	launchJSON, err := ioutil.ReadAll(res.Body)
 
 	if err != nil {
-		return reply(message, "Unable to fetch launch data")
+		return message.Reply("Unable to fetch launch data")
 	}
 
 	launches := gjson.Get(string(launchJSON), "launches").Array()
@@ -468,14 +468,14 @@ func nextLaunch(message *OctaafMessage) error {
 		}
 	}
 
-	return reply(message, msg)
+	return message.Reply(msg)
 }
 
 func issues(message *OctaafMessage) error {
 	res, err := http.Get("https://api.github.com/repos/bartwillems/Octaaf/issues?state=open")
 
 	if err != nil {
-		return reply(message, "Unable to fetch open issues")
+		return message.Reply("Unable to fetch open issues")
 	}
 
 	defer res.Body.Close()
@@ -483,7 +483,7 @@ func issues(message *OctaafMessage) error {
 	issuesJSON, err := ioutil.ReadAll(res.Body)
 
 	if err != nil {
-		return reply(message, "Unable to fetch open issues")
+		return message.Reply("Unable to fetch open issues")
 	}
 
 	issues := gjson.ParseBytes(issuesJSON)
@@ -500,12 +500,12 @@ func issues(message *OctaafMessage) error {
 		return true
 	})
 
-	return reply(message, msg)
+	return message.Reply(msg)
 }
 
 func kaliRank(message *OctaafMessage) error {
 	if message.Chat.ID != settings.Telegram.KaliID {
-		return reply(message, "You are not allowed!")
+		return message.Reply("You are not allowed!")
 	}
 
 	kaliRank := []models.MessageCount{}
@@ -513,7 +513,7 @@ func kaliRank(message *OctaafMessage) error {
 
 	if err != nil {
 		log.Error("Unable to fetch kali rankings: ", err)
-		return reply(message, "Unable to fetch the kali rankings")
+		return message.Reply("Unable to fetch the kali rankings")
 	}
 
 	var msg = "*Kali rankings:*"
@@ -521,7 +521,7 @@ func kaliRank(message *OctaafMessage) error {
 		msg += fmt.Sprintf("\n`#%v:` *%v messages*   _~%v_", index+1, rank.Diff, rank.CreatedAt.Format("Monday, 2 January 2006"))
 	}
 
-	return reply(message, msg)
+	return message.Reply(msg)
 }
 
 func iasip(message *OctaafMessage) error {
@@ -530,7 +530,7 @@ func iasip(message *OctaafMessage) error {
 	res, err := http.Get(server)
 	if err != nil {
 		log.Error("Unable to fetch IASIP quote: ", err)
-		return reply(message, "Unable to fetch iasip quote...you goddamn bitch you..")
+		return message.Reply("Unable to fetch iasip quote...you goddamn bitch you..")
 	}
 
 	defer res.Body.Close()
@@ -538,22 +538,22 @@ func iasip(message *OctaafMessage) error {
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		log.Error("Unable to fetch IASIP quote: ", err)
-		return reply(message, "Unable to fetch iasip quote...you goddamn bitch you..")
+		return message.Reply("Unable to fetch iasip quote...you goddamn bitch you..")
 	}
 
-	return reply(message, string(body))
+	return message.Reply(string(body))
 }
 
 func reported(message *OctaafMessage) error {
 	if message.Chat.ID != settings.Telegram.KaliID {
-		return reply(message, "Yeah well, you need to update to Strontbot Enterprise edition for Workgroups to use this feature.")
+		return message.Reply("Yeah well, you need to update to Strontbot Enterprise edition for Workgroups to use this feature.")
 	}
 
 	reportCount, err := DB.Count(models.Report{})
 
 	if err != nil {
 		log.Error("Report fetch error: ", err)
-		return reply(message, "I can't seem to be able to count the reports.")
+		return message.Reply("I can't seem to be able to count the reports.")
 	}
 
 	config := tgbotapi.ChatConfigWithUser{
@@ -564,13 +564,13 @@ func reported(message *OctaafMessage) error {
 	reporter, err := Octaaf.GetChatMember(config)
 
 	if err != nil {
-		return reply(message, fmt.Sprintf("So far, %v people have been reported by Dieter", reportCount))
+		return message.Reply(fmt.Sprintf("So far, %v people have been reported by Dieter", reportCount))
 	}
-	return reply(message, MDEscape(fmt.Sprintf("So far, %v people have been reported by: @%v", reportCount, reporter.User.UserName)))
+	return message.Reply(MDEscape(fmt.Sprintf("So far, %v people have been reported by: @%v", reportCount, reporter.User.UserName)))
 }
 
 func care(message *OctaafMessage) error {
 	msg := "¯\\_(ツ)_/¯"
 
-	return reply(message, MDEscape(msg))
+	return message.Reply(MDEscape(msg))
 }
