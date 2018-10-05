@@ -10,6 +10,7 @@ import (
 )
 
 var settings Settings
+var assets Assets
 
 const GitUri = "https://gitlab.com/BartWillems/octaaf"
 
@@ -23,6 +24,11 @@ func main() {
 
 	if settings.Environment != "production" {
 		log.SetLevel(log.DebugLevel)
+	}
+
+	err := assets.Load()
+	if err != nil {
+		log.Fatalf("Unable to load the assets: %v", err)
 	}
 
 	initRedis()

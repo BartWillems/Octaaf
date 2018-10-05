@@ -371,13 +371,7 @@ func xkcd(message *OctaafMessage) error {
 }
 
 func doubt(message *OctaafMessage) error {
-	msg := tgbotapi.NewPhotoUpload(message.Chat.ID, "assets/doubt.jpg")
-	msg.ReplyToMessageID = message.MessageID
-	_, err := Octaaf.Send(msg)
-	if err != nil {
-		log.Error("Unable to send /doubt: ", err)
-	}
-	return err
+	return message.Reply(assets.Doubt)
 }
 
 func quote(message *OctaafMessage) error {
