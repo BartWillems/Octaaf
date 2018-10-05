@@ -14,6 +14,7 @@ A telegram bot written in Go
 * /img - Search possible NSFW images
 * /img_sfw - Search possible SFW images
 * /issues - Show a list of open issues
+* /kaleaderboard - Show the kaleets or blazers
 * /kalirank - Show the kali rankings
 * /m8ball - Let fate decide your future
 * /more - MORE IMAGES
