@@ -577,5 +577,5 @@ func care(message *OctaafMessage) error {
 		return message.Reply(MDEscape(msg))
 	}
 
-	return message.Reply(fmt.Sprintf("\"%v\"\n\n%v", MDEscape(reply.Text), MDEscape(msg)))
+	return message.ReplyTo(MDEscape(msg), reply.MessageID)
 }

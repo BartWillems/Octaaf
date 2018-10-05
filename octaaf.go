@@ -16,6 +16,10 @@ type OctaafMessage struct {
 }
 
 func (message *OctaafMessage) Reply(r interface{}) error {
+	return message.ReplyTo(r, message.MessageID)
+}
+
+func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 
 	span := message.Span.Tracer().StartSpan(
 		"reply",
@@ -30,7 +34,7 @@ func (message *OctaafMessage) Reply(r interface{}) error {
 		span.SetTag("type", "unknown")
 	case string:
 		msg := tgbotapi.NewMessage(message.Chat.ID, resp)
-		msg.ReplyToMessageID = message.MessageID
+		msg.ReplyToMessageID = messageID
 		msg.ParseMode = "markdown"
 		_, err = Octaaf.Send(msg)
 		span.SetTag("type", "text")
