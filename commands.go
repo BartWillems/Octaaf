@@ -375,21 +375,36 @@ func doubt(message *OctaafMessage) error {
 }
 
 func quote(message *OctaafMessage) error {
+	quoteSpan := message.Span.Tracer().StartSpan(
+		"quote",
+		opentracing.ChildOf(message.Span.Context()),
+	)
 	// Fetch a random quote
 	if message.ReplyToMessage == nil {
+		quoteSpan.SetOperationName("Loading quote...")
 		quote := models.Quote{}
 
 		err := quote.Search(DB, message.Chat.ID, message.CommandArguments())
 
+		quoteSpan.Finish()
+
 		if err != nil {
 			log.Errorf("Quote fetch error: %v", err)
+			quoteSpan.SetTag("error", err)
 			return message.Reply("No quote found boi")
 		}
 
+		userSpan := message.Span.Tracer().StartSpan(
+			"Loading username...",
+			opentracing.ChildOf(message.Span.Context()),
+		)
 		user, userErr := getUsername(quote.UserID, message.Chat.ID)
+
+		userSpan.Finish()
 
 		if userErr != nil {
 			log.Errorf("Unable to find the username for id '%v' : %v", quote.UserID, userErr)
+			userSpan.SetTag("error", userErr)
 			return message.Reply(quote.Quote)
 		}
 		msg := fmt.Sprintf("\"%v\"", Markdown(quote.Quote, mdquote))
@@ -397,8 +412,12 @@ func quote(message *OctaafMessage) error {
 		return message.Reply(msg)
 	}
 
+	quoteSpan.SetOperationName("Saving quote...")
+
 	// Unable to store this quote
 	if message.ReplyToMessage.Text == "" {
+		quoteSpan.SetTag("error", "No quote found")
+		quoteSpan.Finish()
 		return message.Reply("No text found in the comment. Not saving the quote!")
 	}
 
@@ -407,8 +426,11 @@ func quote(message *OctaafMessage) error {
 		UserID: message.ReplyToMessage.From.ID,
 		ChatID: message.Chat.ID})
 
+	quoteSpan.Finish()
+
 	if err != nil {
 		log.Errorf("Unable to save quote '%v', error: %v", message.ReplyToMessage.Text, err)
+		quoteSpan.SetTag("error", err)
 		return message.Reply("Unable to save the quote...")
 	}
 
