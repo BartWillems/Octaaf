@@ -6,8 +6,6 @@ import (
 
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
-	"github.com/gobuffalo/validate"
-	"github.com/gobuffalo/validate/validators"
 )
 
 type Quote struct {
@@ -32,27 +30,6 @@ type Quotes []Quote
 func (q Quotes) String() string {
 	jq, _ := json.Marshal(q)
 	return string(jq)
-}
-
-// Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-// This method is not required and may be deleted.
-func (q *Quote) Validate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.Validate(
-		&validators.StringIsPresent{Field: q.Quote, Name: "Quote"},
-		&validators.IntIsPresent{Field: q.UserID, Name: "UserID"},
-	), nil
-}
-
-// ValidateCreate gets run every time you call "pop.ValidateAndCreate" method.
-// This method is not required and may be deleted.
-func (q *Quote) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
-}
-
-// ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
-// This method is not required and may be deleted.
-func (q *Quote) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
 }
 
 func (q *Quote) Search(tx *pop.Connection, chatID int64, filter ...string) error {

@@ -51,26 +51,18 @@ func handle(m *tgbotapi.Message) {
 
 	defer message.Span.Finish()
 	message.Span.SetTag("telegram-group-id", message.Chat.ID)
-	message.Span.SetTag("telegram-group-name", message.Chat.UserName)
+	message.Span.SetTag("telegram-group-name", message.Chat.Title)
 	message.Span.SetTag("telegram-message-id", message.MessageID)
 	message.Span.SetTag("telegram-from-id", message.From.ID)
 	message.Span.SetTag("telegram-from-username", message.From.UserName)
 
 	go kaliHandler(message)
 
-	isReporter := (message.From.ID == settings.Telegram.ReporterID)
-	allowed := true
-	if isReporter {
-		allowed = message.MessageID%2 == 0
-	}
-
-	if message.IsCommand() && !allowed {
-		message.Reply("You have been rate limited for spreading lies.")
-	} else if message.IsCommand() {
+	if message.IsCommand() {
 		message.Span.SetOperationName(fmt.Sprintf("Command /%v", message.Command()))
+		message.Span.SetTag("is-command", true)
 		message.Span.SetTag("telegram-command", message.Command())
 		message.Span.SetTag("telegram-command-arguments", message.CommandArguments())
-		log.Debugf("Command received: %v", message.Command())
 		switch message.Command() {
 		case "all":
 			all(message)
@@ -117,19 +109,9 @@ func handle(m *tgbotapi.Message) {
 		case "care":
 			care(message)
 		}
-
-		if message.From.ID == settings.Telegram.ModeratorID {
-			switch message.Command() {
-			case "limit":
-				message.Reply("Not implemented yet.")
-			}
-		}
 	}
-	if message.MessageID%100000 == 0 {
-		msg := tgbotapi.NewMessage(message.Chat.ID, fmt.Sprintf("💯💯💯💯 YOU HAVE MESSAGE %v 💯💯💯💯", message.MessageID))
-		msg.ReplyToMessageID = message.MessageID
-		msg.ParseMode = "markdown"
-		Octaaf.Send(msg)
+	if message.MessageID%1e5 == 0 {
+		message.Reply(fmt.Sprintf("💯💯💯💯 YOU HAVE MESSAGE %v 💯💯💯💯", message.MessageID))
 	}
 
 	// Maintain an array of chat members per group in Redis

@@ -28,6 +28,11 @@ func kaliHandler(message *OctaafMessage) {
 		if time.Now().Hour() == 16 && time.Now().Minute() == 20 {
 			go addLeetBlazer(message, "420")
 		}
+
+		switch message.Command() {
+		case "kaleaderboard":
+			getKaleaderboard(message)
+		}
 	}
 }
 
@@ -109,4 +114,32 @@ func setKaliCount() {
 	if err != nil {
 		log.Error("Unable to save today's kalicount: ", err)
 	}
+}
+
+func getKaleaderboard(message *OctaafMessage) error {
+	query := message.CommandArguments()
+	if query != "1337" && query != "420" {
+		return message.Reply("Please specify which kaleaderboard you wish to view. (1337|420)")
+	}
+	var stats models.KaliStats
+	err := stats.Top(DB, query)
+
+	if err != nil {
+		log.Error(err)
+		message.Reply(fmt.Sprintf("Error: %v", err))
+		return err
+	}
+
+	response := "*Rank: count - name*\n"
+	for index, stat := range stats {
+		user, err := getUsername(stat.UserID, settings.Telegram.KaliID)
+		if err != nil {
+			log.Errorf("Unable to fetch username: %v", err)
+			message.Span.SetTag("error", err)
+			continue
+		}
+		response += fmt.Sprintf("*%v:* %v - @%v", index+1, stat.Count, MDEscape(user.User.UserName))
+	}
+
+	return message.Reply(response)
 }

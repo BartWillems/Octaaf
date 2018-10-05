@@ -6,8 +6,6 @@ import (
 
 	"github.com/gobuffalo/pop"
 	"github.com/gobuffalo/uuid"
-	"github.com/gobuffalo/validate"
-	"github.com/gobuffalo/validate/validators"
 )
 
 type Kalivent struct {
@@ -19,39 +17,40 @@ type Kalivent struct {
 	Type      string    `json:"type" db:"type"`
 }
 
-// String is not required by pop and may be deleted
+type Kalivents []Kalivent
+
+type KaliStat struct {
+	Count  int    `json:"count" db:"kcount"`
+	UserID int    `json:"user_id" db:"user_id"`
+	Type   string `json:"type" db:"type"`
+}
+
+type KaliStats []KaliStat
+
 func (k Kalivent) String() string {
 	jk, _ := json.Marshal(k)
 	return string(jk)
 }
 
-// Kalivents is not required by pop and may be deleted
-type Kalivents []Kalivent
-
-// String is not required by pop and may be deleted
 func (k Kalivents) String() string {
 	jk, _ := json.Marshal(k)
 	return string(jk)
 }
 
-// Validate gets run every time you call a "pop.Validate*" (pop.ValidateAndSave, pop.ValidateAndCreate, pop.ValidateAndUpdate) method.
-// This method is not required and may be deleted.
-func (k *Kalivent) Validate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.Validate(
-		&validators.IntIsPresent{Field: k.UserID, Name: "UserID"},
-		&validators.TimeIsPresent{Field: k.Date, Name: "Date"},
-		&validators.StringIsPresent{Field: k.Type, Name: "Type"},
-	), nil
+func (k *KaliStat) TableName() string {
+	return "kalivents"
 }
 
-// ValidateCreate gets run every time you call "pop.ValidateAndCreate" method.
-// This method is not required and may be deleted.
-func (k *Kalivent) ValidateCreate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
+func (k *KaliStats) TableName() string {
+	return "kalivents"
 }
 
-// ValidateUpdate gets run every time you call "pop.ValidateAndUpdate" method.
-// This method is not required and may be deleted.
-func (k *Kalivent) ValidateUpdate(tx *pop.Connection) (*validate.Errors, error) {
-	return validate.NewErrors(), nil
+func (k *KaliStats) Top(tx *pop.Connection, kind string) error {
+	err := tx.Select("user_id", "COUNT(type) kcount").
+		Where("type=?", kind).
+		GroupBy("user_id").
+		Order("kcount DESC").
+		All(k)
+
+	return err
 }
