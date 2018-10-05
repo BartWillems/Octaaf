@@ -138,7 +138,7 @@ func getKaleaderboard(message *OctaafMessage) error {
 			message.Span.SetTag("error", err)
 			continue
 		}
-		response += fmt.Sprintf("*%v:* %v - @%v", index+1, stat.Count, MDEscape(user.User.UserName), "\n")
+		response += fmt.Sprintf("*%v:* %v - @%v \n", index+1, stat.Count, MDEscape(user.User.UserName))
 	}
 
 	return message.Reply(response)
