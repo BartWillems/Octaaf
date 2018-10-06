@@ -153,11 +153,21 @@ func reply(message *OctaafMessage, r interface{}) error {
 	}
 }
 
-func getUsername(userID int, chatID int64) (tgbotapi.ChatMember, error) {
+func getUser(userID int, chatID int64) (tgbotapi.ChatMember, error) {
 	config := tgbotapi.ChatConfigWithUser{
 		ChatID:             chatID,
 		SuperGroupUsername: "",
 		UserID:             userID}
 
 	return Octaaf.GetChatMember(config)
+}
+
+func getUserName(userID int, chatID int64) (string, error) {
+	user, err := getUser(userID, chatID)
+
+	if err != nil {
+		return "", err
+	}
+
+	return MDEscape(user.User.UserName), nil
 }

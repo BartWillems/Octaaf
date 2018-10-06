@@ -63,9 +63,9 @@ func all(message *OctaafMessage) error {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			user, err := getUsername(memberID, message.Chat.ID)
+			username, err := getUserName(memberID, message.Chat.ID)
 			if err == nil {
-				response += fmt.Sprintf("@%v ", user.User.UserName)
+				response += fmt.Sprintf("@%v ", username)
 			}
 		}()
 	}
@@ -398,7 +398,7 @@ func quote(message *OctaafMessage) error {
 			"Loading username...",
 			opentracing.ChildOf(message.Span.Context()),
 		)
-		user, userErr := getUsername(quote.UserID, message.Chat.ID)
+		username, userErr := getUserName(quote.UserID, message.Chat.ID)
 
 		userSpan.Finish()
 
@@ -408,7 +408,7 @@ func quote(message *OctaafMessage) error {
 			return message.Reply(quote.Quote)
 		}
 		msg := fmt.Sprintf("\"%v\"", Markdown(quote.Quote, mdquote))
-		msg += fmt.Sprintf(" \n    ~@%v", MDEscape(user.User.UserName))
+		msg += fmt.Sprintf(" \n    ~@%v", username)
 		return message.Reply(msg)
 	}
 

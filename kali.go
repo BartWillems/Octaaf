@@ -64,14 +64,14 @@ func getLeetBlazers(event string) {
 	// Store the kalivent in the DB
 	for _, participator := range participators {
 		userID, _ := strconv.Atoi(participator)
-		user, err := getUsername(userID, settings.Telegram.KaliID)
+		username, err := getUserName(userID, settings.Telegram.KaliID)
 
 		if err != nil {
 			log.Errorf("Unable to fetch username for the kalivent %v; error: %v", event, err)
 			continue
 		}
 
-		usernames = append(usernames, fmt.Sprintf("@%v", user.User.UserName))
+		usernames = append(usernames, fmt.Sprintf("@%v", username))
 
 		// Store this absolute unit in the database
 		kali := models.Kalivent{
@@ -132,13 +132,13 @@ func getKaleaderboard(message *OctaafMessage) error {
 
 	response := "*Rank: count - name*\n"
 	for index, stat := range stats {
-		user, err := getUsername(stat.UserID, settings.Telegram.KaliID)
+		username, err := getUserName(stat.UserID, settings.Telegram.KaliID)
 		if err != nil {
 			log.Errorf("Unable to fetch username: %v", err)
 			message.Span.SetTag("error", err)
 			continue
 		}
-		response += fmt.Sprintf("*%v:* %v - @%v \n", index+1, stat.Count, MDEscape(user.User.UserName))
+		response += fmt.Sprintf("*%v:* %v - @%v \n", index+1, stat.Count, username)
 	}
 
 	return message.Reply(response)
