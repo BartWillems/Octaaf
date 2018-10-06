@@ -347,7 +347,7 @@ func sendImage(message *OctaafMessage) error {
 			continue
 		}
 
-		err = reply(message, img)
+		err = message.Reply(img)
 
 		if err == nil {
 			imgSpan.Finish()

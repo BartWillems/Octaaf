@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"os/signal"
@@ -119,7 +118,6 @@ func handle(m *tgbotapi.Message) {
 		"redis /all array",
 		opentracing.ChildOf(message.Span.Context()),
 	)
-	// span := Tracer.StartSpan("redis /all array", message.Span.Context())
 	Redis.SAdd(fmt.Sprintf("members_%v", message.Chat.ID), message.From.ID)
 	span.Finish()
 }
@@ -130,26 +128,6 @@ func sendGlobal(message string) {
 
 	if err != nil {
 		log.Errorf("Error while sending global '%v': %v", message, err)
-	}
-}
-
-func reply(message *OctaafMessage, r interface{}) error {
-	switch resp := r.(type) {
-	default:
-		return errors.New("Unkown response type given")
-	case string:
-		msg := tgbotapi.NewMessage(message.Chat.ID, resp)
-		msg.ReplyToMessageID = message.MessageID
-		msg.ParseMode = "markdown"
-		_, err := Octaaf.Send(msg)
-		return err
-	case []byte:
-		bytes := tgbotapi.FileBytes{Name: "image.jpg", Bytes: resp}
-		msg := tgbotapi.NewPhotoUpload(message.Chat.ID, bytes)
-		msg.Caption = message.CommandArguments()
-		msg.ReplyToMessageID = message.MessageID
-		_, err := Octaaf.Send(msg)
-		return err
 	}
 }
 
