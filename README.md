@@ -45,6 +45,12 @@ A telegram bot written in Go
 1. Install and run Redis
 1. [Soda](https://gobuffalo.io/en/docs/db/toolbox)
 1. a google api key *(optional)*
-1. ```cp config/settings.toml.dist config/setting.toml```
+1. ```cp config/settings.toml.dist config/settings.toml```
 1. Enter the correct values in the settings file
 1. _(Optional)_ <https://github.com/tools/godep>
+
+#### But I don't know how to computer 😨😨😨
+
+1. ```cp config/settings.toml.dist config/settings.toml```
+1. Enter the correct values in config/settings.toml (just enter your telegram api key)
+1. ```docker-compose up```
