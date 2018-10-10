@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"octaaf/models"
 	"octaaf/scrapers"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -615,22 +616,17 @@ func pollentiek(message *OctaafMessage) error {
 		},
 	}
 
+	keys := reflect.ValueOf(orientations).MapKeys()
 	rand.Seed(time.Now().UnixNano())
-	index := rand.Intn(len(orientations))
 
-	var orientation string
-	for orientation = range orientations {
-		if index == 0 {
-			break
-		}
+	randOrientIndex := rand.Intn(len(keys))
+	randOrientation := keys[randOrientIndex].String()
 
-		index--
-	}
+	randSayIndex := rand.Intn(len(orientations[randOrientation]))
+	randSaying := orientations[randOrientation][randSayIndex]
 
-	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(orientation, mdbold))
-
-	randomSaying := rand.Intn(len(orientations[orientation]))
-	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", Markdown(orientations[orientation][randomSaying], mdbold))
+	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(randOrientation, mdbold))
+	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", Markdown(randSaying, mdbold))
 
 	return message.Reply(msg)
 }
