@@ -579,3 +579,57 @@ func care(message *OctaafMessage) error {
 
 	return message.ReplyTo(MDEscape(msg), reply.MessageID)
 }
+
+func pollentiek(message *OctaafMessage) error {
+	orientations := map[string][]string{
+		"corrupte sos": []string{
+			"Liever poen dan groen!",
+			"Zwijg bruine rakker!!",
+			"Wij staken voor uw toekomst",
+			"Sommige mensen denken dat ze kost wat kost mogen gaan werken",
+		},
+		"karakterloze tsjeef": []string{
+			"Eat, sleep, tsjeef, repeat",
+			"Is hier nog ergens een chassidische jood beschikbaar om op te komen voor mij? Aub ik smeek u Bartje maakt mij kapot..",
+			"'t Is al de schuld van de sossen!",
+			"Ik heb geen probleem met moslims in de straat, maar ...",
+		},
+		"racistische marginale zot": []string{
+			"'t Is al de schuld van de sossen!",
+			"Komt door al die vluchtelingen",
+			"Dit is fake nieuws. U kan die posts gewoon op internet vinden. Of zelf maken.\nIemand heeft mijn profielfoto en voornaam gestolen en post zo'n uitspraken in mijn naam.\nMaar die zijn niet van mij.",
+			"Het wordt hoog tijd dat de mensch terug zijn schild en zijn vriend draagtdt!!",
+			"Moest Vlaams Belang meer zetels hebben zou dit niet gebeuren punt",
+			"Obama and Hillary both smell like sulfur.",
+			"Goddamn liberals",
+			"Beter dood dan rood!",
+			"Linkse ratten!! Rolt uw matten!!",
+		},
+		"gierige lafaard met geld": []string{
+			"'t Is al de schuld van de sossen!",
+			"WIR SCHAFFEN DAS",
+			"WIR HAVEN DAS NICHT GEWURST",
+			"Gewoon doen, watermeloen",
+			"Ge zijt ne flipflop! U en uw partij!",
+			"Here is how Bernie can still win..",
+		},
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	randomStart := rand.Intn(len(orientations))
+	index := randomStart
+
+	var key string
+	for key = range orientations {
+		if index == 0 {
+			break
+		}
+
+		index--
+	}
+
+	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(key, mdbold))
+	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming  at least once per day:\n\n%s", Markdown(orientations[key][randomStart], mdbold))
+
+	return message.Reply(msg)
+}

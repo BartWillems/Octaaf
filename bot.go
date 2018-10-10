@@ -116,6 +116,8 @@ func handle(m *tgbotapi.Message) {
 			remind(message)
 		case "care":
 			care(message)
+		case "polentiek":
+			pollentiek(message)
 		}
 
 		if message.From.ID == settings.Telegram.ModeratorID {
