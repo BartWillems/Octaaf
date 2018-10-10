@@ -616,11 +616,10 @@ func pollentiek(message *OctaafMessage) error {
 	}
 
 	rand.Seed(time.Now().UnixNano())
-	randomStart := rand.Intn(len(orientations))
-	index := randomStart
+	index := rand.Intn(len(orientations))
 
-	var key string
-	for key = range orientations {
+	var orientation string
+	for orientation = range orientations {
 		if index == 0 {
 			break
 		}
@@ -628,8 +627,10 @@ func pollentiek(message *OctaafMessage) error {
 		index--
 	}
 
-	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(key, mdbold))
-	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming  at least once per day:\n\n%s", Markdown(orientations[key][randomStart], mdbold))
+	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(orientation, mdbold))
+
+	randomSaying := rand.Intn(len(orientations[orientation]))
+	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", Markdown(orientations[orientation][randomSaying], mdbold))
 
 	return message.Reply(msg)
 }
