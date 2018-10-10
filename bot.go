@@ -116,7 +116,7 @@ func handle(m *tgbotapi.Message) {
 			remind(message)
 		case "care":
 			care(message)
-		case "polentiek":
+		case "pollentiek":
 			pollentiek(message)
 		}
 
