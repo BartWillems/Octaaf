@@ -15,7 +15,10 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker { image 'golang:1.11' }
+                docker { 
+                    image 'golang:1.11'
+                    args '-v $HOME/.cache/go:/.cache'
+                }
             }
             steps {
                 sh 'go vet'
