@@ -10,6 +10,7 @@ pipeline {
         DESCRIPTION = 'A Go Telegram bot'
         ARCH        = 'x86_64'
         GO111MODULE = 'on'
+        GOPATH      = "${WORKSPACE}"
     }
 
     stages {
