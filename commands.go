@@ -606,7 +606,7 @@ func pollentiek(message *OctaafMessage) error {
 			"Beter dood dan rood!🔴☠️🔴☠️🔴☠️",
 			"Linkse ratten!! Rolt uw matten!!🐀🐀🐀",
 			"Het is weer nen makaak ze 🙉🙉🙉",
-			"'t Zijn altijd dezelfden!! 😒😒😒😒"
+			"'t Zijn altijd dezelfden!! 😒😒😒😒",
 		},
 		"gierige lafaard met geld": []string{
 			"🆘🆘🆘 't Is al de schuld van de sossen! 🆘🆘🆘",
