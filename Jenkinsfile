@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'go vet'
+                sh 'go vet -mod vendor'
                 sh 'go build -mod vendor'
             }
         }
