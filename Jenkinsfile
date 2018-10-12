@@ -15,8 +15,12 @@ node {
     if (env.BUILD_TAG?.trim()) {
         withEnv([
             "VERSION=${env.BUILD_TAG}"]) {
+
+            def dink = buildingTag()
              stage("Package") {
                 sh "make package"
+
+                sh "echo '${dink}'"
             }
         }
 
