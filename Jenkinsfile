@@ -17,7 +17,7 @@ pipeline {
             agent {
                 docker { 
                     image 'golang:1.11'
-                    args '-v $HOME/.cache/go:/.cache'
+                    args '--user=root'
                 }
             }
             steps {
