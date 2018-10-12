@@ -55,3 +55,7 @@ String gitTagName() {
     }
     return null
 }
+
+String getCommit() {
+    return sh(script: 'git rev-parse HEAD', returnStdout: true)?.trim()
+}
