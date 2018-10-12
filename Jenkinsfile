@@ -12,7 +12,7 @@ node {
         }
     }
 
-    if (env.BUILD_TAG != "")) {
+    if (env.BUILD_TAG != "") {
         stage("Package") {
             sh "make package"
         }
