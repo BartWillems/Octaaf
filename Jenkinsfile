@@ -23,6 +23,13 @@ pipeline {
             steps {
                 sh 'go vet -mod vendor'
                 sh 'go build -mod vendor -ldflags "-s -w" -o octaaf'
+                sh 'ls'
+            }
+        }
+
+        stage('Random') {
+            steps {
+                sh "ls"
             }
         }
 
