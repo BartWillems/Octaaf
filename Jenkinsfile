@@ -9,12 +9,17 @@ pipeline {
         VERSION     = "${TAG_NAME}"
         DESCRIPTION = 'A Go Telegram bot'
         ARCH        = 'x86_64'
+        GO111MODULE = 'on'
     }
 
     stages {
         stage('Build') {
+            agent {
+                docker { image 'golang:1.11' }
+            }
             steps {
-                sh 'make build'
+                sh 'go vet'
+                sh 'go build'
             }
         }
 

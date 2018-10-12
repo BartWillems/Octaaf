@@ -26,10 +26,13 @@ require (
 	github.com/gobuffalo/uuid v2.0.3+incompatible
 	github.com/gobuffalo/validate v2.0.3+incompatible
 	github.com/jackc/pgx v3.2.0+incompatible // indirect
+	github.com/json-iterator/go v1.1.5 // indirect
 	github.com/markbates/going v1.0.2 // indirect
 	github.com/markbates/oncer v0.0.0-20180924034138-723ad0170a46 // indirect
 	github.com/mattn/go-colorable v0.0.9 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/olebedev/when v0.0.0-20171024044931-53693fbb59a8
 	github.com/opentracing/opentracing-go v1.0.2
 	github.com/sirupsen/logrus v1.1.1
