@@ -1,8 +1,8 @@
-create_table("reminders", func(t) {
+create_table("reminders") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("chat_id", "bigint", {})
 	t.Column("message_id", "integer", {})
 	t.Column("message", "string", {})
 	t.Column("deadline", "timestamp", {})
 	t.Column("executed", "bool", {"default": false})
-})
+}

@@ -1,6 +1,6 @@
-create_table("kalivents", func(t) {
+create_table("kalivents") {
 	t.Column("id", "uuid", {"primary": true})
 	t.Column("user_id", "integer", {})
 	t.Column("date", "timestamp", {})
 	t.Column("type", "string", {})
-})
+}

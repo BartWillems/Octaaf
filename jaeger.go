@@ -9,6 +9,7 @@ import (
 	config "github.com/uber/jaeger-client-go/config"
 )
 
+// Tracer is the opentracing instance
 var Tracer opentracing.Tracer
 
 func initJaeger(service string) io.Closer {
@@ -21,6 +22,9 @@ func initJaeger(service string) io.Closer {
 			LogSpans: true,
 		},
 	}
+
+	// Only log the spans in development
+	cfg.Reporter.LogSpans = settings.Environment == "development"
 
 	var err error
 	var closer io.Closer

@@ -76,7 +76,6 @@ func getLeetBlazers(event string) {
 		// Store this absolute unit in the database
 		kali := models.Kalivent{
 			UserID: userID,
-			Date:   time.Now(),
 			Type:   event}
 		DB.Save(&kali)
 	}
