@@ -1,6 +1,6 @@
 pipeline {
 
-    agent any
+    agent none
 
     environment {
         REPO_SERVER = 'repo.youkebox.be'
