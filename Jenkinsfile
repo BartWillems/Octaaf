@@ -12,22 +12,27 @@ node {
         }
     }
 
-    if (env.BUILD_TAG != "") {
-        stage("Package") {
-            sh "make package"
+    if (env.BUILD_TAG?.trim()) {
+        withEnv([
+            "VERSION=${env.BUILD_TAG}"]) {
+             stage("Package") {
+                sh "make package"
+            }
         }
 
         withEnv([
             "REPO_SERVER=repo.youkebox.be",
             "REPO_PATH=/var/vhosts/repo/octaaf/"]) {
             stage("Upload") {
-                sh "scp octaaf-*.rpm root@${REPO_SERVER}:${REPO_PATH}/packages/"
-                sh "ssh root@${REPO_SERVER} 'createrepo --update ${REPO_PATH}'"
+                if (env.BUILD_TAG?.trim()) {
+                    sh "scp octaaf-*.rpm root@${REPO_SERVER}:${REPO_PATH}/packages/"
+                    sh "ssh root@${REPO_SERVER} 'createrepo --update ${REPO_PATH}'"
+                }
             }
         }
 
-        if ( env.BUILD_TAG == "release-*" ) {
-            withEnv(["REPO_SERVER=repo.youkebox.be"]) {
+        withEnv(["REPO_SERVER=repo.youkebox.be"]) {
+            if ( env.BUILD_TAG == "release-*" ) {
                 stage('Deploy') {
                     sh """
                         ssh root@${REPO_SERVER} '\\
