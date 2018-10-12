@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"octaaf/models"
 	"octaaf/scrapers"
+	"reflect"
 	"strconv"
 	"strings"
 	"sync"
@@ -594,4 +595,57 @@ func care(message *OctaafMessage) error {
 	}
 
 	return message.ReplyTo(MDEscape(msg), reply.MessageID)
+}
+
+func pollentiek(message *OctaafMessage) error {
+	orientations := map[string][]string{
+		"corrupte sos": []string{
+			"Liever poen dan groen! 🤑🤑",
+			"Zwijg bruine rakker!! 🤚🤚",
+			"Wij staken voor uw toekomst 😴😴🍻🍻🍻",
+			"Sommige mensen denken dat ze kost wat kost mogen gaan werken 🤓🤓🤓",
+		},
+		"karakterloze tsjeef": []string{
+			"Eat, sleep, tsjeef, repeat 💅💅💅",
+			"Is hier nog ergens een chassidische jood beschikbaar om op te komen voor mij? Aub ik smeek u Bartje maakt mij kapot.. 🕎🕎",
+			"🆘🆘🆘 't Is al de schuld van de sossen! 🆘🆘🆘",
+			"Ik heb geen probleem met moslims in de straat, maar ...💁💁💁",
+		},
+		"racistische marginale zot": []string{
+			"🆘🆘🆘 't Is al de schuld van de sossen! 🆘🆘🆘",
+			"Komt door al die vluchtelingen 🏃🏃🏃🏃",
+			"Dit is fake nieuws. U kan die posts gewoon op internet vinden. Of zelf maken.\nIemand heeft mijn profielfoto en voornaam gestolen en post zo'n uitspraken in mijn naam.\nMaar die zijn niet van mij. 🤷‍♂️🤷‍♂️🤷‍♂️",
+			"😤😤😤Het wordt hoog tijd dat de mensch terug zijn schild en zijn vriend draagtdt!!😤😤😤",
+			"Moest Vlaams Belang meer zetels hebben zou dit niet gebeuren punt 🛋🛋🛋🛋",
+			"😈Obama😈 and 😈Hillary😈 both smell like 🔥sulfur🔥.",
+			"Goddamn liberals 😤😤😤",
+			"Beter dood dan rood!🔴☠️🔴☠️🔴☠️",
+			"Linkse ratten!! Rolt uw matten!!🐀🐀🐀",
+			"Het is weer nen makaak ze 🙉🙉🙉",
+			"'t Zijn altijd dezelfden!! 😒😒😒😒",
+		},
+		"gierige lafaard met geld": []string{
+			"🆘🆘🆘 't Is al de schuld van de sossen! 🆘🆘🆘",
+			"🇩🇪🇩🇪🇩🇪WIR SCHAFFEN DAS🇩🇪🇩🇪🇩🇪",
+			"WIR HABEN DAS NICHT GEWURST🚿🚿🚿",
+			"Gewoon doen, watermeloen 🍉🍉🍉🤤🤤",
+			"Ge zijt ne flipflop! U en uw partij!🤔🤔🤔🤔",
+			"🤤🤤🤤Here is how Bernie can still win..🤤🤤🤤",
+		},
+	}
+
+	keys := reflect.ValueOf(orientations).MapKeys()
+
+	rand.Seed(time.Now().UnixNano())
+	orientation := keys[rand.Intn(len(keys))].String()
+
+	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(orientation, mdbold))
+
+	rand.Seed(time.Now().UnixNano())
+	randomSayIndex := rand.Intn(len(orientations[orientation]))
+	saying := orientations[orientation][randomSayIndex]
+
+	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", Markdown(saying, mdbold))
+
+	return message.Reply(msg)
 }

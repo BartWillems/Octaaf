@@ -107,6 +107,8 @@ func handle(m *tgbotapi.Message) {
 			remind(message)
 		case "care":
 			care(message)
+		case "pollentiek":
+			pollentiek(message)
 		}
 	}
 	if message.MessageID%1e5 == 0 {

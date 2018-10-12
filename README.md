@@ -19,6 +19,7 @@ A telegram bot written in Go
 * /m8ball - Let fate decide your future
 * /more - MORE IMAGES
 * /next_launch - Show the next 5 rocket launches
+* /pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
 * /quote - Get or store random kali quotes
 * /remind_me - Remind me in a given time
 * /reported - Get the reported count
