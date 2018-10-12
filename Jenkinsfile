@@ -12,7 +12,7 @@ node {
         }
     }
 
-    if (buildingTag()) {
+    if (env.BUILD_TAG != "")) {
         stage("Package") {
             sh "make package"
         }
@@ -26,7 +26,7 @@ node {
             }
         }
 
-        if ( tag == "release-*" ) {
+        if ( env.BUILD_TAG == "release-*" ) {
             withEnv(["REPO_SERVER=repo.youkebox.be"]) {
                 stage('Deploy') {
                     sh """
