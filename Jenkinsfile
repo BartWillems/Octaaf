@@ -9,7 +9,7 @@ pipeline {
         VERSION     = "${TAG_NAME}"
         DESCRIPTION = 'A Go Telegram bot'
         ARCH        = 'x86_64'
-        GO111MODULE = 'on'
+        GO111MODULE = 'off'
     }
 
     stages {
@@ -23,8 +23,8 @@ pipeline {
             steps {
                 sh 'echo $GOPATH'
                 sh 'pwd'
-                sh 'GO111MODULE=on go vet'
-                sh 'GO111MODULE=on go build'
+                sh 'GO111MODULE=off go vet'
+                sh 'GO111MODULE=off go build'
             }
         }
 
