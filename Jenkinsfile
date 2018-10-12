@@ -12,7 +12,7 @@ node {
         }
     }
 
-    if (env.BUILD_TAG?.trim()) {
+    if( env.BRANCH_NAME.startsWith("release-") ) {
         withEnv([
             "VERSION=${env.BUILD_TAG}"]) {
 
