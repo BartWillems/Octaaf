@@ -289,13 +289,13 @@ func sendImage(message *OctaafMessage) error {
 		)
 
 		images, err = scrapers.GetImages(message.CommandArguments(), message.Command() == "img_sfw")
-		if err != nil {
-			fetchSpan.SetTag("error", err)
-			fetchSpan.Finish()
-			return message.Reply("Something went wrong!")
-		}
 
 		fetchSpan.Finish()
+
+		if err != nil {
+			fetchSpan.SetTag("error", err)
+			return message.Reply("Something went wrong!")
+		}
 
 		Cache.Set(&cache.Item{
 			Key:        key,
@@ -331,9 +331,10 @@ func sendImage(message *OctaafMessage) error {
 
 		res, err := client.Get(url)
 
+		imgSpan.Finish()
+
 		if err != nil {
 			imgSpan.SetTag("error", err)
-			imgSpan.Finish()
 			continue
 		}
 
@@ -343,7 +344,6 @@ func sendImage(message *OctaafMessage) error {
 
 		if err != nil {
 			imgSpan.SetTag("error", err)
-			imgSpan.Finish()
 			log.Errorf("Unable to load image %v; error: %v", url, err)
 			continue
 		}
@@ -351,11 +351,9 @@ func sendImage(message *OctaafMessage) error {
 		err = message.Reply(img)
 
 		if err == nil {
-			imgSpan.Finish()
 			return nil
 		}
 		imgSpan.SetTag("error", err)
-		imgSpan.Finish()
 	}
 
 	return message.Reply("I did not find images for the query: `" + message.CommandArguments() + "`")
