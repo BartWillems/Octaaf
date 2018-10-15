@@ -64,7 +64,8 @@ func getLeetBlazers(event string) {
 	// Store the kalivent in the DB
 	for _, participator := range participators {
 		userID, _ := strconv.Atoi(participator)
-		username, err := getUserName(userID, settings.Telegram.KaliID)
+		// sendGlobal doesn't parse markdown, so escaped usernames will not render properly
+		username, err := getUserNameUnsafe(userID, settings.Telegram.KaliID)
 
 		if err != nil {
 			log.Errorf("Unable to fetch username for the kalivent %v; error: %v", event, err)
@@ -77,7 +78,11 @@ func getLeetBlazers(event string) {
 		kali := models.Kalivent{
 			UserID: userID,
 			Type:   event}
-		DB.Save(&kali)
+		err = DB.Save(&kali)
+
+		if err != nil {
+			log.Errorf("Unable to save leetblazer '%v'; reason: %v", kali.UserID, err)
+		}
 	}
 
 	reply := "Today "

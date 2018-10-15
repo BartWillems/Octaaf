@@ -142,12 +142,24 @@ func getUser(userID int, chatID int64) (tgbotapi.ChatMember, error) {
 	return Octaaf.GetChatMember(config)
 }
 
-func getUserName(userID int, chatID int64) (string, error) {
+// Returns a username that could contain markdown characters
+func getUserNameUnsafe(userID int, chatID int64) (string, error) {
 	user, err := getUser(userID, chatID)
 
 	if err != nil {
 		return "", err
 	}
 
-	return MDEscape(user.User.UserName), nil
+	return user.User.UserName, nil
+}
+
+// Returns a markdown escaped username
+func getUserName(userID int, chatID int64) (string, error) {
+	username, err := getUserNameUnsafe(userID, chatID)
+
+	if err != nil {
+		return "", err
+	}
+
+	return MDEscape(username), nil
 }
