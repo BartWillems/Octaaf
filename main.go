@@ -32,9 +32,21 @@ func main() {
 	}
 
 	initRedis()
-	initDB()
-	migrateDB()
-	initBot()
+
+	err = initDB()
+	if err != nil {
+		log.Fatalf("Couldn't establish a database connection: %v", err)
+	}
+
+	err = migrateDB()
+	if err != nil {
+		log.Fatalf("DB Migration error: %v", err)
+	}
+
+	err = initBot()
+	if err != nil {
+		log.Fatalf("Telegram connection error: %v", err)
+	}
 
 	go loadReminders()
 

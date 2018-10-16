@@ -37,6 +37,7 @@ type jaeger struct {
 	ServiceName string `toml:"service_name"`
 }
 
+// Load parses the toml file and returns a Settings struct
 func (c *Settings) Load() (toml.MetaData, error) {
 	return toml.DecodeFile("config/settings.toml", c)
 }

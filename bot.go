@@ -14,13 +14,13 @@ import (
 // Octaaf is the global bot endpoint
 var Octaaf *tgbotapi.BotAPI
 
-func initBot() {
+func initBot() error {
 	// Explicitly create this err var, or else Octaaf will be shadowed
 	var err error
 	Octaaf, err = tgbotapi.NewBotAPI(settings.Telegram.ApiKey)
 
 	if err != nil {
-		log.Fatal("Telegram connection error: ", err)
+		return err
 	}
 
 	Octaaf.Debug = settings.Environment == "development"
@@ -41,6 +41,8 @@ func initBot() {
 			os.Exit(0)
 		}()
 	}
+
+	return nil
 }
 
 func handle(m *tgbotapi.Message) {
