@@ -22,13 +22,17 @@ require (
 	github.com/gobuffalo/makr v1.1.5 // indirect
 	github.com/gobuffalo/packr v1.13.7 // indirect
 	github.com/gobuffalo/plush v3.7.20+incompatible // indirect
-	github.com/gobuffalo/pop v4.8.3+incompatible
+	github.com/gobuffalo/pop v4.8.4+incompatible
 	github.com/gobuffalo/uuid v2.0.3+incompatible
 	github.com/gobuffalo/validate v2.0.3+incompatible
 	github.com/jackc/pgx v3.2.0+incompatible // indirect
+	github.com/jmoiron/sqlx v1.2.0 // indirect
 	github.com/json-iterator/go v1.1.5 // indirect
+	github.com/konsorten/go-windows-terminal-sequences v1.0.1 // indirect
+	github.com/kr/pty v1.1.3 // indirect
 	github.com/markbates/going v1.0.2 // indirect
-	github.com/markbates/oncer v0.0.0-20180924034138-723ad0170a46 // indirect
+	github.com/markbates/inflect v1.0.1 // indirect
+	github.com/markbates/oncer v0.0.0-20181014194634-05fccaae8fc4 // indirect
 	github.com/mattn/go-colorable v0.0.9 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -36,6 +40,7 @@ require (
 	github.com/olebedev/when v0.0.0-20171024044931-53693fbb59a8
 	github.com/opentracing/opentracing-go v1.0.2
 	github.com/sirupsen/logrus v1.1.1
+	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/tidwall/gjson v1.1.3
 	github.com/tidwall/match v0.0.0-20171002075945-1731857f09b1 // indirect
@@ -43,7 +48,9 @@ require (
 	github.com/uber/jaeger-lib v1.5.0 // indirect
 	github.com/ugorji/go/codec v0.0.0-20181012064053-8333dd449516 // indirect
 	github.com/vmihailenco/msgpack v4.0.0+incompatible
+	golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e // indirect
 	golang.org/x/net v0.0.0-20181011144130-49bb7cea24b1 // indirect
+	golang.org/x/sys v0.0.0-20181011152604-fa43e7bc11ba // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 )
