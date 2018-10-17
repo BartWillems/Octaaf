@@ -1,4 +1,4 @@
-// Copyright (C) 2013-2018 by Maxim Bublis <b@codemonkey.ru>
+// Copyright (c) 2018 Andrei Tudor Călin <mail@acln.ro>
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -19,26 +19,29 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// +build gofuzz
+
 package uuid
 
-import (
-	guuid "github.com/gofrs/uuid"
-)
-
-// NewV1 returns UUID based on current timestamp and MAC address.
-var NewV1 = guuid.NewV1
-
-// NewV2 returns DCE Security UUID based on POSIX UID/GID.
-var NewV2 = guuid.NewV2
-
-// NewV3 returns UUID based on MD5 hash of namespace UUID and name.
-var NewV3 = guuid.NewV3
-
-// NewV4 returns random generated UUID.
-var NewV4 = guuid.NewV4
-
-// NewV5 returns UUID based on SHA-1 hash of namespace UUID and name.
-var NewV5 = guuid.NewV5
-
-// Generator provides interface for generating UUIDs.
-type Generator = guuid.Generator
+// Fuzz implements a simple fuzz test for FromString / UnmarshalText.
+//
+// To run:
+//
+//     $ go get github.com/dvyukov/go-fuzz/...
+//     $ cd $GOPATH/src/github.com/gofrs/uuid
+//     $ go-fuzz-build github.com/gofrs/uuid
+//     $ go-fuzz -bin=uuid-fuzz.zip -workdir=./testdata
+//
+// If you make significant changes to FromString / UnmarshalText and add
+// new cases to fromStringTests (in codec_test.go), please run
+//
+//    $ go test -seed_fuzz_corpus
+//
+// to seed the corpus with the new interesting inputs, then run the fuzzer.
+func Fuzz(data []byte) int {
+	_, err := FromString(string(data))
+	if err != nil {
+		return 0
+	}
+	return 1
+}

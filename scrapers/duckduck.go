@@ -1,9 +1,12 @@
 package scrapers
 
 import (
+	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/tidwall/gjson"
 )
 
 const ddgo_uri = "https://duckduckgo.com/lite?k1=-1&q="
@@ -56,4 +59,23 @@ func bang(query string) (string, bool) {
 		return uri, true
 	}
 	return "", false
+}
+
+func What(query string) (string, bool, error) {
+	resp, err := http.Get(fmt.Sprintf("https://api.duckduckgo.com/?q=%v&format=json&no_html=1&skip_disambig=1", query))
+	if err != nil {
+		return "", false, err
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", false, err
+	}
+
+	result := gjson.Get(string(body), "AbstractText").String()
+
+	if len(result) == 0 {
+		return "", false, nil
+	}
+	return result, true, nil
 }

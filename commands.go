@@ -199,21 +199,22 @@ func where(message *OctaafMessage) error {
 }
 
 func what(message *OctaafMessage) error {
+	span := message.Span.Tracer().StartSpan(
+		"Trying to explain something...",
+		opentracing.ChildOf(message.Span.Context()),
+	)
 	query := message.CommandArguments()
-	resp, err := http.Get(fmt.Sprintf("https://api.duckduckgo.com/?q=%v&format=json&no_html=1&skip_disambig=1", query))
+	result, found, err := scrapers.What(query)
+	span.Finish()
+
 	if err != nil {
-		return message.Reply("Just what is this?")
+		log.Errorf("Unable to explain '%v'. Error: %v", query, err)
+		span.SetTag("error", err)
+		return message.Reply("I do not know, something went bork...")
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return message.Reply("Just what is this?")
-	}
-
-	result := gjson.Get(string(body), "AbstractText").String()
-
-	if len(result) == 0 {
-		return message.Reply(fmt.Sprintf("What is this %v you speak of?", Markdown(query, mdbold)))
+	if !found {
+		return message.Reply("That is forbidden knowledge.")
 	}
 
 	return message.Reply(fmt.Sprintf("%v: %v", Markdown(query, mdbold), result))
@@ -482,38 +483,6 @@ func nextLaunch(message *OctaafMessage) error {
 			msg += "\n    " + MDEscape(vods[0].String())
 		}
 	}
-
-	return message.Reply(msg)
-}
-
-func issues(message *OctaafMessage) error {
-	res, err := http.Get("https://api.github.com/repos/bartwillems/Octaaf/issues?state=open")
-
-	if err != nil {
-		return message.Reply("Unable to fetch open issues")
-	}
-
-	defer res.Body.Close()
-
-	issuesJSON, err := ioutil.ReadAll(res.Body)
-
-	if err != nil {
-		return message.Reply("Unable to fetch open issues")
-	}
-
-	issues := gjson.ParseBytes(issuesJSON)
-
-	var msg = "*Octaaf issues:*"
-
-	var count int
-
-	issues.ForEach(func(key, value gjson.Result) bool {
-		count++
-		msg += fmt.Sprintf("\n*%v: %v*", count, MDEscape(value.Get("title").String()))
-		msg += fmt.Sprintf("\n    *url:* %v", Markdown(value.Get("url").String(), mdcursive))
-		msg += fmt.Sprintf("\n    *creator:* %v", Markdown(value.Get("user.login").String(), mdcursive))
-		return true
-	})
 
 	return message.Reply(msg)
 }

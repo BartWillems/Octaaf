@@ -24,8 +24,9 @@ require (
 	github.com/gobuffalo/packr v1.13.7 // indirect
 	github.com/gobuffalo/plush v3.7.20+incompatible // indirect
 	github.com/gobuffalo/pop v4.8.4+incompatible
-	github.com/gobuffalo/uuid v2.0.3+incompatible
+	github.com/gobuffalo/uuid v2.0.4+incompatible
 	github.com/gobuffalo/validate v2.0.3+incompatible
+	github.com/gofrs/uuid v3.1.0+incompatible // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.2.0+incompatible // indirect
 	github.com/jmoiron/sqlx v1.2.0 // indirect

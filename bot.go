@@ -97,8 +97,6 @@ func handle(m *tgbotapi.Message) {
 			nextLaunch(message)
 		case "doubt":
 			doubt(message)
-		case "issues":
-			issues(message)
 		case "kalirank":
 			kaliRank(message)
 		case "iasip":

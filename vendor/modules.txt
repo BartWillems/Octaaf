@@ -75,11 +75,13 @@ github.com/gobuffalo/pop/nulls
 github.com/gobuffalo/tags
 github.com/gobuffalo/tags/form
 github.com/gobuffalo/tags/form/bootstrap
-# github.com/gobuffalo/uuid v2.0.3+incompatible
+# github.com/gobuffalo/uuid v2.0.4+incompatible
 github.com/gobuffalo/uuid
 # github.com/gobuffalo/validate v2.0.3+incompatible
 github.com/gobuffalo/validate
 github.com/gobuffalo/validate/validators
+# github.com/gofrs/uuid v3.1.0+incompatible
+github.com/gofrs/uuid
 # github.com/golang/protobuf v1.2.0
 github.com/golang/protobuf/proto
 # github.com/jackc/pgx v3.2.0+incompatible
