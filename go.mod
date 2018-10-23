@@ -32,7 +32,6 @@ require (
 	github.com/jmoiron/sqlx v1.2.0 // indirect
 	github.com/json-iterator/go v1.1.5 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.1 // indirect
-	github.com/kr/pty v1.1.3 // indirect
 	github.com/markbates/going v1.0.2 // indirect
 	github.com/markbates/inflect v1.0.3 // indirect
 	github.com/markbates/oncer v0.0.0-20181014194634-05fccaae8fc4 // indirect
@@ -46,7 +45,6 @@ require (
 	github.com/shopspring/decimal v0.0.0-20180709203117-cd690d0c9e24 // indirect
 	github.com/simplereach/timeutils v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.1.1
-	github.com/spf13/pflag v1.0.3 // indirect
 	github.com/stretchr/testify v1.2.2
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/tidwall/gjson v1.1.3

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"regexp"
 	"strings"
 )
 
@@ -12,8 +11,6 @@ const (
 	mdcursive style = '_'
 	mdquote   style = '`'
 )
-
-var re = regexp.MustCompile(`(\*|_)`)
 
 // Markdown ensures safe markdown parsing on unsafe input
 func Markdown(input string, style style) string {
