@@ -38,6 +38,7 @@ func MDEscape(input string) string {
 	shouldSkip := false
 
 	for pos, char := range input {
+		// Previous character was \ so this character shouldn't be escaped
 		if shouldSkip {
 			shouldSkip = false
 			result += string(char)
@@ -48,13 +49,13 @@ func MDEscape(input string) string {
 		case '\\':
 			// If the last character is a backslash, it should always be escaped
 			if pos+1 == len(input) {
-				result += escape(string(char))
+				result += escape(char)
 			} else {
 				result += string(char)
 				shouldSkip = true
 			}
 		case '_', '*':
-			result += escape(string(char))
+			result += escape(char)
 		default:
 			result += string(char)
 		}
@@ -62,6 +63,6 @@ func MDEscape(input string) string {
 	return result
 }
 
-func escape(input string) string {
-	return `\` + input
+func escape(input rune) string {
+	return `\` + string(input)
 }

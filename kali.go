@@ -64,8 +64,7 @@ func getLeetBlazers(event string) {
 	// Store the kalivent in the DB
 	for _, participator := range participators {
 		userID, _ := strconv.Atoi(participator)
-		// sendGlobal doesn't parse markdown, so escaped usernames will not render properly
-		username, err := getUserNameUnsafe(userID, settings.Telegram.KaliID)
+		username, err := getUserName(userID, settings.Telegram.KaliID)
 
 		if err != nil {
 			log.Errorf("Unable to fetch username for the kalivent %v; error: %v", event, err)
