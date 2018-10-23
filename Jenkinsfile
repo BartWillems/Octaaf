@@ -21,7 +21,7 @@ pipeline {
                 }
             }
             steps {
-                sh 'go vet -mod vendor'
+                sh 'go test -mod vendor'
                 sh 'go build -mod vendor -ldflags "-s -w" -o octaaf'
                 stash includes: 'octaaf', name: 'octaaf'
             }

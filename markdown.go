@@ -11,7 +11,6 @@ const (
 	mdbold    style = '*'
 	mdcursive style = '_'
 	mdquote   style = '`'
-	mdescape  bool  = true
 )
 
 var re = regexp.MustCompile(`(\*|_)`)
