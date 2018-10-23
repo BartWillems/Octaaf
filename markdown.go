@@ -24,11 +24,44 @@ func Markdown(input string, style style) string {
 	return string(style) + MDEscape(input) + string(style)
 }
 
-// MDEscape escapes all telegram markdown characters & removes `
-func MDEscape(input string) string {
-	return mdUnquote(re.ReplaceAllString(input, `\$1`))
-}
-
 func mdUnquote(input string) string {
 	return strings.Replace(input, "`", "", -1)
+}
+
+func MDEscape(input string) string {
+	// Remove backslashes as they can't be escaped
+	input = mdUnquote(input)
+
+	result := ""
+
+	// Boolean that tests if previous char is a backslash
+	shouldSkip := false
+
+	for pos, char := range input {
+		if shouldSkip {
+			shouldSkip = false
+			result += string(char)
+			continue
+		}
+
+		switch char {
+		case '\\':
+			// If the last character is a backslash, it should always be escaped
+			if pos+1 == len(input) {
+				result += escape(string(char))
+			} else {
+				result += string(char)
+				shouldSkip = true
+			}
+		case '_', '*':
+			result += escape(string(char))
+		default:
+			result += string(char)
+		}
+	}
+	return result
+}
+
+func escape(input string) string {
+	return `\` + input
 }

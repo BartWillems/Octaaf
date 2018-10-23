@@ -6,7 +6,10 @@ import (
 )
 
 func Test_MDEscape(t *testing.T) {
-	assert.Equal(t, MDEscape(`some_string`), `some\_string`)
+	assert.Equal(t, MDEscape(`some\_string`), `some\_string`)
+	assert.Equal(t, MDEscape(`some\\_string`), `some\\\_string`)
+	assert.Equal(t, MDEscape(`some string\`), `some string\\`)
+	assert.Equal(t, MDEscape(`_some * string`), `\_some \* string`)
 }
 
 func Test_MDStyle(t *testing.T) {
