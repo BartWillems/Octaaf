@@ -19,8 +19,6 @@ func kaliHandler(message *OctaafMessage) {
 		log.Debug("Kalimember found")
 		KaliCount = message.MessageID
 
-		go kaliReport(message)
-
 		if time.Now().Hour() == 13 && time.Now().Minute() == 37 {
 			go addLeetBlazer(message, "1337")
 		}
@@ -32,16 +30,6 @@ func kaliHandler(message *OctaafMessage) {
 		switch message.Command() {
 		case "kaleaderboard":
 			getKaleaderboard(message)
-		}
-	}
-}
-
-func kaliReport(message *OctaafMessage) {
-	if message.From.ID == settings.Telegram.ReporterID {
-		log.Debug("Reporter found")
-		if strings.ToLower(message.Text) == "reported" ||
-			(message.Sticker != nil && message.Sticker.FileID == "CAADBAAD5gEAAreTBA3s5qVy8bxHfAI") {
-			DB.Save(&models.Report{})
 		}
 	}
 }

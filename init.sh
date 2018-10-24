@@ -2,4 +2,5 @@
 #
 # Startup script used for docker-compose
 
-go run *.go
+go build -o octaaf
+./octaaf

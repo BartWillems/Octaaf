@@ -528,31 +528,6 @@ func iasip(message *OctaafMessage) error {
 	return message.Reply(string(body))
 }
 
-func reported(message *OctaafMessage) error {
-	if message.Chat.ID != settings.Telegram.KaliID {
-		return message.Reply("Yeah well, you need to update to Strontbot Enterprise edition for Workgroups to use this feature.")
-	}
-
-	reportCount, err := DB.Count(models.Report{})
-
-	if err != nil {
-		log.Error("Report fetch error: ", err)
-		return message.Reply("I can't seem to be able to count the reports.")
-	}
-
-	config := tgbotapi.ChatConfigWithUser{
-		ChatID:             message.Chat.ID,
-		SuperGroupUsername: "",
-		UserID:             settings.Telegram.ReporterID}
-
-	reporter, err := Octaaf.GetChatMember(config)
-
-	if err != nil {
-		return message.Reply(fmt.Sprintf("So far, %v people have been reported by Dieter", reportCount))
-	}
-	return message.Reply(MDEscape(fmt.Sprintf("So far, %v people have been reported by: @%v", reportCount, reporter.User.UserName)))
-}
-
 func care(message *OctaafMessage) error {
 	msg := "¯\\_(ツ)_/¯"
 
