@@ -3,7 +3,7 @@ package web
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
-	"github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/gobuffalo/pop"
 )
 

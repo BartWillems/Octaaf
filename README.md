@@ -13,7 +13,6 @@ A telegram bot written in Go
 * /iasip - Get a random It's Always Sunny In Philadelphia quote
 * /img - Search possible NSFW images
 * /img_sfw - Search possible SFW images
-* /issues - Show a list of open issues
 * /kaleaderboard - Show the kaleets or blazers
 * /kalirank - Show the kali rankings
 * /m8ball - Let fate decide your future
@@ -22,7 +21,6 @@ A telegram bot written in Go
 * /pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
 * /quote - Get or store random kali quotes
 * /remind_me - Remind me in a given time
-* /reported - Get the reported count
 * /roll - Praise kek
 * /search - Search stuff on DuckDuckGo with safe search on
 * /search_nsfw - Search dirty stuff on DuckDuckGo

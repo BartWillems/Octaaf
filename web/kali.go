@@ -5,6 +5,7 @@ import (
 
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func quote(c *gin.Context) {
