@@ -124,6 +124,7 @@ func handle(m *tgbotapi.Message) {
 
 func sendGlobal(message string) {
 	msg := tgbotapi.NewMessage(settings.Telegram.KaliID, message)
+	msg.ParseMode = "markdown"
 	_, err := Octaaf.Send(msg)
 
 	if err != nil {
