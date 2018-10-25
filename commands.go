@@ -529,14 +529,14 @@ func iasip(message *OctaafMessage) error {
 }
 
 func care(message *OctaafMessage) error {
-	msg := `¯\\_(ツ)_/¯`
+	msg := MDEscape(`¯\_(ツ)_/¯`)
 
 	reply := message.ReplyToMessage
 	if reply == nil {
-		return message.Reply(MDEscape(msg))
+		return message.Reply(msg)
 	}
 
-	return message.ReplyTo(MDEscape(msg), reply.MessageID)
+	return message.ReplyTo(msg, reply.MessageID)
 }
 
 func pollentiek(message *OctaafMessage) error {
