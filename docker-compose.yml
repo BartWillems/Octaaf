@@ -2,7 +2,7 @@ version: "2"
 
 services:
   octaaf:
-    image: golang:1.10
+    image: golang:1.11.1
     volumes:
         - .:/go/src/octaaf
     working_dir: /go/src/octaaf
