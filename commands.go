@@ -529,7 +529,7 @@ func iasip(message *OctaafMessage) error {
 }
 
 func care(message *OctaafMessage) error {
-	msg := "¯\\_(ツ)_/¯"
+	msg := `¯\\_(ツ)_/¯`
 
 	reply := message.ReplyToMessage
 	if reply == nil {

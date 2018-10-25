@@ -21,7 +21,7 @@ func startReminder(reminder models.Reminder) {
 
 	username, _ := getUserName(reminder.UserID, reminder.ChatID)
 
-	msg := tgbotapi.NewMessage(reminder.ChatID, fmt.Sprintf("@%v%v", username, reminder.Message))
+	msg := tgbotapi.NewMessage(reminder.ChatID, fmt.Sprintf("@%v %v", username, reminder.Message))
 	msg.ReplyToMessageID = reminder.MessageID
 	go Octaaf.Send(msg)
 
