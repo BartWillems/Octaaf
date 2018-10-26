@@ -48,7 +48,9 @@ func initBot() error {
 func handle(m *tgbotapi.Message) {
 	message := &OctaafMessage{
 		m,
-		Tracer.StartSpan("Message Received")}
+		Tracer.StartSpan("Message Received"),
+		true,
+	}
 
 	defer message.Span.Finish()
 	message.Span.SetTag("telegram-group-id", message.Chat.ID)

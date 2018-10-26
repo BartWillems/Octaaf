@@ -529,7 +529,14 @@ func iasip(message *OctaafMessage) error {
 }
 
 func care(message *OctaafMessage) error {
-	msg := MDEscape(`¯\_(ツ)_/¯`)
+	msg := `¯\_(ツ)_/¯`
+
+	// Telegram is broken, so it will always print the wrong amount of backticks
+	// This is why this specific command gets parsed as plaintext
+	message.IsMarkdown = false
+
+	log.Debug(msg)
+	log.Debug(`TEST DINK \ TEST`)
 
 	reply := message.ReplyToMessage
 	if reply == nil {

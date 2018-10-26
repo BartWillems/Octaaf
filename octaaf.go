@@ -7,12 +7,15 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 )
 
+type IsMarkdown bool
+
 // OctaafMessage extends on the tgbotapi Message
 // This is so we can trace the message throughout the application
 // and extend on it with functions
 type OctaafMessage struct {
 	*tgbotapi.Message
-	Span opentracing.Span
+	Span       opentracing.Span
+	IsMarkdown IsMarkdown
 }
 
 func (message *OctaafMessage) Reply(r interface{}) error {
@@ -35,7 +38,9 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 	case string:
 		msg := tgbotapi.NewMessage(message.Chat.ID, resp)
 		msg.ReplyToMessageID = messageID
-		msg.ParseMode = "markdown"
+		if message.IsMarkdown {
+			msg.ParseMode = "markdown"
+		}
 		_, err = Octaaf.Send(msg)
 		span.SetTag("type", "text")
 	case []byte:
