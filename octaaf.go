@@ -7,15 +7,14 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 )
 
-type IsMarkdown bool
-
 // OctaafMessage extends on the tgbotapi Message
 // This is so we can trace the message throughout the application
 // and extend on it with functions
 type OctaafMessage struct {
 	*tgbotapi.Message
-	Span       opentracing.Span
-	IsMarkdown IsMarkdown
+	Span           opentracing.Span
+	IsMarkdown     bool
+	KeyboardCloser bool // When true, close an open keyboard
 }
 
 func (message *OctaafMessage) Reply(r interface{}) error {
@@ -40,6 +39,10 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 		msg.ReplyToMessageID = messageID
 		if message.IsMarkdown {
 			msg.ParseMode = "markdown"
+		}
+
+		if message.KeyboardCloser {
+			msg.ReplyMarkup = tgbotapi.NewRemoveKeyboard(true)
 		}
 		_, err = Octaaf.Send(msg)
 		span.SetTag("type", "text")

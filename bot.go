@@ -49,7 +49,8 @@ func handle(m *tgbotapi.Message) {
 	message := &OctaafMessage{
 		m,
 		Tracer.StartSpan("Message Received"),
-		true,
+		true,  // IsMarkdown
+		false, // KeyboardCloser
 	}
 
 	defer message.Span.Finish()

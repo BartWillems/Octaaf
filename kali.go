@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/dustin/go-humanize/english"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -110,8 +111,20 @@ func setKaliCount() {
 func getKaleaderboard(message *OctaafMessage) error {
 	query := message.CommandArguments()
 	if query != "1337" && query != "420" {
-		return message.Reply("Please specify which kaleaderboard you wish to view. (1337|420)")
+		msg := tgbotapi.NewMessage(message.Chat.ID, message.Text)
+		msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
+			tgbotapi.NewKeyboardButtonRow(
+				tgbotapi.NewKeyboardButton("/"+message.Command()+" 1337"),
+				tgbotapi.NewKeyboardButton("/"+message.Command()+" 420"),
+			),
+		)
+		Octaaf.Send(msg)
+		return nil
 	}
+
+	// Close the keyboard if there is one
+	message.KeyboardCloser = true
+
 	var stats models.KaliStats
 	err := stats.Top(DB, query)
 

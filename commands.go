@@ -167,12 +167,7 @@ func m8Ball(message *OctaafMessage) error {
 }
 
 func sendBodegem(message *OctaafMessage) error {
-	span := message.Span.Tracer().StartSpan(
-		"Fetch Bodegem Map",
-		opentracing.ChildOf(message.Span.Context()),
-	)
 	msg := tgbotapi.NewLocation(message.Chat.ID, 50.8614773, 4.211304)
-	span.Finish()
 	msg.ReplyToMessageID = message.MessageID
 	_, err := Octaaf.Send(msg)
 	return err
