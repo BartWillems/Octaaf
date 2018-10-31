@@ -111,7 +111,7 @@ func setKaliCount() {
 func getKaleaderboard(message *OctaafMessage) error {
 	query := message.CommandArguments()
 	if query != "1337" && query != "420" {
-		msg := tgbotapi.NewMessage(message.Chat.ID, message.Text)
+		msg := tgbotapi.NewMessage(message.Chat.ID, "Please specify which kaleaderboard you wish to view. (1337|420)")
 		msg.ReplyMarkup = tgbotapi.NewReplyKeyboard(
 			tgbotapi.NewKeyboardButtonRow(
 				tgbotapi.NewKeyboardButton("/"+message.Command()+" 1337"),
