@@ -1,8 +1,8 @@
 package main
 
 import (
+	"image"
 	"io/ioutil"
-	"octaaf/trump"
 
 	"github.com/fogleman/gg"
 )
@@ -10,7 +10,7 @@ import (
 // Assets is an in memory store for the assets folder
 type Assets struct {
 	Doubt []byte
-	Trump *gg.Context
+	Trump image.Image
 }
 
 func (a *Assets) Load() error {
@@ -21,7 +21,7 @@ func (a *Assets) Load() error {
 		return err
 	}
 
-	a.Trump, err = trump.LoadOrder("assets/trump.png", settings.Trump.FontPath, settings.Trump.FontSize)
+	a.Trump, err = gg.LoadPNG("assets/trump.png")
 
 	return err
 }
