@@ -24,7 +24,7 @@ func LoadOrder(img image.Image, fontPath string, fontSize float64) gg.Context {
 func Order(img image.Image, fontPath string, fontSize float64, message string) ([]byte, error) {
 	trump := LoadOrder(img, fontPath, fontSize)
 
-	trump.DrawStringWrapped(message, 500, 170, 0.5, 0.5, 160, 1.5, gg.AlignLeft)
+	trump.DrawStringWrapped(message, 420, 150, 0, 0, 170, 1.2, gg.AlignLeft)
 
 	buf := new(bytes.Buffer)
 	err := png.Encode(buf, trump.Image())
