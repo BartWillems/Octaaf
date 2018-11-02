@@ -12,18 +12,20 @@ A telegram bot written in Go
 * /doubt - When in doubt...
 * /iasip - Get a random It's Always Sunny In Philadelphia quote
 * /img - Search possible NSFW images
-* /img_sfw - Search possible SFW images
+* /img\_sfw - Search possible SFW images
 * /kaleaderboard - Show the kaleets or blazers
 * /kalirank - Show the kali rankings
 * /m8ball - Let fate decide your future
 * /more - MORE IMAGES
-* /next_launch - Show the next 5 rocket launches
+* /next\_launch - Show the next 5 rocket launches
 * /pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
+* /presidential\_order - Launch a new presidential order
+* /presidential\_quote - Show a presidential quote
 * /quote - Get or store random kali quotes
-* /remind_me - Remind me in a given time
+* /remind\_me - Remind me in a given time
 * /roll - Praise kek
 * /search - Search stuff on DuckDuckGo with safe search on
-* /search_nsfw - Search dirty stuff on DuckDuckGo
+* /search\_nsfw - Search dirty stuff on DuckDuckGo
 * /stallman - I'd just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux.
 * /weather - Get the weather of a city
 * /what - Explains what something is

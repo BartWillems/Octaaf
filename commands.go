@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"octaaf/models"
 	"octaaf/scrapers"
+	"octaaf/trump"
 	"reflect"
 	"strconv"
 	"strings"
@@ -393,17 +394,31 @@ func quote(message *OctaafMessage) error {
 			"Loading username...",
 			opentracing.ChildOf(message.Span.Context()),
 		)
-		username, userErr := getUserName(quote.UserID, message.Chat.ID)
+
+		user, userErr := getUser(quote.UserID, message.Chat.ID)
 
 		userSpan.Finish()
 
 		if userErr != nil {
-			log.Errorf("Unable to find the username for id '%v' : %v", quote.UserID, userErr)
+			log.Errorf("Unable to find the user for id '%v' : %v", quote.UserID, userErr)
 			userSpan.SetTag("error", userErr)
 			return message.Reply(quote.Quote)
 		}
+
+		if message.Command() == "presidential_quote" {
+			msg := fmt.Sprintf(`"%v"`, quote.Quote)
+			msg += fmt.Sprintf("\n    ~@%v", user.User.String())
+			img, err := trump.Order(assets.Trump, msg)
+
+			if err != nil {
+				log.Errorf("Presidential quote error: %v", err)
+				return message.Reply("Unable to call send a presidential quote.")
+			}
+			return message.Reply(img)
+		}
+
 		msg := fmt.Sprintf("\"%v\"", Markdown(quote.Quote, mdquote))
-		msg += fmt.Sprintf(" \n    ~@%v", username)
+		msg += fmt.Sprintf(" \n    ~@%v", MDEscape(user.User.String()))
 		return message.Reply(msg)
 	}
 
@@ -592,4 +607,27 @@ func pollentiek(message *OctaafMessage) error {
 	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", Markdown(saying, mdbold))
 
 	return message.Reply(msg)
+}
+
+func presidential_order(message *OctaafMessage) error {
+	if message.CommandArguments() == "" {
+		return message.Reply("Please provide a presidential order.")
+	}
+
+	span := message.Span.Tracer().StartSpan(
+		"Writing presidential order",
+		opentracing.ChildOf(message.Span.Context()),
+	)
+
+	img, err := trump.Order(assets.Trump, message.CommandArguments())
+
+	span.Finish()
+
+	if err != nil {
+		log.Errorf("Unable to load image to buffer: %v", err)
+		span.SetTag("error", err)
+		return message.Reply("Unable to order dink")
+	}
+
+	return message.Reply(img)
 }

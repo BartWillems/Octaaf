@@ -12,6 +12,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/fatih/structs v1.1.0
+	github.com/fogleman/gg v1.1.0
 	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7 // indirect
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-redis/cache v6.3.5+incompatible
@@ -25,8 +26,8 @@ require (
 	github.com/gobuffalo/plush v3.7.21+incompatible // indirect
 	github.com/gobuffalo/pop v4.8.5+incompatible
 	github.com/gobuffalo/uuid v2.0.5+incompatible
-	github.com/gobuffalo/validate v2.0.3+incompatible
 	github.com/gofrs/uuid v3.1.0+incompatible // indirect
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.2.0+incompatible // indirect
 	github.com/jmoiron/sqlx v1.2.0 // indirect
@@ -56,6 +57,7 @@ require (
 	github.com/vmihailenco/msgpack v4.0.0+incompatible
 	go.uber.org/atomic v1.3.2 // indirect
 	golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e // indirect
+	golang.org/x/image v0.0.0-20181102021609-63626fb251ce // indirect
 	golang.org/x/net v0.0.0-20181023162649-9b4f9f5ad519 // indirect
 	golang.org/x/sys v0.0.0-20181023152157-44b849a8bc13 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect

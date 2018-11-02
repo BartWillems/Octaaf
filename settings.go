@@ -11,6 +11,7 @@ type Settings struct {
 	Redis    redis
 	Google   google
 	Jaeger   jaeger
+	Trump    trumpFont
 }
 
 type telegram struct {
@@ -35,6 +36,11 @@ type google struct {
 
 type jaeger struct {
 	ServiceName string `toml:"service_name"`
+}
+
+type trumpFont struct {
+	FontPath string  `toml:"font_path"`
+	FontSize float64 `toml:"font_size"`
 }
 
 // Load parses the toml file and returns a Settings struct

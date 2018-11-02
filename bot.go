@@ -94,7 +94,7 @@ func handle(m *tgbotapi.Message) {
 			what(message)
 		case "xkcd":
 			xkcd(message)
-		case "quote":
+		case "quote", "presidential_quote":
 			quote(message)
 		case "next_launch":
 			nextLaunch(message)
@@ -110,6 +110,8 @@ func handle(m *tgbotapi.Message) {
 			care(message)
 		case "pollentiek":
 			pollentiek(message)
+		case "presidential_order":
+			presidential_order(message)
 		}
 	}
 	if message.MessageID%1e5 == 0 {
