@@ -408,8 +408,7 @@ func quote(message *OctaafMessage) error {
 		if message.Command() == "presidential_quote" {
 			msg := fmt.Sprintf(`"%v"`, quote.Quote)
 			msg += fmt.Sprintf("\n    ~@%v", user.User.String())
-			// img, err := trump.Order(assets.Trump, msg)
-			img, err := trump.Order(assets.Trump, settings.Trump.FontPath, settings.Trump.FontSize, msg)
+			img, err := trump.Order(assets.Trump, &settings.Trump, msg)
 
 			if err != nil {
 				log.Errorf("Presidential quote error: %v", err)
@@ -620,7 +619,7 @@ func presidential_order(message *OctaafMessage) error {
 		opentracing.ChildOf(message.Span.Context()),
 	)
 
-	img, err := trump.Order(assets.Trump, settings.Trump.FontPath, settings.Trump.FontSize, message.CommandArguments())
+	img, err := trump.Order(assets.Trump, &settings.Trump, message.CommandArguments())
 
 	span.Finish()
 

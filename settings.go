@@ -1,6 +1,10 @@
 package main
 
-import "github.com/BurntSushi/toml"
+import (
+	"octaaf/trump"
+
+	"github.com/BurntSushi/toml"
+)
 
 type Settings struct {
 	Environment string
@@ -11,7 +15,7 @@ type Settings struct {
 	Redis    redis
 	Google   google
 	Jaeger   jaeger
-	Trump    trumpFont
+	Trump    trump.TrumpConfig
 }
 
 type telegram struct {
@@ -36,11 +40,6 @@ type google struct {
 
 type jaeger struct {
 	ServiceName string `toml:"service_name"`
-}
-
-type trumpFont struct {
-	FontPath string  `toml:"font_path"`
-	FontSize float64 `toml:"font_size"`
 }
 
 // Load parses the toml file and returns a Settings struct
