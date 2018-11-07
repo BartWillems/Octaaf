@@ -26,7 +26,7 @@ func (o *OctaafSocket) Listen() (net.Listener, error) {
 	listener, err := net.Listen("unix", o.Path)
 
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	for {

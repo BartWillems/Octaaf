@@ -20,7 +20,6 @@ func main() {
 
 	if input.Reload {
 		log.Fatal("Not implemented yet")
-		os.Exit(0)
 	}
 
 	if _, err := settings.Load(); err != nil {
