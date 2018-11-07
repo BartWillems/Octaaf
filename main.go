@@ -16,6 +16,13 @@ const GitUri = "https://gitlab.com/BartWillems/octaaf"
 
 func main() {
 
+	input := NewInput()
+
+	if input.Reload {
+		log.Fatal("Not implemented yet")
+		os.Exit(0)
+	}
+
 	if _, err := settings.Load(); err != nil {
 		log.Fatal("Unable to load/parse the settings file: ", err)
 	}
