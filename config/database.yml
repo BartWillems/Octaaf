@@ -3,10 +3,10 @@
 # This is legacy because of gobuffalo/pop's hard requirement on this file
 
 development:
-  url: {{envOr "DATABASE_URL" "postgres://username:password@127.0.0.1:5432/octaaf_db_name?sslmode=disable" }}
+  url: {{ env "DATABASE_URL" }}
 
 test:
-  url: {{envOr "DATABASE_URL" "postgres://username:password@127.0.0.1:5432/octaaf_db_name?sslmode=disable" }}
+  url: {{ env "DATABASE_URL" }}
 
 production:
-  url: {{envOr "DATABASE_URL" "postgres://username:password@127.0.0.1:5432/octaaf_db_name?sslmode=disable" }}
+  url: {{ env "DATABASE_URL" }}
