@@ -1,6 +1,9 @@
 package web
 
 import (
+	"image"
+	"octaaf/trump"
+
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -11,6 +14,8 @@ type Connections struct {
 	Octaaf      *tgbotapi.BotAPI
 	Postgres    *pop.Connection
 	Redis       *redis.Client
+	TrumpCfg    *trump.TrumpConfig
+	Trump       *image.Image
 	KaliID      int64
 	Environment string
 }
@@ -33,6 +38,7 @@ func New(c Connections) *gin.Engine {
 	kali := api.Group("/kali")
 	{
 		kali.GET("/quote", quote)
+		kali.GET("/quote/presidential", presidentialQuote)
 	}
 
 	return router

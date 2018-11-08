@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"os"
 
 	"octaaf/web"
 
@@ -20,6 +21,10 @@ func main() {
 
 	if input.Reload {
 		log.Fatal("Not implemented yet")
+	}
+
+	if input.ShouldQuit {
+		os.Exit(0)
 	}
 
 	if _, err := settings.Load(); err != nil {
@@ -67,6 +72,8 @@ func main() {
 			Redis:       Redis,
 			KaliID:      settings.Telegram.KaliID,
 			Environment: settings.Environment,
+			TrumpCfg:    &settings.Trump,
+			Trump:       &assets.Trump,
 		})
 		err := router.Run()
 		if err != nil {

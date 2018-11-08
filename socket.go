@@ -1,57 +1,43 @@
 package main
 
 import (
-	"fmt"
-	"net"
-	"os"
-
+	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
 
 type OctaafSocket struct {
-	Path string
+	*gin.Engine
 }
 
 func NewOctaafSocket() *OctaafSocket {
-	socketPath := fmt.Sprintf("%s/octaaf.sock", os.TempDir())
-
-	log.Infof("Creating a unix socket at %s", socketPath)
-
-	return &OctaafSocket{
-		Path: socketPath,
+	router := gin.Default()
+	o := &OctaafSocket{router}
+	api := o.Group("/api/v1")
+	{
+		api.POST("/reload", o.Reload)
 	}
+
+	return o
 }
 
-func (o *OctaafSocket) Listen() (net.Listener, error) {
-	listener, err := net.Listen("unix", o.Path)
+func (o *OctaafSocket) Listen() error {
+	return o.Run("127.0.0.1:8127")
+}
+
+func (o *OctaafSocket) Reload(c *gin.Context) {
+	_, err := settings.Load()
+
+	status := 200
+	result := gin.H{
+		"message": "Settings reloaded.",
+	}
 
 	if err != nil {
-		return nil, err
+		status = 500
+		result["message"] = err
 	}
 
-	for {
-		fd, err := listener.Accept()
-
-		if err != nil {
-			log.Errorf("Unable to handle socket request: %s", err)
-			continue
-		}
-
-		go func() {
-			buf := make([]byte, 512)
-
-			n, err := fd.Read(buf)
-
-			if err != nil {
-				log.Errorf("Unable to handle socket request: %s", err)
-				return
-			}
-
-			data := buf[0:n]
-
-			log.Debugf("Received data: %s", string(data))
-		}()
-	}
+	c.JSON(status, result)
 }
 
 // SocketWriter writes messages to the local octaaf socket

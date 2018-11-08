@@ -7,15 +7,23 @@ import (
 
 // Input holds all the user provided flags
 type Input struct {
-	Reload bool `json:"reload"`
+	Reload     bool `json:"reload"`
+	ShouldQuit bool `json:"should_quit"`
 }
 
 // NewInput returns an Input instance containing the user provided flags
 func NewInput() *Input {
-	reload := flag.Bool("reload", false, "Reload the settings without downtime.")
+	input := &Input{}
+	input.ShouldQuit = false
+	input.Reload = *flag.Bool("reload", false, "Reload the settings without downtime.")
+
+	if input.Reload {
+		input.ShouldQuit = true
+	}
+
 	flag.Parse()
 
-	return &Input{Reload: *reload}
+	return input
 }
 
 // String returns the json encoded input parameters

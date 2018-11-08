@@ -23,3 +23,4 @@ service_name = "octaaf"
 [trump]
 font_path = "/usr/share/fonts/TTF/Roboto-Regular.ttf"
 font_size = 18.0
+line_height = 1.3
