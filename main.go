@@ -16,11 +16,14 @@ var assets Assets
 const GitUri = "https://gitlab.com/BartWillems/octaaf"
 
 func main() {
-
 	input := NewInput()
 
 	if input.Reload {
-		log.Fatal("Not implemented yet")
+		err := input.TriggerReload()
+
+		if err != nil {
+			log.Errorf("Unable to reload settings: %v", err)
+		}
 	}
 
 	if input.ShouldQuit {
@@ -66,6 +69,7 @@ func main() {
 	defer cron.Stop()
 
 	go func() {
+		log.Info("Starting the external api...")
 		router := web.New(web.Connections{
 			Octaaf:      Octaaf,
 			Postgres:    DB,
@@ -77,7 +81,17 @@ func main() {
 		})
 		err := router.Run()
 		if err != nil {
-			log.Errorf("Gin creation error: %v", err)
+			log.Errorf("External API creation error: %v", err)
+		}
+	}()
+
+	go func() {
+		log.Info("Starting the internal API...")
+		socket := NewOctaafSocket()
+		err := socket.Listen()
+
+		if err != nil {
+			log.Errorf("Internal API creation error: %v", err)
 		}
 	}()
 
