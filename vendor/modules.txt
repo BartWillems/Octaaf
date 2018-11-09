@@ -14,6 +14,8 @@ github.com/cockroachdb/cockroach-go/crdb
 github.com/codahale/hdrhistogram
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
+# github.com/disintegration/imaging v1.5.0
+github.com/disintegration/imaging
 # github.com/dustin/go-humanize v1.0.0
 github.com/dustin/go-humanize
 github.com/dustin/go-humanize/english
@@ -199,11 +201,14 @@ github.com/vmihailenco/msgpack/codes
 # golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/image v0.0.0-20181102021609-63626fb251ce
+golang.org/x/image/bmp
+golang.org/x/image/tiff
 golang.org/x/image/draw
 golang.org/x/image/font
 golang.org/x/image/font/basicfont
 golang.org/x/image/math/f64
 golang.org/x/image/math/fixed
+golang.org/x/image/tiff/lzw
 # golang.org/x/net v0.0.0-20181023162649-9b4f9f5ad519
 golang.org/x/net/context
 golang.org/x/net/html

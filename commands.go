@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"image"
+	"image/png"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -14,6 +17,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/disintegration/imaging"
 	humanize "github.com/dustin/go-humanize"
 	"github.com/go-redis/cache"
 	"github.com/go-telegram-bot-api/telegram-bot-api"
@@ -337,12 +341,35 @@ func sendImage(message *OctaafMessage) error {
 
 		defer res.Body.Close()
 
-		img, err := ioutil.ReadAll(res.Body)
+		var img []byte
 
-		if err != nil {
-			imgSpan.SetTag("error", err)
-			log.Errorf("Unable to load image %v; error: %v", url, err)
-			continue
+		if message.Command() == "img_censored" {
+			log.Debug("Censoring image")
+			src, _, err := image.Decode(res.Body)
+
+			if err != nil {
+				imgSpan.SetTag("error", err)
+				continue
+			}
+
+			img_blurred := imaging.Blur(src, 15)
+			buf := new(bytes.Buffer)
+			err = png.Encode(buf, img_blurred.SubImage(img_blurred.Bounds()))
+
+			if err != nil {
+				imgSpan.SetTag("error", err)
+				continue
+			}
+
+			img = buf.Bytes()
+		} else {
+			img, err = ioutil.ReadAll(res.Body)
+
+			if err != nil {
+				imgSpan.SetTag("error", err)
+				log.Errorf("Unable to load image %v; error: %v", url, err)
+				continue
+			}
 		}
 
 		err = message.Reply(img)

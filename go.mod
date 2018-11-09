@@ -9,6 +9,7 @@ require (
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/cockroachdb/cockroach-go v0.0.0-20181001143604-e0a95dfd547c // indirect
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
+	github.com/disintegration/imaging v1.5.0
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/fatih/structs v1.1.0

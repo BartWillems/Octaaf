@@ -78,7 +78,7 @@ func handle(m *tgbotapi.Message) {
 			sendBodegem(message)
 		case "changelog":
 			changelog(message)
-		case "img", "img_sfw", "more":
+		case "img", "img_sfw", "more", "img_censored":
 			sendImage(message)
 		case "stallman":
 			sendStallman(message)
