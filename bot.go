@@ -28,8 +28,8 @@ func initBot() error {
 	log.Info("Authorized on account ", Octaaf.Self.UserName)
 
 	if settings.Environment == "production" {
-		sendGlobal(fmt.Sprintf("I'm up and running! 👌\nRunning with version: %v", settings.Version))
-		sendGlobal(fmt.Sprintf("Check out the changelog over here: \n%v/tags/%v", GitUri, settings.Version))
+		sendGlobal(fmt.Sprintf("I'm up and running! 👌\nRunning with version: %v", Version))
+		sendGlobal(fmt.Sprintf("Check out the changelog over here: \n%v/tags/%v", GitUri, Version))
 
 		c := make(chan os.Signal, 2)
 		signal.Notify(c, os.Interrupt, syscall.SIGTERM)

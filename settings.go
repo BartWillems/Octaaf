@@ -8,7 +8,6 @@ import (
 
 type Settings struct {
 	Environment string
-	Version     string
 
 	Telegram telegram
 	Database database

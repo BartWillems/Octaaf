@@ -30,11 +30,11 @@ import (
 )
 
 func changelog(message *OctaafMessage) error {
-	if settings.Version == "" {
+	if Version == "" {
 		return message.Reply("Current version not found, check the changelog here: " + GitUri + "/tags")
 	}
 
-	return message.Reply(fmt.Sprintf("%v/tags/%v", GitUri, settings.Version))
+	return message.Reply(fmt.Sprintf("%v/tags/%v", GitUri, Version))
 }
 
 func all(message *OctaafMessage) error {

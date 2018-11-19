@@ -16,13 +16,13 @@ pipeline {
         stage('Build') {
             agent {
                 docker { 
-                    image 'golang:1.11.1'
+                    image 'golang:1.11.2'
                     args '--user=root'
                 }
             }
             steps {
                 sh 'go test -mod vendor'
-                sh 'go build -mod vendor -ldflags "-s -w" -o octaaf'
+                sh "go build -mod vendor -ldflags '-s -w -X main.Version=$VERSION' -o octaaf"
                 stash includes: 'octaaf', name: 'octaaf'
             }
         }

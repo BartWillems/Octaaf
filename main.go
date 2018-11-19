@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"os"
 
 	"octaaf/web"
@@ -12,6 +11,9 @@ import (
 
 var settings Settings
 var assets Assets
+
+// Version is a git tag that get's added at compile time
+var Version string
 
 const GitUri = "https://gitlab.com/BartWillems/octaaf"
 
@@ -33,8 +35,6 @@ func main() {
 	if _, err := settings.Load(); err != nil {
 		log.Fatal("Unable to load/parse the settings file: ", err)
 	}
-
-	settings.Version = loadVersion()
 
 	if settings.Environment != "production" {
 		log.SetLevel(log.DebugLevel)
@@ -114,15 +114,4 @@ func main() {
 
 		go handle(update.Message)
 	}
-}
-
-func loadVersion() string {
-	bytes, err := ioutil.ReadFile("assets/version")
-
-	if err != nil {
-		log.Errorf("Error while loading version string: %v", err)
-		return ""
-	}
-	log.Infof("Loaded version %v", string(bytes))
-	return string(bytes)
 }
