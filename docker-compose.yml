@@ -6,7 +6,7 @@ services:
     volumes:
         - .:/go/src/octaaf
     working_dir: /go/src/octaaf
-    command: ./init.sh
+    command: go run octaaf
     network_mode: host
     ports:
       - "8080:8080"

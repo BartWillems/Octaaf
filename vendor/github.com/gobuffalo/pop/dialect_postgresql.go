@@ -7,18 +7,23 @@ import (
 	"os/exec"
 	"sync"
 
-	"github.com/jmoiron/sqlx"
-
 	"github.com/gobuffalo/fizz"
 	"github.com/gobuffalo/fizz/translators"
 	"github.com/gobuffalo/pop/columns"
 	"github.com/gobuffalo/pop/logging"
+	"github.com/jmoiron/sqlx"
 	"github.com/markbates/going/defaults"
 	"github.com/pkg/errors"
 )
 
+const namePostgreSQL = "postgres"
+const portPostgreSQL = "5432"
+
 func init() {
-	AvailableDialects = append(AvailableDialects, "postgres")
+	AvailableDialects = append(AvailableDialects, namePostgreSQL)
+	dialectSynonyms["postgresql"] = namePostgreSQL
+	dialectSynonyms["pg"] = namePostgreSQL
+	finalizer[namePostgreSQL] = finalizerPostgreSQL
 }
 
 var _ dialect = &postgresql{}
@@ -30,7 +35,7 @@ type postgresql struct {
 }
 
 func (p *postgresql) Name() string {
-	return "postgresql"
+	return namePostgreSQL
 }
 
 func (p *postgresql) Details() *ConnectionDetails {
@@ -46,7 +51,12 @@ func (p *postgresql) Create(s store, model *Model, cols columns.Columns) error {
 			ID int `db:"id"`
 		}{}
 		w := cols.Writeable()
-		query := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s) returning id", model.TableName(), w.String(), w.SymbolizedString())
+		var query string
+		if len(w.Cols) > 0 {
+			query = fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s) returning id", model.TableName(), w.String(), w.SymbolizedString())
+		} else {
+			query = fmt.Sprintf("INSERT INTO %s DEFAULT VALUES returning id", model.TableName())
+		}
 		log(logging.SQL, query)
 		stmt, err := s.PrepareNamed(query)
 		if err != nil {
@@ -195,6 +205,10 @@ func newPostgreSQL(deets *ConnectionDetails) dialect {
 		mu:                sync.Mutex{},
 	}
 	return cd
+}
+
+func finalizerPostgreSQL(cd *ConnectionDetails) {
+	cd.Port = defaults.String(cd.Port, portPostgreSQL)
 }
 
 const pgTruncate = `DO
