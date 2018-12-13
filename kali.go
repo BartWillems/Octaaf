@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"octaaf/models"
 	"strconv"
 	"strings"
@@ -146,4 +147,14 @@ func getKaleaderboard(message *OctaafMessage) error {
 	}
 
 	return message.Reply(response)
+}
+
+func checkIn() {
+	rand.Seed(time.Now().UnixNano())
+	// Generate a random time moment
+	randomTime, _ := time.ParseDuration(fmt.Sprintf("%vs", rand.Intn(24*3600)))
+	time.Sleep(randomTime)
+	sendGlobal("RANDOM CHECKIN!!!! T-60s")
+	time.Sleep(60 * time.Second)
+	sendGlobal("Checking complete.")
 }
