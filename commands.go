@@ -172,10 +172,7 @@ func m8Ball(message *OctaafMessage) error {
 }
 
 func sendBodegem(message *OctaafMessage) error {
-	msg := tgbotapi.NewLocation(message.Chat.ID, 50.8614773, 4.211304)
-	msg.ReplyToMessageID = message.MessageID
-	_, err := Octaaf.Send(msg)
-	return err
+	return message.Reply("This place does not exist 🙈🙈🙈🤔🤔�")
 }
 
 func where(message *OctaafMessage) error {
