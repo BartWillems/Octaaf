@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"octaaf/markdown"
 	"octaaf/models"
 	"octaaf/scrapers"
 	"octaaf/trump"
@@ -217,7 +218,7 @@ func what(message *OctaafMessage) error {
 		return message.Reply("That is forbidden knowledge.")
 	}
 
-	return message.Reply(fmt.Sprintf("%v: %v", Markdown(query, mdbold), result))
+	return message.Reply(fmt.Sprintf("%v: %v", markdown.Bold(query), result))
 }
 
 func weather(message *OctaafMessage) error {
@@ -251,7 +252,7 @@ func search(message *OctaafMessage) error {
 	searchSpan.Finish()
 
 	if found {
-		return message.Reply(MDEscape(url))
+		return message.Reply(markdown.Escape(url))
 	}
 	return message.Reply("I found nothing 😱😱😱")
 }
@@ -444,8 +445,8 @@ func quote(message *OctaafMessage) error {
 			return message.Reply(img)
 		}
 
-		msg := fmt.Sprintf("\"%v\"", Markdown(quote.Quote, mdquote))
-		msg += fmt.Sprintf(" \n    ~@%v", MDEscape(user.User.String()))
+		msg := fmt.Sprintf("\"%v\"", markdown.Quote(quote.Quote))
+		msg += fmt.Sprintf(" \n    ~@%v", markdown.Escape(user.User.String()))
 		return message.Reply(msg)
 	}
 
@@ -506,18 +507,18 @@ func nextLaunch(message *OctaafMessage) error {
 		whenStr := launch.Get("net").String()
 		when, err := time.Parse(layout, whenStr)
 
-		msg += fmt.Sprintf("\n*%v*: %v", index+1, MDEscape(launch.Get("name").String()))
+		msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Escape(launch.Get("name").String()))
 
 		if err != nil {
-			msg += fmt.Sprintf("\n	  %v", Markdown(whenStr, mdcursive))
+			msg += fmt.Sprintf("\n	  %v", markdown.Cursive(whenStr))
 		} else {
-			msg += fmt.Sprintf("\n	  %v", Markdown(humanize.Time(when), mdcursive))
+			msg += fmt.Sprintf("\n	  %v", markdown.Cursive(humanize.Time(when)))
 		}
 
 		vods := launch.Get("vidURLs").Array()
 
 		if len(vods) > 0 {
-			msg += "\n    " + MDEscape(vods[0].String())
+			msg += "\n    " + markdown.Escape(vods[0].String())
 		}
 	}
 
@@ -625,13 +626,13 @@ func pollentiek(message *OctaafMessage) error {
 	rand.Seed(time.Now().UnixNano())
 	orientation := keys[rand.Intn(len(keys))].String()
 
-	msg := fmt.Sprintf("You are a fullblooded %v.\n", Markdown(orientation, mdbold))
+	msg := fmt.Sprintf("You are a fullblooded %v.\n", markdown.Bold(orientation))
 
 	rand.Seed(time.Now().UnixNano())
 	randomSayIndex := rand.Intn(len(orientations[orientation]))
 	saying := orientations[orientation][randomSayIndex]
 
-	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", Markdown(saying, mdbold))
+	msg += fmt.Sprintf("Don't forget to remind everyone around you by proclaiming at least once a day:\n\n%s", markdown.Bold(saying))
 
 	return message.Reply(msg)
 }

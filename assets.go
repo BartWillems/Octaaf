@@ -13,6 +13,7 @@ type Assets struct {
 	Trump image.Image
 }
 
+// Load all the assets in memory
 func (a *Assets) Load() error {
 	var err error
 	a.Doubt, err = ioutil.ReadFile("assets/doubt.jpg")

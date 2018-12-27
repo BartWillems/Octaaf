@@ -17,10 +17,12 @@ type OctaafMessage struct {
 	KeyboardCloser bool // When true, close an open keyboard
 }
 
+// Reply to the current message
 func (message *OctaafMessage) Reply(r interface{}) error {
 	return message.ReplyTo(r, message.MessageID)
 }
 
+// ReplyTo sends a reply to a specific message ID
 func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 
 	span := message.Span.Tracer().StartSpan(

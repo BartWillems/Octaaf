@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"octaaf/markdown"
 	"os"
 	"os/signal"
 	"syscall"
@@ -165,5 +166,5 @@ func getUserName(userID int, chatID int64) (string, error) {
 		return "", err
 	}
 
-	return MDEscape(username), nil
+	return markdown.Escape(username), nil
 }

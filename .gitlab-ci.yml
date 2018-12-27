@@ -13,7 +13,7 @@ build:
       - octaaf
     expire_in: 1 week
   script:
-    - go test -mod vendor
+    - go test -mod vendor ./...
     - go build -mod vendor -ldflags '-s -w -X main.Version=${CI_COMMIT_TAG}' -o octaaf
 
 deploy:
