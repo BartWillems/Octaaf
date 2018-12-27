@@ -1,8 +1,6 @@
 package main
 
 import (
-	"os"
-
 	"octaaf/web"
 
 	"github.com/go-telegram-bot-api/telegram-bot-api"
@@ -18,19 +16,6 @@ var Version string
 const GitUri = "https://gitlab.com/BartWillems/octaaf"
 
 func main() {
-	input := NewInput()
-
-	if input.Reload {
-		err := input.TriggerReload()
-
-		if err != nil {
-			log.Errorf("Unable to reload settings: %v", err)
-		}
-	}
-
-	if input.ShouldQuit {
-		os.Exit(0)
-	}
 
 	if _, err := settings.Load(); err != nil {
 		log.Fatal("Unable to load/parse the settings file: ", err)
