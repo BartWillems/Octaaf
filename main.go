@@ -70,16 +70,6 @@ func main() {
 		}
 	}()
 
-	go func() {
-		log.Info("Starting the internal API...")
-		socket := NewOctaafSocket()
-		err := socket.Listen()
-
-		if err != nil {
-			log.Errorf("Internal API creation error: %v", err)
-		}
-	}()
-
 	closer := initJaeger("octaaf")
 	defer closer.Close()
 
