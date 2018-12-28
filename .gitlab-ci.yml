@@ -25,14 +25,10 @@ deploy:
     - build
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker pull ${CONTAINER_IMAGE}:latest || true
-    - docker build \
-      --cache-from ${CONTAINER_IMAGE}:latest \
-      --tag ${CONTAINER_IMAGE}:${CI_COMMIT_TAG} \
-      --tag ${CONTAINER_IMAGE}:latest \
-      .
-    - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_TAG}
-    - docker push ${CONTAINER_IMAGE}:latest
+    - docker pull "${CONTAINER_IMAGE}:latest" || true
+    - docker build --cache-from "${CONTAINER_IMAGE}:latest" --tag "${CONTAINER_IMAGE}:${CI_COMMIT_TAG}" --tag "${CONTAINER_IMAGE}:latest" .
+    - docker push "${CONTAINER_IMAGE}:${CI_COMMIT_TAG}"
+    - docker push "${CONTAINER_IMAGE}:latest"
   only:
     variables:
       - $CI_COMMIT_TAG =~ /^release-.*$/

@@ -9,7 +9,7 @@ ENV ENVIRONMENT="development" \
     JAEGER_SERVICE_NAME="octaaf" \
     TRUMP_FONT_PATH="/usr/share/fonts/truetype/ubuntu/Ubuntu-LI.ttf"
 
-RUN apt-update \
+RUN apt update \
     && apt install -y fonts-ubuntu \
     && apt clean
 
