@@ -45,7 +45,7 @@ code_quality:
       "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
   artifacts:
     reports:
-      codequality: octaaf-code-quality-report.json
+      codequality: gl-code-quality-report.json
 
 deploy-unstable:
   stage: deploy
