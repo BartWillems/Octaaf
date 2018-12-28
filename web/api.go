@@ -14,7 +14,7 @@ type Connections struct {
 	Octaaf      *tgbotapi.BotAPI
 	Postgres    *pop.Connection
 	Redis       *redis.Client
-	TrumpCfg    *trump.TrumpConfig
+	TrumpCfg    *trump.Config
 	Trump       *image.Image
 	KaliID      int64
 	Environment string

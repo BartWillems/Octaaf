@@ -18,7 +18,7 @@ type Settings struct {
 	Redis    redis
 	Google   google
 	Jaeger   jaeger
-	Trump    trump.TrumpConfig
+	Trump    trump.Config
 }
 
 type telegram struct {
