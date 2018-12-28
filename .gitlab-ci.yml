@@ -21,6 +21,23 @@ build:
   script:
     - go build -mod vendor -ldflags '-s -w -X main.Version=${CI_COMMIT_TAG}' -o octaaf
 
+code_quality:
+  stage: build
+  image: docker:stable
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+    - docker run
+      --env SOURCE_CODE="$PWD"
+      --volume "$PWD":/code
+      --volume /var/run/docker.sock:/var/run/docker.sock
+      "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
+  artifacts:
+    reports:
+      codequality: octaaf-code-quality-report.json
+
 deploy-unstable:
   stage: deploy
   image: docker:stable
