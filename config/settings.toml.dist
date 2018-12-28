@@ -3,8 +3,6 @@ environment = "development"
 [telegram]
 api_key = ""
 kali_id = 0
-reporter_id = 0
-moderator_id = 0
 
 [database]
 uri = "postgres://octaaf:@127.0.0.1:5432/octaaf_development?sslmode=disable"

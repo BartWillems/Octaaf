@@ -22,9 +22,8 @@ type Settings struct {
 }
 
 type telegram struct {
-	APIKEY     string `toml:"api_key" env:"TELEGRAM_API_KEY"`
-	KaliID     int64  `toml:"kali_id" env:"KALI_ID"`
-	ReporterID int    `toml:"reporter_id" env:"REPORTER_ID"`
+	APIKEY string `toml:"api_key" env:"TELEGRAM_API_KEY"`
+	KaliID int64  `toml:"kali_id" env:"KALI_ID"`
 }
 
 type database struct {
