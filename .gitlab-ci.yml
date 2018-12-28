@@ -29,8 +29,7 @@ deploy:
     - docker build \
       --cache-from ${CONTAINER_IMAGE}:latest \
       --tag ${CONTAINER_IMAGE}:${CI_COMMIT_TAG} \
-      --tag ${CONTAINER_IMAGE}:latest \
-      --label version=$(git describe --long) \
+      --tag ${CONTAINER_IMAGE}:latest
       .
     - docker push ${CONTAINER_IMAGE}:${CI_COMMIT_TAG}
     - docker push ${CONTAINER_IMAGE}:latest
