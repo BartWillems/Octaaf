@@ -11,9 +11,9 @@ import (
 
 // TrumpConfig is the configuration for the fonts & text alignments
 type TrumpConfig struct {
-	FontPath   string  `toml:"font_path"`
-	FontSize   float64 `toml:"font_size"`
-	LineHeight float64 `toml:"line_height"`
+	FontPath   string  `toml:"font_path" mapstructure:"font_path"`
+	FontSize   float64 `toml:"font_size" mapstructure:"font_size"`
+	LineHeight float64 `toml:"line_height" mapstructure:"line_height"`
 }
 
 func LoadOrder(img image.Image, cfg *TrumpConfig) gg.Context {

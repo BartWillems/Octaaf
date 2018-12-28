@@ -13,11 +13,11 @@ var assets Assets
 // Version is a git tag that get's added at compile time
 var Version string
 
-const GitUri = "https://gitlab.com/BartWillems/octaaf"
+// GitURI is the URI to the current git repository
+const GitURI = "https://gitlab.com/BartWillems/octaaf"
 
 func main() {
-
-	if _, err := settings.Load(); err != nil {
+	if err := settings.Load(); err != nil {
 		log.Fatal("Unable to load/parse the settings file: ", err)
 	}
 
@@ -64,7 +64,7 @@ func main() {
 			TrumpCfg:    &settings.Trump,
 			Trump:       &assets.Trump,
 		})
-		err := router.Run()
+		err = router.Run()
 		if err != nil {
 			log.Errorf("External API creation error: %v", err)
 		}

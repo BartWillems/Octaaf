@@ -18,7 +18,7 @@ var Octaaf *tgbotapi.BotAPI
 func initBot() error {
 	// Explicitly create this err var, or else Octaaf will be shadowed
 	var err error
-	Octaaf, err = tgbotapi.NewBotAPI(settings.Telegram.ApiKey)
+	Octaaf, err = tgbotapi.NewBotAPI(settings.Telegram.APIKEY)
 
 	if err != nil {
 		return err
@@ -30,7 +30,7 @@ func initBot() error {
 
 	if settings.Environment == "production" {
 		sendGlobal(fmt.Sprintf("I'm up and running! 👌\nRunning with version: %v", Version))
-		sendGlobal(fmt.Sprintf("Check out the changelog over here: \n%v/tags/%v", GitUri, Version))
+		sendGlobal(fmt.Sprintf("Check out the changelog over here: \n%v/tags/%v", GitURI, Version))
 
 		c := make(chan os.Signal, 2)
 		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
@@ -112,7 +112,7 @@ func handle(m *tgbotapi.Message) {
 		case "pollentiek":
 			pollentiek(message)
 		case "presidential_order":
-			presidential_order(message)
+			presidentialOrder(message)
 		}
 	}
 	if message.MessageID%1e5 == 0 {

@@ -32,10 +32,10 @@ import (
 
 func changelog(message *OctaafMessage) error {
 	if Version == "" {
-		return message.Reply("Current version not found, check the changelog here: " + GitUri + "/tags")
+		return message.Reply("Current version not found, check the changelog here: " + GitURI + "/tags")
 	}
 
-	return message.Reply(fmt.Sprintf("%v/tags/%v", GitUri, Version))
+	return message.Reply(fmt.Sprintf("%v/tags/%v", GitURI, Version))
 }
 
 func all(message *OctaafMessage) error {
@@ -186,7 +186,7 @@ func where(message *OctaafMessage) error {
 		"Fetch location",
 		opentracing.ChildOf(message.Span.Context()),
 	)
-	location, found := scrapers.GetLocation(argument, settings.Google.ApiKey)
+	location, found := scrapers.GetLocation(argument, settings.Google.APIKEY)
 	span.Finish()
 
 	if !found {
@@ -226,7 +226,7 @@ func weather(message *OctaafMessage) error {
 		"Fetching weather status...",
 		opentracing.ChildOf(message.Span.Context()),
 	)
-	weather, found := scrapers.GetWeatherStatus(message.CommandArguments(), settings.Google.ApiKey)
+	weather, found := scrapers.GetWeatherStatus(message.CommandArguments(), settings.Google.APIKEY)
 
 	weatherSpan.SetTag("found", found == true)
 	weatherSpan.Finish()
@@ -353,9 +353,9 @@ func sendImage(message *OctaafMessage) error {
 				continue
 			}
 
-			img_blurred := imaging.Blur(src, 15)
+			imgBlurred := imaging.Blur(src, 15)
 			buf := new(bytes.Buffer)
-			err = png.Encode(buf, img_blurred.SubImage(img_blurred.Bounds()))
+			err = png.Encode(buf, imgBlurred.SubImage(imgBlurred.Bounds()))
 
 			if err != nil {
 				imgSpan.SetTag("error", err)
@@ -637,7 +637,7 @@ func pollentiek(message *OctaafMessage) error {
 	return message.Reply(msg)
 }
 
-func presidential_order(message *OctaafMessage) error {
+func presidentialOrder(message *OctaafMessage) error {
 	if message.CommandArguments() == "" {
 		return message.Reply("Please provide a presidential order.")
 	}

@@ -15,7 +15,7 @@ var Cache *cache.Codec
 
 func initRedis() {
 	Redis = goRedis.NewClient(&goRedis.Options{
-		Addr:     settings.Redis.Uri,
+		Addr:     settings.Redis.URI,
 		Password: settings.Redis.Password,
 		DB:       settings.Redis.DB,
 	})
