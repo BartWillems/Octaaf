@@ -21,7 +21,7 @@ build:
   script:
     - go build -mod vendor -ldflags '-s -w -X main.Version=${CI_COMMIT_TAG}' -o octaaf
 
-deploy:
+deploy-unstable:
   stage: deploy
   image: docker:stable
   services:
@@ -30,9 +30,9 @@ deploy:
     - build
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker pull "${CONTAINER_IMAGE}:${CI_COMMIT_REF_NAME}" || true
-    - docker build --cache-from "${CONTAINER_IMAGE}:${CI_COMMIT_REF_NAME}" --tag "${CONTAINER_IMAGE}:${CI_COMMIT_REF_NAME}" .
-    - docker push "${CONTAINER_IMAGE}:${CI_COMMIT_REF_NAME}"
+    - docker pull "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}" || true
+    - docker build --cache-from "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}" --tag "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}" .
+    - docker push "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}"
 
 deploy-stable:
   stage: deploy
