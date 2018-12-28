@@ -1,5 +1,6 @@
 stages:
   - build
+  - code-quality
   - deploy
 
 variables:
@@ -28,8 +29,8 @@ build:
   script:
     - go build -mod vendor -ldflags '-s -w -X main.Version=${CI_COMMIT_TAG}' -o octaaf
 
-code_quality:
-  stage: build
+code-quality:
+  stage: code-quality
   image: docker:stable
   allow_failure: true
   services:
