@@ -64,7 +64,13 @@ func main() {
 			TrumpCfg:    &settings.Trump,
 			Trump:       &assets.Trump,
 		})
-		err = router.Run()
+
+		if setting.Environment == production {
+			err = router.Run(":8080")
+		} else {
+			err = router.Run(":8888")
+		}
+
 		if err != nil {
 			log.Errorf("External API creation error: %v", err)
 		}

@@ -24,7 +24,8 @@ ADD ./config/settings.toml.dist /opt/octaaf/config/settings.toml
 ADD ./config/database.yml /opt/octaaf/config/database.yml
 ADD ./octaaf /opt/octaaf/octaaf
 
-EXPOSE 8080
+# Production port - development port
+EXPOSE 8080 8888
 
 WORKDIR /opt/octaaf
 
