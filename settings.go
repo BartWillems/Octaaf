@@ -42,7 +42,7 @@ type google struct {
 }
 
 type jaeger struct {
-	ServiceName string `toml:"service_name" env:"JAEGER_SERVICE_KEY"`
+	ServiceName string `toml:"service_name" env:"JAEGER_SERVICE_NAME"`
 	AgentHost   string `toml:"agent_host" env:"JAEGER_AGENT_HOST"`
 	AgentPort   int    `toml:"agent_port" env:"JAEGER_AGENT_PORT"`
 }
