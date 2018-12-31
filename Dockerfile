@@ -13,7 +13,7 @@ ENV ENVIRONMENT="development" \
     TRUMP_FONT_PATH="/usr/share/fonts/truetype/ubuntu/Ubuntu-LI.ttf"
 
 RUN apt update \
-    && apt install -y fonts-ubuntu \
+    && apt install -y fonts-ubuntu ca-certificates \
     && apt clean
 
 RUN mkdir -p /opt/octaaf/config
