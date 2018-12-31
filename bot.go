@@ -24,7 +24,7 @@ func initBot() error {
 		return err
 	}
 
-	Octaaf.Debug = settings.Environment == "development"
+	Octaaf.Debug = settings.Environment == development
 
 	log.Info("Authorized on account ", Octaaf.Self.UserName)
 

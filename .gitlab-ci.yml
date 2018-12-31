@@ -1,7 +1,7 @@
 stages:
   - build
-  - code-quality
   - deploy
+  - code-quality
 
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}

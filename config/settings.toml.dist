@@ -17,6 +17,8 @@ api_key = ""
 
 [jaeger]
 service_name = "octaaf"
+agent_host = "localhost"
+agent_port = 6831
 
 [trump]
 font_path = "/usr/share/fonts/TTF/Roboto-Regular.ttf"

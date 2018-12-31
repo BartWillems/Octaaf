@@ -7,6 +7,11 @@ import (
 	opentracing "github.com/opentracing/opentracing-go"
 )
 
+const (
+	development = "development"
+	production  = "production"
+)
+
 // OctaafMessage extends on the tgbotapi Message
 // This is so we can trace the message throughout the application
 // and extend on it with functions

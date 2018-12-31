@@ -26,7 +26,7 @@ func initDB() error {
 	}
 
 	log.Info("Established DB connection.")
-	pop.Debug = settings.Environment == "development"
+	pop.Debug = settings.Environment == development
 	return nil
 }
 

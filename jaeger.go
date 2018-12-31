@@ -1,34 +1,34 @@
 package main
 
 import (
+	"fmt"
 	"io"
 
 	opentracing "github.com/opentracing/opentracing-go"
 	log "github.com/sirupsen/logrus"
 	jaegerClient "github.com/uber/jaeger-client-go"
-	config "github.com/uber/jaeger-client-go/config"
+	jaegercfg "github.com/uber/jaeger-client-go/config"
 )
 
 // Tracer is the opentracing instance
 var Tracer opentracing.Tracer
 
 func initJaeger(service string) io.Closer {
-	cfg := &config.Configuration{
-		Sampler: &config.SamplerConfig{
+	cfg := &jaegercfg.Configuration{
+		Sampler: &jaegercfg.SamplerConfig{
 			Type:  "const",
 			Param: 1,
 		},
-		Reporter: &config.ReporterConfig{
-			LogSpans: true,
+		Reporter: &jaegercfg.ReporterConfig{
+			// Only log the spans in development mode
+			LogSpans:           settings.Environment == development,
+			LocalAgentHostPort: fmt.Sprintf("%v:%v", settings.Jaeger.AgentHost, settings.Jaeger.AgentPort),
 		},
 	}
 
-	// Only log the spans in development
-	cfg.Reporter.LogSpans = settings.Environment == "development"
-
 	var err error
 	var closer io.Closer
-	Tracer, closer, err = cfg.New(service, config.Logger(jaegerClient.StdLogger))
+	Tracer, closer, err = cfg.New(service, jaegercfg.Logger(jaegerClient.StdLogger))
 
 	if err != nil {
 		log.Panicf("Jaeger init error: %v", err)
