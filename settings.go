@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"octaaf/trump"
 
+	env "github.com/BartWillems/go-env"
 	"github.com/BurntSushi/toml"
-	env "github.com/Netflix/go-env"
 	"github.com/imdario/mergo"
 )
 

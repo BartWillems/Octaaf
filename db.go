@@ -11,7 +11,7 @@ var DB *pop.Connection
 
 func initDB() error {
 	// pop requires a database.yml file
-	// This yaml file refers to the DATABASE_URL environment variable as the uri
+	// This yaml file refers to the DATABASE_URI environment variable as the uri
 	// So we set this env variable, so that database.yml can point to it.
 	// I hope this changes in the future
 	if envy.Get("DATABASE_URI", "") != "" {
