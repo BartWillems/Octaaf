@@ -2,8 +2,8 @@ module octaaf
 
 require (
 	github.com/AlekSi/pointer v1.0.0 // indirect
+	github.com/BartWillems/go-env v0.0.0-20181231133509-98607f11c65f
 	github.com/BurntSushi/toml v0.3.1
-	github.com/Netflix/go-env v0.0.0-20180529183433-1e80ef5003ef
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/araddon/dateparse v0.0.0-20181123171228-21df004e09ca
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect

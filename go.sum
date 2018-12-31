@@ -1,10 +1,10 @@
 github.com/AlekSi/pointer v1.0.0 h1:KWCWzsvFxNLcmM5XmiqHsGTTsuwZMsLFwWF9Y+//bNE=
 github.com/AlekSi/pointer v1.0.0/go.mod h1:1kjywbfcPFCmncIxtk6fIEub6LKrfMz3gc5QKVOSOA8=
+github.com/BartWillems/go-env v0.0.0-20181231133509-98607f11c65f h1:0mwvv36dCA6QcKQ6fuDiM8lAB+OtIpswo2wFqK5PIuI=
+github.com/BartWillems/go-env v0.0.0-20181231133509-98607f11c65f/go.mod h1:tEZSZmnRJX7npvRsjVD6iu7PMPTQSNb84z7zxKRp5K8=
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Masterminds/semver v1.4.2/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
-github.com/Netflix/go-env v0.0.0-20180529183433-1e80ef5003ef h1:ihS04yk5M8UqTu4D6qDQ6O1ip30HHGSP0XuJhlKtvGU=
-github.com/Netflix/go-env v0.0.0-20180529183433-1e80ef5003ef/go.mod h1:9XMFaCeRyW7fC9XJOWQ+NdAv8VLG7ys7l3x4ozEGLUQ=
 github.com/PuerkitoBio/goquery v1.5.0 h1:uGvmFXOA73IKluu/F84Xd1tt/z07GYm8X49XKHP7EJk=
 github.com/PuerkitoBio/goquery v1.5.0/go.mod h1:qD2PgZ9lccMbQlc7eEOjaeRlFQON7xY8kdmcsrnKqMg=
 github.com/ajg/form v0.0.0-20160822230020-523a5da1a92f/go.mod h1:uL1WgH+h2mgNtvBq0339dVnzXdBETtL2LeUXaIv25UY=

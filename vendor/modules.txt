@@ -1,9 +1,9 @@
 # github.com/AlekSi/pointer v1.0.0
 github.com/AlekSi/pointer
+# github.com/BartWillems/go-env v0.0.0-20181231133509-98607f11c65f
+github.com/BartWillems/go-env
 # github.com/BurntSushi/toml v0.3.1
 github.com/BurntSushi/toml
-# github.com/Netflix/go-env v0.0.0-20180529183433-1e80ef5003ef
-github.com/Netflix/go-env
 # github.com/PuerkitoBio/goquery v1.5.0
 github.com/PuerkitoBio/goquery
 # github.com/andybalholm/cascadia v1.0.0
@@ -53,7 +53,7 @@ github.com/go-redis/redis/internal/util
 github.com/go-sql-driver/mysql
 # github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 github.com/go-telegram-bot-api/telegram-bot-api
-# github.com/gobuffalo/envy v1.6.9
+# github.com/gobuffalo/envy v1.6.11
 github.com/gobuffalo/envy
 # github.com/gobuffalo/fizz v1.1.3
 github.com/gobuffalo/fizz
@@ -70,9 +70,9 @@ github.com/gobuffalo/github_flavored_markdown/internal/shurcooL/octicon
 github.com/gobuffalo/github_flavored_markdown/internal/shurcooL/sanitized_anchor_name
 # github.com/gobuffalo/makr v1.1.5
 github.com/gobuffalo/makr
-# github.com/gobuffalo/packd v0.0.0-20181124090624-311c6248e5fb
+# github.com/gobuffalo/packd v0.0.0-20181207120301-c49825f8f6f4
 github.com/gobuffalo/packd
-# github.com/gobuffalo/plush v3.7.22+incompatible
+# github.com/gobuffalo/plush v3.7.32+incompatible
 github.com/gobuffalo/plush
 github.com/gobuffalo/plush/ast
 github.com/gobuffalo/plush/parser
@@ -87,7 +87,7 @@ github.com/gobuffalo/pop/logging
 github.com/gobuffalo/pop/nulls
 # github.com/gobuffalo/syncx v0.0.0-20181120194010-558ac7de985f
 github.com/gobuffalo/syncx
-# github.com/gobuffalo/tags v2.0.11+incompatible
+# github.com/gobuffalo/tags v2.0.14+incompatible
 github.com/gobuffalo/tags
 github.com/gobuffalo/tags/form
 github.com/gobuffalo/tags/form/bootstrap
@@ -133,7 +133,7 @@ github.com/markbates/going/defaults
 github.com/markbates/going/randx
 # github.com/markbates/inflect v1.0.4
 github.com/markbates/inflect
-# github.com/markbates/oncer v0.0.0-20181014194634-05fccaae8fc4
+# github.com/markbates/oncer v0.0.0-20181203154359-bf2de49a0be2
 github.com/markbates/oncer
 # github.com/mattn/go-colorable v0.0.9
 github.com/mattn/go-colorable
@@ -161,6 +161,10 @@ github.com/opentracing/opentracing-go/ext
 github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
+# github.com/rogpeppe/go-internal v1.0.0
+github.com/rogpeppe/go-internal/modfile
+github.com/rogpeppe/go-internal/module
+github.com/rogpeppe/go-internal/semver
 # github.com/serenize/snaker v0.0.0-20171204205717-a683aaf2d516
 github.com/serenize/snaker
 # github.com/sergi/go-diff v1.0.0
@@ -204,7 +208,7 @@ github.com/ugorji/go/codec
 # github.com/vmihailenco/msgpack v4.0.1+incompatible
 github.com/vmihailenco/msgpack
 github.com/vmihailenco/msgpack/codes
-# golang.org/x/crypto v0.0.0-20181126163421-e657309f52e7
+# golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9
 golang.org/x/crypto/ssh/terminal
 # golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b
 golang.org/x/image/bmp
@@ -215,13 +219,13 @@ golang.org/x/image/font/basicfont
 golang.org/x/image/math/f64
 golang.org/x/image/math/fixed
 golang.org/x/image/tiff/lzw
-# golang.org/x/net v0.0.0-20181114220301-adae6a3d119a
+# golang.org/x/net v0.0.0-20181207154023-610586996380
 golang.org/x/net/context
 golang.org/x/net/html
 golang.org/x/net/html/atom
 # golang.org/x/sync v0.0.0-20181108010431-42b317875d0f
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.0.0-20181122145206-62eef0e2fa9b
+# golang.org/x/sys v0.0.0-20181206074257-70b957f3b65e
 golang.org/x/sys/unix
 golang.org/x/sys/windows
 # google.golang.org/appengine v1.3.0
@@ -239,5 +243,5 @@ google.golang.org/appengine/internal/remote_api
 gopkg.in/go-playground/validator.v8
 # gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 gopkg.in/robfig/cron.v2
-# gopkg.in/yaml.v2 v2.2.1
+# gopkg.in/yaml.v2 v2.2.2
 gopkg.in/yaml.v2
