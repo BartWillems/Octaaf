@@ -65,7 +65,7 @@ func main() {
 			Trump:       &assets.Trump,
 		})
 
-		if setting.Environment == production {
+		if settings.Environment == production {
 			err = router.Run(":8080")
 		} else {
 			err = router.Run(":8888")
