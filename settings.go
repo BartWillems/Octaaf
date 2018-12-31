@@ -7,6 +7,7 @@ import (
 	env "github.com/BartWillems/go-env"
 	"github.com/BurntSushi/toml"
 	"github.com/imdario/mergo"
+	log "github.com/sirupsen/logrus"
 )
 
 // Settings is the struct that holds the runtime config
@@ -50,7 +51,7 @@ type jaeger struct {
 func (s *Settings) Load() error {
 	_, err := toml.DecodeFile("config/settings.toml", s)
 	if err != nil {
-		return err
+		log.Warnf("Unable to load settings file: %v, falling back to environment variables.", err)
 	}
 
 	var envSettings Settings

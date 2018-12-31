@@ -3,7 +3,7 @@ package main
 import (
 	"octaaf/web"
 
-	"github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -18,7 +18,7 @@ const GitURI = "https://gitlab.com/BartWillems/octaaf"
 
 func main() {
 	if err := settings.Load(); err != nil {
-		log.Fatal("Unable to load/parse the settings file: ", err)
+		log.Fatal("Unable to load/parse the settings: ", err)
 	}
 
 	if settings.Environment != "production" {
