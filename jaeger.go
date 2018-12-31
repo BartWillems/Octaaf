@@ -15,6 +15,7 @@ var Tracer opentracing.Tracer
 
 func initJaeger(service string) io.Closer {
 	cfg := &jaegercfg.Configuration{
+		ServiceName: settings.Jaeger.ServiceName,
 		Sampler: &jaegercfg.SamplerConfig{
 			Type:  "const",
 			Param: 1,
