@@ -14,7 +14,7 @@ func initDB() error {
 	// This yaml file refers to the DATABASE_URI environment variable as the uri
 	// So we set this env variable, so that database.yml can point to it.
 	// I hope this changes in the future
-	if envy.Get("DATABASE_URI", "") != "" {
+	if envy.Get("DATABASE_URI", "") == "" {
 		envy.Set("DATABASE_URI", settings.Database.URI)
 	}
 
