@@ -21,7 +21,7 @@ import (
 	"github.com/disintegration/imaging"
 	humanize "github.com/dustin/go-humanize"
 	"github.com/go-redis/cache"
-	"github.com/go-telegram-bot-api/telegram-bot-api"
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/olebedev/when"
 	"github.com/olebedev/when/rules/common"
 	"github.com/olebedev/when/rules/en"
@@ -388,6 +388,7 @@ func xkcd(message *OctaafMessage) error {
 	image, err := scrapers.GetXKCD()
 
 	if err != nil {
+		message.Span.SetTag("error", err)
 		return message.Reply("Failed to parse XKCD image")
 	}
 
