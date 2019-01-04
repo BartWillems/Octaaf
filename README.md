@@ -65,7 +65,7 @@ A telegram bot written in Go
 docker service create \
     --name octaaf \
     --network "host" \
-    --env ENVIRONMENT="production"
+    --env ENVIRONMENT="production" \
     --env TELEGRAM_API_KEY="12345678:AAAAAAAA...." \
     --env DATABASE_URI="postgres://username:password@127.0.0.1:5432/octaaf_development?sslmode=disable" \
     --env REDIS_URI="redis-host:6379" \
@@ -73,6 +73,5 @@ docker service create \
     --env GOOGLE_API_KEY="ABC..." \
     --env JAEGER_SERVICE_NAME="octaaf" \
     --env KALI_ID="-1000..." \
-    -p 8080:8080 \
     registry.gitlab.com/bartwillems/octaaf:latest
 ```
