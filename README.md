@@ -57,3 +57,22 @@ A telegram bot written in Go
 1. `cp config/settings.toml.dist config/settings.toml`
 1. Enter the correct values in config/settings.toml (just enter your telegram api key)
 1. `docker-compose up`
+
+## Deploying
+
+```bash
+# Deploying the latest stable version
+docker service create \
+    --name octaaf \
+    --network "host" \
+    --env ENVIRONMENT="production"
+    --env TELEGRAM_API_KEY="12345678:AAAAAAAA...." \
+    --env DATABASE_URI="postgres://username:password@127.0.0.1:5432/octaaf_development?sslmode=disable" \
+    --env REDIS_URI="redis-host:6379" \
+    --env REDIS_DB="0" \
+    --env GOOGLE_API_KEY="ABC..." \
+    --env JAEGER_SERVICE_NAME="octaaf" \
+    --env KALI_ID="-1000..." \
+    -p 8080:8080 \
+    registry.gitlab.com/bartwillems/octaaf:latest
+```
