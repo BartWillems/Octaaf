@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"octaaf/jaeger"
 	"octaaf/trump"
 
 	env "github.com/BartWillems/go-env"
@@ -18,7 +19,7 @@ type Settings struct {
 	Database database
 	Redis    redis
 	Google   google
-	Jaeger   jaeger
+	Jaeger   jaeger.Config
 	Trump    trump.Config
 }
 
@@ -39,12 +40,6 @@ type redis struct {
 
 type google struct {
 	APIKEY string `toml:"api_key" env:"GOOGLE_API_KEY"`
-}
-
-type jaeger struct {
-	ServiceName string `toml:"service_name" env:"JAEGER_SERVICE_NAME"`
-	AgentHost   string `toml:"agent_host" env:"JAEGER_AGENT_HOST"`
-	AgentPort   int    `toml:"agent_port" env:"JAEGER_AGENT_PORT"`
 }
 
 // Load parses the toml file and returns a Settings struct

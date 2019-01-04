@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"octaaf/jaeger"
 	"octaaf/markdown"
 	"os"
 	"os/signal"
@@ -49,7 +50,7 @@ func initBot() error {
 func handle(m *tgbotapi.Message) {
 	message := &OctaafMessage{
 		m,
-		Tracer.StartSpan("Message Received"),
+		jaeger.Tracer.StartSpan("Message Received"),
 		true,  // IsMarkdown
 		false, // KeyboardCloser
 	}

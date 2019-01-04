@@ -1,6 +1,7 @@
 package main
 
 import (
+	"octaaf/jaeger"
 	"octaaf/web"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -76,7 +77,16 @@ func main() {
 		}
 	}()
 
-	closer := initJaeger()
+	closer, err := jaeger.Init(
+		settings.Jaeger.ServiceName,
+		settings.Jaeger.AgentHost,
+		settings.Jaeger.AgentPort,
+		settings.Environment == development)
+
+	if err != nil {
+		log.Fatalf("Jaeger init error: %v", err)
+	}
+
 	defer closer.Close()
 
 	u := tgbotapi.NewUpdate(0)
