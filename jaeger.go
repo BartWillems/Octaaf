@@ -13,7 +13,7 @@ import (
 // Tracer is the opentracing instance
 var Tracer opentracing.Tracer
 
-func initJaeger(service string) io.Closer {
+func initJaeger() io.Closer {
 	cfg := &jaegercfg.Configuration{
 		ServiceName: settings.Jaeger.ServiceName,
 		Sampler: &jaegercfg.SamplerConfig{
@@ -29,7 +29,7 @@ func initJaeger(service string) io.Closer {
 
 	var err error
 	var closer io.Closer
-	Tracer, closer, err = cfg.New(service, jaegercfg.Logger(jaegerClient.StdLogger))
+	Tracer, closer, err = cfg.New(settings.Jaeger.ServiceName, jaegercfg.Logger(jaegerClient.StdLogger))
 
 	if err != nil {
 		log.Panicf("Jaeger init error: %v", err)

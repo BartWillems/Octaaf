@@ -76,7 +76,7 @@ func main() {
 		}
 	}()
 
-	closer := initJaeger("octaaf")
+	closer := initJaeger()
 	defer closer.Close()
 
 	u := tgbotapi.NewUpdate(0)
