@@ -47,6 +47,8 @@ code-quality:
   artifacts:
     reports:
       codequality: gl-code-quality-report.json
+  only:
+    - merge_requests
 
 deploy-unstable:
   stage: deploy
