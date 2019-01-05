@@ -73,5 +73,6 @@ docker service create \
     --env GOOGLE_API_KEY="ABC..." \
     --env JAEGER_SERVICE_NAME="octaaf" \
     --env KALI_ID="-1000..." \
+    --env TZ="Europe/Brussels" \
     registry.gitlab.com/bartwillems/octaaf:latest
 ```
