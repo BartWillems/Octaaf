@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gopkg.in/robfig/cron.v2"
+	cron "gopkg.in/robfig/cron.v2"
 )
 
 func initCrons() *cron.Cron {
@@ -12,6 +12,8 @@ func initCrons() *cron.Cron {
 	c.AddFunc("01 20 16 * * *", func() { sendGlobal("420") })
 	c.AddFunc("02 21 16 * * *", func() { getLeetBlazers("420") })
 	c.AddFunc("00 00 00 * * *", setKaliCount)
+
+	c.AddFunc("00 00 00 * * *", checkIn)
 
 	return c
 }
