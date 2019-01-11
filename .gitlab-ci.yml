@@ -1,7 +1,6 @@
 stages:
   - build
   - deploy
-  - code-quality
 
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}
@@ -10,14 +9,7 @@ test:
   stage: build
   image: golang:1.11
   script:
-    - go get -u github.com/jstemmer/go-junit-report
-    - go test -mod vendor ./... -v 2>&1 | go-junit-report > report.xml
-  artifacts:
-    reports:
-      junit: report.xml
-  cache:
-    paths:
-      - /go/src/
+    - go test -mod vendor ./...
 
 build:
   stage: build
@@ -28,27 +20,6 @@ build:
     expire_in: 1 week
   script:
     - go build -mod vendor -ldflags "-s -w -X main.Version=${CI_COMMIT_TAG}" -o octaaf
-
-code-quality:
-  stage: code-quality
-  image: docker:stable
-  allow_failure: true
-  services:
-    - docker:stable-dind
-  variables:
-    DOCKER_DRIVER: overlay2
-  script:
-    - export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-    - docker run
-      --env SOURCE_CODE="$PWD"
-      --volume "$PWD":/code
-      --volume /var/run/docker.sock:/var/run/docker.sock
-      "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
-  artifacts:
-    reports:
-      codequality: gl-code-quality-report.json
-  only:
-    - merge_requests
 
 deploy-unstable:
   stage: deploy
@@ -65,7 +36,6 @@ deploy-unstable:
   except:
     variables:
       - $CI_COMMIT_TAG =~ /^release-.*$/
-
 
 deploy-stable:
   stage: deploy
