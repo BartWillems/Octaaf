@@ -9,6 +9,5 @@ func initCrons() *cron.Cron {
 	// Cron func: ss mm hh
 	c.AddFunc("00 00 00 * * *", setKaliCount)
 	c.AddFunc("00 00 00 * * *", checkIn)
-
 	return c
 }
