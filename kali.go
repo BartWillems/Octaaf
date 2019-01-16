@@ -83,11 +83,8 @@ func getKaliCheckers(message *OctaafMessage) error {
 	var KalicheckerStats models.KalicheckerStats
 	err := KalicheckerStats.Top(DB)
 
-	if err != nil {
-		log.Error(err)
-		message.Span.SetTag("error", err)
-		message.Reply(fmt.Sprintf("Error: %v", err))
-		return err
+	if err != nil || len(KalicheckerStats) == 0 {
+		return message.Reply("404")
 	}
 
 	response := "*Rank: count - name*\n"
