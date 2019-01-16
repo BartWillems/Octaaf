@@ -11,11 +11,12 @@ A telegram bot written in Go
 - /care - Notify the participants that you don't give a hecky.
 - /changelog - View the Octaaf changelog
 - /count - Get your room's current message count
+- /checkrepublic - **ENTERPRISE ONLY:** fetch kali checkers
 - /doubt - When in doubt...
 - /iasip - Get a random It's Always Sunny In Philadelphia quote
 - /img - Search possible NSFW images
 - /img_sfw - Search possible SFW images
-- /kalirank - Show the kali rankings
+- /kalirank - **ENTERPRISE ONLY:** Show the kali rankings
 - /m8ball - Let fate decide your future
 - /more - MORE IMAGES
 - /next_launch - Show the next 5 rocket launches

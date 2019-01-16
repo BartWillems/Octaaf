@@ -29,6 +29,12 @@ func kaliHandler(message *OctaafMessage) {
 			log.Infof("Random checker found: %v", message.From.ID)
 			Redis.SAdd(KaliCheckersKey, message.From.ID)
 		}
+
+		if message.IsCommand() {
+			if message.Command() == "checkrepublic" {
+				getKaliCheckers(message)
+			}
+		}
 	}
 }
 
