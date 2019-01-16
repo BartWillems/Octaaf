@@ -1,0 +1,4 @@
+create_table("kalicheckers") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("user_id", "integer", {})
+}
