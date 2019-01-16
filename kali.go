@@ -84,7 +84,7 @@ func getKaliCheckers(message *OctaafMessage) error {
 	err := KalicheckerStats.Top(DB)
 
 	if err != nil || len(KalicheckerStats) == 0 {
-		return message.Reply("404")
+		return message.Reply("404 - No entries found. Maybe tomorrow?")
 	}
 
 	response := "*Rank: count - name*\n"
