@@ -21,19 +21,21 @@ var IsCheckinTime = false
 const KaliCheckersKey = "kalicheckers"
 
 func kaliHandler(message *OctaafMessage) {
-	if message.Chat.ID == settings.Telegram.KaliID {
-		log.Debug("Kalimember found")
-		KaliCount = message.MessageID
+	if message.Chat.ID != settings.Telegram.KaliID {
+		return
+	}
 
-		if IsCheckinTime && (strings.Contains(message.Text, "check") || strings.ContainsAny(message.Text, "✅✔️☑️")) {
-			log.Infof("Random checker found: %v", message.From.ID)
-			Redis.SAdd(KaliCheckersKey, message.From.ID)
-		}
+	log.Debug("Kalimember found")
+	KaliCount = message.MessageID
 
-		if message.IsCommand() {
-			if message.Command() == "checkrepublic" {
-				getKaliCheckers(message)
-			}
+	if IsCheckinTime && (strings.Contains(message.Text, "check") || strings.ContainsAny(message.Text, "✅✔️☑️")) {
+		log.Infof("Random checker found: %v", message.From.ID)
+		Redis.SAdd(KaliCheckersKey, message.From.ID)
+	}
+
+	if message.IsCommand() {
+		if message.Command() == "checkrepublic" {
+			getKaliCheckers(message)
 		}
 	}
 }
