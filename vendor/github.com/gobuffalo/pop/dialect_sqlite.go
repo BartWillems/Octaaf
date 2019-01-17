@@ -28,6 +28,7 @@ func init() {
 	AvailableDialects = append(AvailableDialects, nameSQLite3)
 	dialectSynonyms["sqlite"] = nameSQLite3
 	urlParser[nameSQLite3] = urlParserSQLite3
+	newConnection[nameSQLite3] = newSQLite
 }
 
 var _ dialect = &sqlite{}
@@ -208,6 +209,10 @@ func (m *sqlite) TruncateAll(tx *Connection) error {
 		stmts = append(stmts, fmt.Sprintf("DELETE FROM %s", n.Name))
 	}
 	return tx.RawQuery(strings.Join(stmts, "; ")).Exec()
+}
+
+func (m *sqlite) afterOpen(c *Connection) error {
+	return nil
 }
 
 func newSQLite(deets *ConnectionDetails) (dialect, error) {
