@@ -118,4 +118,5 @@ func checkIn() {
 
 	sendGlobal("Checking complete.")
 	IsCheckinTime = false
+	saveKaliCheckers()
 }
