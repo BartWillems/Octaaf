@@ -36,7 +36,7 @@ func (k *KalicheckerStat) TableName() string {
 	return "kalicheckers"
 }
 
-func (k *Kalicheckers) TableName() string {
+func (k *KalicheckerStats) TableName() string {
 	return "kalicheckers"
 }
 
