@@ -82,6 +82,8 @@ func handle(m *tgbotapi.Message) {
 			changelog(message)
 		case "img", "img_sfw", "more", "img_censored":
 			sendImage(message)
+		case "imgquote":
+			imgQuote(message)
 		case "stallman":
 			sendStallman(message)
 		case "search", "search_nsfw":

@@ -1,0 +1,6 @@
+create_table("imgquotes") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("message_id", "integer", {})
+	t.Column("chat_id", "integer", {})
+	t.Column("user_id", "integer", {})
+}

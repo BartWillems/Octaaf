@@ -16,6 +16,7 @@ A telegram bot written in Go
 - /iasip - Get a random It's Always Sunny In Philadelphia quote
 - /img - Search possible NSFW images
 - /img_sfw - Search possible SFW images
+- /imgquote - Like /quote, but for images
 - /kalirank - **ENTERPRISE ONLY:** Show the kali rankings
 - /m8ball - Let fate decide your future
 - /more - MORE IMAGES

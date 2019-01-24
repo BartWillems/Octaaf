@@ -660,3 +660,36 @@ func presidentialOrder(message *OctaafMessage) error {
 
 	return message.Reply(img)
 }
+
+func imgQuote(message *OctaafMessage) error {
+	if message.ReplyToMessage == nil {
+		imgQuote := models.ImgQuote{}
+		err := imgQuote.Search(DB, message.Chat.ID)
+
+		if err != nil {
+			message.Span.SetTag("error", err)
+			return message.Reply("Unable to fetch an image quote.")
+		}
+
+		return message.Reply(imgQuote)
+	}
+
+	if message.ReplyToMessage.Photo == nil {
+		return message.Reply("No image found in this message.")
+	}
+
+	imgQuote := models.ImgQuote{
+		MessageID: message.ReplyToMessage.MessageID,
+		ChatID:    message.Chat.ID,
+		UserID:    message.ReplyToMessage.From.ID,
+	}
+
+	err := DB.Save(&imgQuote)
+
+	if err != nil {
+		message.Span.SetTag("error", err)
+		return message.Reply("Unable to store the image quote.")
+	}
+
+	return message.Reply("Successfully saved the img quote!")
+}

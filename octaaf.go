@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"octaaf/models"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	opentracing "github.com/opentracing/opentracing-go"
@@ -60,6 +61,11 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 		msg.ReplyToMessageID = message.MessageID
 		_, err = Octaaf.Send(msg)
 		span.SetTag("type", "image")
+	case models.ImgQuote:
+		msg := tgbotapi.NewForward(resp.ChatID, resp.ChatID, resp.MessageID)
+		msg.ReplyToMessageID = message.MessageID
+		_, err = Octaaf.Send(msg)
+		span.SetTag("type", "forward")
 	}
 
 	if err != nil {
