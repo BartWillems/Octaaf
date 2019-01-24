@@ -1,0 +1,2 @@
+drop_column("imgquotes", "chat_id")
+add_column("imgquotes", "chat_id", "bigint", {"null": true})
