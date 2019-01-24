@@ -1,0 +1,1 @@
+add_index("imgquotes", ["chat_id", "message_id"], {"unique": true, "name": "unique_imgquotes"})
