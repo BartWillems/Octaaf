@@ -78,7 +78,8 @@ func GetLocation(query string, apiKey string) (Location, bool) {
 
 	location := Location{
 		Lat: gjson.Get(json, "results.0.geometry.location.lat").Num,
-		Lng: gjson.Get(json, "results.0.geometry.location.lng").Num}
+		Lng: gjson.Get(json, "results.0.geometry.location.lng").Num,
+	}
 
 	return location, true
 }

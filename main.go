@@ -1,6 +1,7 @@
 package main
 
 import (
+	"octaaf/cache"
 	"octaaf/jaeger"
 	"octaaf/web"
 
@@ -32,6 +33,8 @@ func main() {
 	}
 
 	initRedis()
+
+	cache.Init(Redis)
 
 	err = initDB()
 	if err != nil {

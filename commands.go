@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	"octaaf/cache"
 	"octaaf/markdown"
 	"octaaf/models"
 	"octaaf/scrapers"
@@ -20,7 +21,6 @@ import (
 
 	"github.com/disintegration/imaging"
 	humanize "github.com/dustin/go-humanize"
-	"github.com/go-redis/cache"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/olebedev/when"
 	"github.com/olebedev/when/rules/common"
@@ -279,7 +279,6 @@ func sendImage(message *OctaafMessage) error {
 	var err error
 	more := message.Command() == "more"
 	message.Span.SetTag("more", more)
-	key := fmt.Sprintf("images_%v", message.Chat.ID)
 	if !more {
 		if len(message.CommandArguments()) == 0 {
 			return message.Reply(fmt.Sprintf("What am I to do, @%v? 🤔🤔🤔🤔", message.From.UserName))
@@ -299,13 +298,9 @@ func sendImage(message *OctaafMessage) error {
 			return message.Reply("Something went wrong!")
 		}
 
-		Cache.Set(&cache.Item{
-			Key:        key,
-			Object:     images,
-			Expiration: 0,
-		})
+		cache.Store(message.Chat.ID, "images", images)
 	} else {
-		if err := Cache.Get(key, &images); err != nil {
+		if err := cache.Fetch(message.Chat.ID, "images", &images); err != nil {
 			return message.Reply("I can't fetch them for you right now.")
 		}
 
