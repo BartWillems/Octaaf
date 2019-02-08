@@ -656,35 +656,57 @@ func presidentialOrder(message *OctaafMessage) error {
 	return message.Reply(img)
 }
 
-func imgQuote(message *OctaafMessage) error {
+// msgQuote stores a message as a certain type of quote, eg imgquote, vodquot, ...
+func msgQuote(message *OctaafMessage) error {
+	quoteType := message.Command()
+
+	if quoteType != models.AudioQuote && quoteType != models.ImgQuote && quoteType != models.VodQuote {
+		return message.Reply("Invalid quote type")
+	}
+
 	if message.ReplyToMessage == nil {
-		imgQuote := models.ImgQuote{}
-		err := imgQuote.Search(DB, message.Chat.ID)
+		quote := models.MsgQuote{}
+		err := quote.Search(DB, message.Chat.ID, quoteType)
 
 		if err != nil {
 			message.Span.SetTag("error", err)
-			return message.Reply("Unable to fetch an image quote.")
+			return message.Reply("Unable to fetch a quote.")
 		}
 
-		return message.Reply(imgQuote)
+		return message.Reply(quote)
 	}
 
-	if message.ReplyToMessage.Photo == nil {
-		return message.Reply("No image found in this message.")
+	if quoteType == models.ImgQuote {
+		if message.ReplyToMessage.Photo == nil {
+			return message.Reply("No image found in this message.")
+		}
 	}
 
-	imgQuote := models.ImgQuote{
+	if quoteType == models.AudioQuote {
+		if message.ReplyToMessage.Audio == nil {
+			return message.Reply("No audio found in this message.")
+		}
+	}
+
+	if quoteType == models.VodQuote {
+		if message.ReplyToMessage.Video == nil {
+			return message.Reply("No video found in this message.")
+		}
+	}
+
+	quote := models.MsgQuote{
 		MessageID: message.ReplyToMessage.MessageID,
 		ChatID:    message.Chat.ID,
 		UserID:    message.ReplyToMessage.From.ID,
+		Type:      quoteType,
 	}
 
-	err := DB.Save(&imgQuote)
+	err := DB.Save(&quote)
 
 	if err != nil {
 		message.Span.SetTag("error", err)
-		return message.Reply("Unable to store the image quote.")
+		return message.Reply("Unable to store the quote.")
 	}
 
-	return message.Reply("Successfully saved the img quote!")
+	return message.Reply("Successfully saved the quote!")
 }

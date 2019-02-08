@@ -61,7 +61,7 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 		msg.ReplyToMessageID = message.MessageID
 		_, err = Octaaf.Send(msg)
 		span.SetTag("type", "image")
-	case models.ImgQuote:
+	case models.MsgQuote:
 		msg := tgbotapi.NewForward(resp.ChatID, resp.ChatID, resp.MessageID)
 		msg.ReplyToMessageID = message.MessageID
 		_, err = Octaaf.Send(msg)

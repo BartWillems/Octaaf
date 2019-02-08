@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"octaaf/jaeger"
 	"octaaf/markdown"
+	"octaaf/models"
 	"os"
 	"os/signal"
 	"syscall"
@@ -82,8 +83,8 @@ func handle(m *tgbotapi.Message) {
 			changelog(message)
 		case "img", "img_sfw", "more", "img_censored":
 			sendImage(message)
-		case "imgquote":
-			imgQuote(message)
+		case models.ImgQuote, models.VodQuote, models.AudioQuote:
+			msgQuote(message)
 		case "stallman":
 			sendStallman(message)
 		case "search", "search_nsfw":
