@@ -110,7 +110,7 @@ func remind(message *OctaafMessage) error {
 		Executed:  false}
 
 	go startReminder(reminder)
-	return message.Reply("Reminder saved!")
+	return message.Reply(fmt.Sprintf("Reminder saved for %v!", reminder.Deadline))
 }
 
 func sendRoll(message *OctaafMessage) error {
