@@ -693,13 +693,13 @@ func msgQuote(message *OctaafMessage) error {
 	}
 
 	if quoteType == models.AudioQuote {
-		if message.ReplyToMessage.Audio == nil {
+		if message.ReplyToMessage.Audio == nil && message.ReplyToMessage.Voice == nil {
 			return message.Reply("No audio found in this message.")
 		}
 	}
 
 	if quoteType == models.VodQuote {
-		if message.ReplyToMessage.Video == nil {
+		if message.ReplyToMessage.Video == nil && message.ReplyToMessage.VideoNote == nil && message.ReplyToMessage.Animation == nil {
 			return message.Reply("No video found in this message.")
 		}
 	}
