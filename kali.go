@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"octaaf/markdown"
 	"octaaf/models"
 	"strconv"
 	"strings"
@@ -28,9 +29,10 @@ func kaliHandler(message *OctaafMessage) {
 	log.Debug("Kalimember found")
 	KaliCount = message.MessageID
 
-	if IsCheckinTime && (strings.Contains(message.Text, "check") || strings.ContainsAny(message.Text, "✅✔️☑️")) {
+	if IsCheckinTime && (strings.Contains(strings.ToLower(message.Text), "check") || strings.ContainsAny(message.Text, "✅✔️☑️")) {
 		log.Infof("Random checker found: %v", message.From.ID)
 		Redis.SAdd(KaliCheckersKey, message.From.ID)
+		go message.Reply("👌")
 	}
 
 	if message.IsCommand() {
@@ -113,6 +115,7 @@ func checkIn() {
 	time.Sleep(randomTime)
 
 	sendGlobal("RANDOM CHECKIN!!!! T-60s")
+	sendGlobal(fmt.Sprintf("Reply with: %v or one of: %v to participate", markdown.Quote("check"), markdown.Quote("✅✔️☑️")))
 	IsCheckinTime = true
 
 	time.Sleep(60 * time.Second)

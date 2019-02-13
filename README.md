@@ -7,6 +7,7 @@ A telegram bot written in Go
 ## Commands
 
 - /all - Send a message to all active members in a group
+- /audio_quote - Like /quote, but for audio
 - /bodegem - A place that is real and exists
 - /care - Notify the participants that you don't give a hecky.
 - /changelog - View the Octaaf changelog
@@ -16,7 +17,7 @@ A telegram bot written in Go
 - /iasip - Get a random It's Always Sunny In Philadelphia quote
 - /img - Search possible NSFW images
 - /img_sfw - Search possible SFW images
-- /imgquote - Like /quote, but for images
+- /img_quote - Like /quote, but for images
 - /kalirank - **ENTERPRISE ONLY:** Show the kali rankings
 - /m8ball - Let fate decide your future
 - /more - MORE IMAGES
@@ -30,6 +31,7 @@ A telegram bot written in Go
 - /search - Search stuff on DuckDuckGo with safe search on
 - /search_nsfw - Search dirty stuff on DuckDuckGo
 - /stallman - I'd just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux.
+- /vod_quot - Like /quote, but for videos
 - /weather - Get the weather of a city
 - /what - Explains what something is
 - /where - Find places on earth

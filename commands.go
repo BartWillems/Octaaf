@@ -22,6 +22,7 @@ import (
 	"github.com/disintegration/imaging"
 	humanize "github.com/dustin/go-humanize"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/gobuffalo/envy"
 	"github.com/olebedev/when"
 	"github.com/olebedev/when/rules/common"
 	"github.com/olebedev/when/rules/en"
@@ -110,7 +111,16 @@ func remind(message *OctaafMessage) error {
 		Executed:  false}
 
 	go startReminder(reminder)
-	return message.Reply(fmt.Sprintf("Reminder saved for %v!", reminder.Deadline))
+
+	loc, err := time.LoadLocation(envy.Get("TZ", "Europe/Brussels"))
+	var deadline string
+	if err != nil {
+		deadline = fmt.Sprintf("%s", reminder.Deadline)
+	} else {
+		deadline = reminder.Deadline.In(loc).Format("Monday January 2 15:04:05 2006")
+	}
+
+	return message.Reply(fmt.Sprintf("Reminder saved for %v!", deadline))
 }
 
 func sendRoll(message *OctaafMessage) error {
