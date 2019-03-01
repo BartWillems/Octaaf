@@ -6,6 +6,7 @@ import (
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	opentracing "github.com/opentracing/opentracing-go"
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -73,4 +74,11 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 	}
 
 	return err
+}
+
+// LogError logs an error and reports it to jaeger
+func (message *OctaafMessage) LogError(err string) {
+	log.Error(err)
+	message.Span.SetTag("error", true)
+	message.Span.SetBaggageItem("error", err)
 }

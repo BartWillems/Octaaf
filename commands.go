@@ -91,14 +91,12 @@ func remind(message *OctaafMessage) error {
 	r, err := w.Parse(message.CommandArguments(), time.Now())
 
 	if err != nil {
-		log.Errorf("Reminder parser error: %v", err)
-		message.Span.SetTag("error", err)
+		message.LogError("Unable to parse reminder: " + err.Error())
 		return message.Reply("Unable to parse")
 	}
 
 	if r == nil {
-		log.Error("No reminder found for message: ", message.CommandArguments())
-		message.Span.SetTag("error", "No reminder found")
+		message.LogError("No reminder found for message: " + message.CommandArguments())
 		return message.Reply("No reminder found")
 	}
 
@@ -219,8 +217,7 @@ func what(message *OctaafMessage) error {
 	span.Finish()
 
 	if err != nil {
-		log.Errorf("Unable to explain '%v'. Error: %v", query, err)
-		span.SetTag("error", err)
+		message.LogError(fmt.Sprintf("Unable to explain '%v'. Error: %v", query, err))
 		return message.Reply("I do not know, something went bork...")
 	}
 
@@ -278,7 +275,7 @@ func sendStallman(message *OctaafMessage) error {
 	fetchSpan.Finish()
 
 	if err != nil {
-		fetchSpan.SetTag("error", err)
+		message.LogError("Unable to retrieve stallman: " + err.Error())
 		return message.Reply("Stallman went bork?")
 	}
 	return message.Reply(image)
@@ -354,7 +351,8 @@ func sendImage(message *OctaafMessage) error {
 			src, _, err := image.Decode(res.Body)
 
 			if err != nil {
-				imgSpan.SetTag("error", err)
+				imgSpan.SetTag("error", true)
+				imgSpan.SetBaggageItem("error", err.Error())
 				continue
 			}
 
@@ -363,7 +361,8 @@ func sendImage(message *OctaafMessage) error {
 			err = png.Encode(buf, imgBlurred.SubImage(imgBlurred.Bounds()))
 
 			if err != nil {
-				imgSpan.SetTag("error", err)
+				imgSpan.SetTag("error", true)
+				imgSpan.SetBaggageItem("error", err.Error())
 				continue
 			}
 
@@ -372,7 +371,8 @@ func sendImage(message *OctaafMessage) error {
 			img, err = ioutil.ReadAll(res.Body)
 
 			if err != nil {
-				imgSpan.SetTag("error", err)
+				imgSpan.SetTag("error", true)
+				imgSpan.SetBaggageItem("error", err.Error())
 				log.Errorf("Unable to load image %v; error: %v", url, err)
 				continue
 			}
@@ -393,7 +393,7 @@ func xkcd(message *OctaafMessage) error {
 	image, err := scrapers.GetXKCD()
 
 	if err != nil {
-		message.Span.SetTag("error", err)
+		message.LogError("Failed to parse XKCD image: " + err.Error())
 		return message.Reply("Failed to parse XKCD image")
 	}
 
@@ -420,7 +420,9 @@ func quote(message *OctaafMessage) error {
 
 		if err != nil {
 			log.Errorf("Quote fetch error: %v", err)
-			quoteSpan.SetTag("error", err)
+			quoteSpan.SetTag("error", true)
+			quoteSpan.SetBaggageItem("error", err.Error())
+			message.LogError("Quote retrieval failure: " + err.Error())
 			return message.Reply("No quote found boi")
 		}
 
@@ -435,7 +437,9 @@ func quote(message *OctaafMessage) error {
 
 		if userErr != nil {
 			log.Errorf("Unable to find the user for id '%v' : %v", quote.UserID, userErr)
-			userSpan.SetTag("error", userErr)
+			userSpan.SetTag("error", true)
+			userSpan.SetBaggageItem("error", userErr.Error())
+			message.LogError(fmt.Sprintf("Unable to find the user for id '%v' : %v", quote.UserID, userErr.Error()))
 			return message.Reply(quote.Quote)
 		}
 
@@ -445,7 +449,7 @@ func quote(message *OctaafMessage) error {
 			img, err := trump.Order(assets.Trump, &settings.Trump, msg)
 
 			if err != nil {
-				log.Errorf("Presidential quote error: %v", err)
+				message.LogError("Presidential quote failure: " + err.Error())
 				return message.Reply("Unable to call send a presidential quote.")
 			}
 			return message.Reply(img)
@@ -460,7 +464,8 @@ func quote(message *OctaafMessage) error {
 
 	// Unable to store this quote
 	if message.ReplyToMessage.Text == "" {
-		quoteSpan.SetTag("error", "No quote found")
+		quoteSpan.SetTag("error", true)
+		quoteSpan.SetBaggageItem("error", "No quote found")
 		quoteSpan.Finish()
 		return message.Reply("No text found in the comment. Not saving the quote!")
 	}
@@ -474,7 +479,8 @@ func quote(message *OctaafMessage) error {
 
 	if err != nil {
 		log.Errorf("Unable to save quote '%v', error: %v", message.ReplyToMessage.Text, err)
-		quoteSpan.SetTag("error", err)
+		quoteSpan.SetTag("error", true)
+		quoteSpan.SetBaggageItem("error", err.Error())
 		return message.Reply("Unable to save the quote...")
 	}
 
@@ -491,7 +497,8 @@ func nextLaunch(message *OctaafMessage) error {
 	fetchSpan.Finish()
 
 	if err != nil {
-		fetchSpan.SetTag("error", err)
+		fetchSpan.SetTag("error", true)
+		fetchSpan.SetBaggageItem("error", err.Error())
 		return message.Reply("Unable to fetch launch data")
 	}
 
@@ -500,6 +507,7 @@ func nextLaunch(message *OctaafMessage) error {
 	launchJSON, err := ioutil.ReadAll(res.Body)
 
 	if err != nil {
+		message.LogError("Launch failure: " + err.Error())
 		return message.Reply("Unable to fetch launch data")
 	}
 
@@ -540,7 +548,7 @@ func kaliRank(message *OctaafMessage) error {
 	err := DB.Order("diff DESC").Limit(5).All(&kaliRank)
 
 	if err != nil {
-		log.Error("Unable to fetch kali rankings: ", err)
+		message.LogError("Kalirank failure: " + err.Error())
 		return message.Reply("Unable to fetch the kali rankings")
 	}
 
@@ -557,7 +565,7 @@ func iasip(message *OctaafMessage) error {
 
 	res, err := http.Get(server)
 	if err != nil {
-		log.Error("Unable to fetch IASIP quote: ", err)
+		message.LogError("IASIP retrieval failure: " + err.Error())
 		return message.Reply("Unable to fetch iasip quote...you goddamn bitch you..")
 	}
 
@@ -565,7 +573,7 @@ func iasip(message *OctaafMessage) error {
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
-		log.Error("Unable to fetch IASIP quote: ", err)
+		message.LogError("IASIP retrieval failure: " + err.Error())
 		return message.Reply("Unable to fetch iasip quote...you goddamn bitch you..")
 	}
 
@@ -658,8 +666,7 @@ func presidentialOrder(message *OctaafMessage) error {
 	span.Finish()
 
 	if err != nil {
-		log.Errorf("Unable to load image to buffer: %v", err)
-		span.SetTag("error", err)
+		message.LogError("Presidential order failure: " + err.Error())
 		return message.Reply("Unable to order dink")
 	}
 
@@ -679,7 +686,7 @@ func msgQuote(message *OctaafMessage) error {
 		err := quote.Search(DB, message.Chat.ID, quoteType)
 
 		if err != nil {
-			message.Span.SetTag("error", err)
+			message.LogError("Quote retrieval failure: " + err.Error())
 			return message.Reply("Unable to fetch a quote.")
 		}
 
@@ -714,7 +721,7 @@ func msgQuote(message *OctaafMessage) error {
 	err := DB.Save(&quote)
 
 	if err != nil {
-		message.Span.SetTag("error", err)
+		message.LogError("Quote save failure: " + err.Error())
 		return message.Reply("Unable to store the quote.")
 	}
 

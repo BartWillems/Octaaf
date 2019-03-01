@@ -86,7 +86,7 @@ func getKaliCheckers(message *OctaafMessage) error {
 	err := KalicheckerStats.Top(DB)
 
 	if err != nil || len(KalicheckerStats) == 0 {
-		log.Errorf("KALI ERROR: %v", err)
+		message.LogError("Checker error: " + err.Error())
 		return message.Reply("404 - No entries found. Maybe tomorrow?")
 	}
 
