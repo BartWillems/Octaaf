@@ -10,9 +10,9 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func getQuote() (models.Quote, string, error) {
+func getQuote(filter string) (models.Quote, string, error) {
 	quote := models.Quote{}
-	err := conn.Postgres.Where("chat_id = ?", conn.KaliID).Order("random()").Limit(1).First(&quote)
+	err := quote.Search(conn.Postgres, conn.KaliID, filter)
 
 	if err != nil {
 		return models.Quote{}, "", err
@@ -34,7 +34,7 @@ func getQuote() (models.Quote, string, error) {
 }
 
 func quote(c *gin.Context) {
-	quote, username, err := getQuote()
+	quote, username, err := getQuote(c.Query("filter"))
 
 	if err != nil {
 		c.JSON(500, gin.H{
@@ -50,7 +50,7 @@ func quote(c *gin.Context) {
 }
 
 func presidentialQuote(c *gin.Context) {
-	quote, username, err := getQuote()
+	quote, username, err := getQuote(c.Query("filter"))
 
 	if err != nil {
 		c.JSON(500, gin.H{
