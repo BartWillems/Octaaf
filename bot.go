@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"octaaf/jaeger"
-	"octaaf/markdown"
 	"octaaf/models"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -151,8 +151,8 @@ func getUser(userID int, chatID int64) (tgbotapi.ChatMember, error) {
 	return Octaaf.GetChatMember(config)
 }
 
-// Returns a username that could contain markdown characters
-func getUserNameUnsafe(userID int, chatID int64) (string, error) {
+// Returns a username for a user ID and a chat ID
+func getUserName(userID int, chatID int64) (string, error) {
 	user, err := getUser(userID, chatID)
 
 	if err != nil {
@@ -162,13 +162,20 @@ func getUserNameUnsafe(userID int, chatID int64) (string, error) {
 	return user.User.UserName, nil
 }
 
-// Returns a markdown escaped username
-func getUserName(userID int, chatID int64) (string, error) {
-	username, err := getUserNameUnsafe(userID, chatID)
+func getUserNames(userIDS []int, chatID int64) []string {
+	var users []string
 
-	if err != nil {
-		return "", err
+	var wg sync.WaitGroup
+	// Get the members' usernames
+	for _, userID := range userIDS {
+		wg.Add(1)
+		go func(userID int) {
+			defer wg.Done()
+			username, _ := getUserName(userID, chatID)
+			users = append(users, username)
+		}(userID)
 	}
 
-	return markdown.Escape(username), nil
+	wg.Wait()
+	return users
 }

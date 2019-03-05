@@ -19,7 +19,7 @@ func startReminder(reminder models.Reminder) {
 
 	reminder.Wait()
 
-	username, _ := getUserNameUnsafe(reminder.UserID, reminder.ChatID)
+	username, _ := getUserName(reminder.UserID, reminder.ChatID)
 
 	msg := tgbotapi.NewMessage(reminder.ChatID, fmt.Sprintf("@%v %v", username, reminder.Message))
 	msg.ReplyToMessageID = reminder.MessageID

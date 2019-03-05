@@ -142,6 +142,13 @@ func sendRoll(message *OctaafMessage) error {
 }
 
 func count(message *OctaafMessage) error {
+	// Get the 100K count (eg 5 for >=500k <600K)
+	major := int(message.MessageID / 1e5)
+
+	// Eg: 5 * 100K + 100K = 600K - messageID (eg 599K) < 5000
+	if (major*1e5+1e5)-message.MessageID < 5000 {
+		return message.Reply("Not now kimosabi")
+	}
 	return message.Reply(fmt.Sprintf("%v", message.MessageID))
 }
 
