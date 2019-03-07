@@ -24,6 +24,12 @@ type OctaafMessage struct {
 	KeyboardCloser bool // When true, close an open keyboard
 }
 
+// ReplyPlainText sends a message without parsing it as markdown
+func (message *OctaafMessage) ReplyPlainText(r interface{}) error {
+	message.IsMarkdown = false
+	return message.Reply(r)
+}
+
 // Reply to the current message
 func (message *OctaafMessage) Reply(r interface{}) error {
 	return message.ReplyTo(r, message.MessageID)
@@ -70,7 +76,9 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 	}
 
 	if err != nil {
-		span.SetTag("error", err)
+		log.Error(err)
+		span.SetTag("error", true)
+		span.SetBaggageItem("error", err.Error())
 	}
 
 	return err

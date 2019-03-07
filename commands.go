@@ -80,7 +80,7 @@ func all(message *OctaafMessage) error {
 
 	wg.Wait()
 	usernamesSpan.Finish()
-	return message.Reply(fmt.Sprintf("%v %v", response, message.CommandArguments()))
+	return message.ReplyPlainText(fmt.Sprintf("%v %v", response, message.CommandArguments()))
 }
 
 func remind(message *OctaafMessage) error {
