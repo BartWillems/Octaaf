@@ -1,4 +1,5 @@
-version: "2"
+---
+version: "3"
 
 services:
   octaaf:
@@ -27,6 +28,8 @@ services:
     environment:
       POSTGRES_DB: "octaaf_development"
       POSTGRES_USER: "octaaf"
+    ports:
+      - 5432:5432
 
   jaeger:
     image: jaegertracing/all-in-one:1.8
@@ -40,3 +43,15 @@ services:
       - 16686:16686
       - 14268:14268
       - 9411:9411
+
+  grafana:
+    image: grafana/grafana:6.0.1
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "4uCEmZweC9onJR9UbH3BGJVnK9G9U"
+    ports:
+      - "8030:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - ./assets/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./assets/grafana/datasources:/etc/grafana/provisioning/datasources
