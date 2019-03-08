@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "iteration": 1552049577651,
+  "iteration": 1552064858260,
   "links": [],
   "panels": [
     {
@@ -513,6 +513,8 @@
         "header": "",
         "percentage": true,
         "show": true,
+        "sort": "total",
+        "sortDesc": true,
         "values": true
       },
       "legendType": "Right side",
@@ -535,7 +537,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Dieter\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 218403767\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Dieter\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $dieter_id\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -574,7 +576,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -584,7 +586,7 @@
               "params": [
                 "user_id",
                 "=",
-                "218403767"
+                "$dieter_id"
               ],
               "type": "expression"
             }
@@ -603,7 +605,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Gerben\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 189674713\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Gerben\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $gerben_id\nGROUP BY 1\nORDER BY 1",
           "refId": "B",
           "select": [
             [
@@ -642,7 +644,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -652,7 +654,7 @@
               "params": [
                 "user_id",
                 "=",
-                "189674713"
+                "$gerben_id"
               ],
               "type": "expression"
             }
@@ -671,7 +673,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Bart\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 135502440\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Bart\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $bart_id\nGROUP BY 1\nORDER BY 1",
           "refId": "C",
           "select": [
             [
@@ -710,7 +712,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -720,7 +722,7 @@
               "params": [
                 "user_id",
                 "=",
-                "135502440"
+                "$bart_id"
               ],
               "type": "expression"
             }
@@ -739,7 +741,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Kenny\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 172179034\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Kenny\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $kenny_id\nGROUP BY 1\nORDER BY 1",
           "refId": "D",
           "select": [
             [
@@ -778,7 +780,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -788,7 +790,7 @@
               "params": [
                 "user_id",
                 "=",
-                "172179034"
+                "$kenny_id"
               ],
               "type": "expression"
             }
@@ -807,7 +809,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Tillo\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 145717123\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Tillo\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $tillo_id\nGROUP BY 1\nORDER BY 1",
           "refId": "E",
           "select": [
             [
@@ -846,7 +848,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -856,7 +858,7 @@
               "params": [
                 "user_id",
                 "=",
-                "145717123"
+                "$tillo_id"
               ],
               "type": "expression"
             }
@@ -875,7 +877,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Hannes\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 213583950\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Hannes\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $hannes_id\nGROUP BY 1\nORDER BY 1",
           "refId": "G",
           "select": [
             [
@@ -914,7 +916,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -924,7 +926,7 @@
               "params": [
                 "user_id",
                 "=",
-                "213583950"
+                "$hannes_id"
               ],
               "type": "expression"
             }
@@ -943,7 +945,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Octaaf\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 502563984\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Octaaf\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id AND\n  user_id = $octaaf_id\nGROUP BY 1\nORDER BY 1",
           "refId": "F",
           "select": [
             [
@@ -982,7 +984,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             },
@@ -992,7 +994,7 @@
               "params": [
                 "user_id",
                 "=",
-                "502563984"
+                "$octaaf_id"
               ],
               "type": "expression"
             }
@@ -1027,6 +1029,8 @@
         "header": "",
         "percentage": true,
         "show": true,
+        "sort": "total",
+        "sortDesc": true,
         "values": true
       },
       "legendType": "Right side",
@@ -1049,7 +1053,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Dieter\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 218403767\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Dieter\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = $dieter_id\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -1088,7 +1092,7 @@
               "params": [
                 "user_id",
                 "=",
-                "218403767"
+                "$dieter_id"
               ],
               "type": "expression"
             }
@@ -1107,7 +1111,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Gerben\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 189674713\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Gerben\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = $gerben_id\nGROUP BY 1\nORDER BY 1",
           "refId": "B",
           "select": [
             [
@@ -1146,7 +1150,7 @@
               "params": [
                 "user_id",
                 "=",
-                "189674713"
+                "$gerben_id"
               ],
               "type": "expression"
             }
@@ -1165,7 +1169,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Bart\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 135502440\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Bart\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = $bart_id\nGROUP BY 1\nORDER BY 1",
           "refId": "C",
           "select": [
             [
@@ -1204,7 +1208,7 @@
               "params": [
                 "user_id",
                 "=",
-                "135502440"
+                "$bart_id"
               ],
               "type": "expression"
             }
@@ -1223,7 +1227,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Kenny\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 172179034\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Kenny\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = $kenny_id\nGROUP BY 1\nORDER BY 1",
           "refId": "D",
           "select": [
             [
@@ -1262,7 +1266,7 @@
               "params": [
                 "user_id",
                 "=",
-                "172179034"
+                "$kenny_id"
               ],
               "type": "expression"
             }
@@ -1281,7 +1285,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Tillo\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 145717123\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Tillo\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = $tillo_id\nGROUP BY 1\nORDER BY 1",
           "refId": "E",
           "select": [
             [
@@ -1320,7 +1324,7 @@
               "params": [
                 "user_id",
                 "=",
-                "145717123"
+                "$tillo_id"
               ],
               "type": "expression"
             }
@@ -1339,7 +1343,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Hannes\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 213583950\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Hannes\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = $hannes_id\nGROUP BY 1\nORDER BY 1",
           "refId": "F",
           "select": [
             [
@@ -1378,7 +1382,7 @@
               "params": [
                 "user_id",
                 "=",
-                "213583950"
+                "$hannes_id"
               ],
               "type": "expression"
             }
@@ -1414,6 +1418,8 @@
         "header": "",
         "percentage": true,
         "show": true,
+        "sort": "total",
+        "sortDesc": true,
         "values": true
       },
       "legendType": "Right side",
@@ -1436,7 +1442,7 @@
           ],
           "metricColumn": "type",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  type AS metric,\n  count(chat_id) AS \"chat_id\"\nFROM msgquotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629\nGROUP BY 1,2\nORDER BY 1,2",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  type AS metric,\n  count(chat_id) AS \"chat_id\"\nFROM msgquotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id\nGROUP BY 1,2\nORDER BY 1,2",
           "refId": "A",
           "select": [
             [
@@ -1475,7 +1481,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             }
@@ -1494,7 +1500,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(chat_id) AS \"text_quote\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(chat_id) AS \"text_quote\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = $kali_id\nGROUP BY 1\nORDER BY 1",
           "refId": "B",
           "select": [
             [
@@ -1533,7 +1539,7 @@
               "params": [
                 "chat_id",
                 "=",
-                "-1001090867629"
+                "$kali_id"
               ],
               "type": "expression"
             }
@@ -1577,6 +1583,158 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "text": "-1001090867629",
+          "value": "-1001090867629"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "kali_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "-1001090867629",
+            "value": "-1001090867629"
+          }
+        ],
+        "query": "-1001090867629",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "218403767",
+          "value": "218403767"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "dieter_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "218403767",
+            "value": "218403767"
+          }
+        ],
+        "query": "218403767",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "189674713",
+          "value": "189674713"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "gerben_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "189674713",
+            "value": "189674713"
+          }
+        ],
+        "query": "189674713",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "135502440",
+          "value": "135502440"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "bart_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "135502440",
+            "value": "135502440"
+          }
+        ],
+        "query": "135502440",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "172179034",
+          "value": "172179034"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "kenny_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "172179034",
+            "value": "172179034"
+          }
+        ],
+        "query": "172179034",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "145717123",
+          "value": "145717123"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "tillo_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "145717123",
+            "value": "145717123"
+          }
+        ],
+        "query": "145717123",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "213583950",
+          "value": "213583950"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "hannes_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "213583950",
+            "value": "213583950"
+          }
+        ],
+        "query": "213583950",
+        "skipUrlSync": false,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "502563984",
+          "value": "502563984"
+        },
+        "hide": 2,
+        "label": null,
+        "name": "octaaf_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "502563984",
+            "value": "502563984"
+          }
+        ],
+        "query": "502563984",
+        "skipUrlSync": false,
+        "type": "constant"
       }
     ]
   },
@@ -1613,5 +1771,5 @@
   "timezone": "",
   "title": "KaliKillers",
   "uid": "ssEanTCmk",
-  "version": 1
+  "version": 3
 }
