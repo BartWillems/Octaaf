@@ -492,49 +492,6 @@
       "type": "gauge"
     },
     {
-      "content": "\n| ID        | User   |\n|-----------|--------|\n| 218403767 | Dieter |\n| 189674713 | Gerben |\n| 135502440 | Bart   |\n| 172179034 | Kenny  |\n| 145717123 | Tillo  |\n| 502563984 | Octaaf |",
-      "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 0,
-        "y": 16
-      },
-      "id": 13,
-      "links": [],
-      "mode": "markdown",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": false,
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "User IDs",
-      "type": "text"
-    },
-    {
       "aliasColors": {},
       "breakPoint": "50%",
       "cacheTimeout": null,
@@ -547,7 +504,7 @@
       "gridPos": {
         "h": 7,
         "w": 7,
-        "x": 3,
+        "x": 0,
         "y": 16
       },
       "id": 14,
@@ -576,9 +533,9 @@
               "type": "time"
             }
           ],
-          "metricColumn": "text(user_id)",
+          "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  text(user_id) AS metric,\n  count(user_id) AS \"text(user_id)\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629\nGROUP BY 1,2\nORDER BY 1,2",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Dieter\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 218403767\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -596,7 +553,7 @@
               },
               {
                 "params": [
-                  "text(user_id)"
+                  "Dieter"
                 ],
                 "type": "alias"
               }
@@ -620,6 +577,424 @@
                 "-1001090867629"
               ],
               "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "218403767"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Gerben\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 189674713\nGROUP BY 1\nORDER BY 1",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Gerben"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "189674713"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Bart\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 135502440\nGROUP BY 1\nORDER BY 1",
+          "refId": "C",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Bart"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "135502440"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Kenny\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 172179034\nGROUP BY 1\nORDER BY 1",
+          "refId": "D",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Kenny"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "172179034"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Tillo\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 145717123\nGROUP BY 1\nORDER BY 1",
+          "refId": "E",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Tillo"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "145717123"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Hannes\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 213583950\nGROUP BY 1\nORDER BY 1",
+          "refId": "G",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Hannes"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "213583950"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Octaaf\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629 AND\n  user_id = 502563984\nGROUP BY 1\nORDER BY 1",
+          "refId": "F",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Octaaf"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "502563984"
+              ],
+              "type": "expression"
             }
           ]
         }
@@ -638,16 +1013,15 @@
         "label": "Others",
         "threshold": 0
       },
-      "decimals": 0,
       "fontSize": "80%",
       "format": "none",
       "gridPos": {
         "h": 7,
         "w": 7,
-        "x": 10,
+        "x": 7,
         "y": 16
       },
-      "id": 11,
+      "id": 16,
       "interval": null,
       "legend": {
         "header": "",
@@ -660,7 +1034,7 @@
       "maxDataPoints": 3,
       "nullPointMode": "connected",
       "pieType": "pie",
-      "strokeWidth": "1",
+      "strokeWidth": 1,
       "targets": [
         {
           "format": "time_series",
@@ -673,9 +1047,9 @@
               "type": "time"
             }
           ],
-          "metricColumn": "text(user_id)",
+          "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  text(user_id) AS metric,\n  count(user_id) AS \"user_id\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at)\nGROUP BY 1,2\nORDER BY 1,2",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Dieter\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 218403767\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -693,7 +1067,7 @@
               },
               {
                 "params": [
-                  "user_id"
+                  "Dieter"
                 ],
                 "type": "alias"
               }
@@ -707,13 +1081,313 @@
               "name": "$__timeFilter",
               "params": [],
               "type": "macro"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "218403767"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Gerben\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 189674713\nGROUP BY 1\nORDER BY 1",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Gerben"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "kalicheckers",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "189674713"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Bart\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 135502440\nGROUP BY 1\nORDER BY 1",
+          "refId": "C",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Bart"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "kalicheckers",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "135502440"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Kenny\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 172179034\nGROUP BY 1\nORDER BY 1",
+          "refId": "D",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Kenny"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "kalicheckers",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "172179034"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Tillo\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 145717123\nGROUP BY 1\nORDER BY 1",
+          "refId": "E",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Tillo"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "kalicheckers",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "145717123"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(user_id) AS \"Hannes\"\nFROM kalicheckers\nWHERE\n  $__timeFilter(created_at) AND\n  user_id = 213583950\nGROUP BY 1\nORDER BY 1",
+          "refId": "F",
+          "select": [
+            [
+              {
+                "params": [
+                  "user_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Hannes"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "kalicheckers",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int4",
+              "name": "",
+              "params": [
+                "user_id",
+                "=",
+                "213583950"
+              ],
+              "type": "expression"
             }
           ]
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Check per User",
+      "title": "Check-ins per user",
       "type": "grafana-piechart-panel",
       "valueName": "total"
     },
@@ -731,7 +1405,7 @@
       "gridPos": {
         "h": 7,
         "w": 7,
-        "x": 17,
+        "x": 14,
         "y": 16
       },
       "id": 15,
@@ -762,7 +1436,7 @@
           ],
           "metricColumn": "type",
           "rawQuery": false,
-          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  type AS metric,\n  count(chat_id) AS \"chat_id\"\nFROM msgquotes\nWHERE\n  $__timeFilter(created_at)\nGROUP BY 1,2\nORDER BY 1,2",
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  type AS metric,\n  count(chat_id) AS \"chat_id\"\nFROM msgquotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629\nGROUP BY 1,2\nORDER BY 1,2",
           "refId": "A",
           "select": [
             [
@@ -794,13 +1468,81 @@
               "name": "$__timeFilter",
               "params": [],
               "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
+            }
+          ]
+        },
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1h",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(created_at,1h),\n  count(chat_id) AS \"text_quote\"\nFROM quotes\nWHERE\n  $__timeFilter(created_at) AND\n  chat_id = -1001090867629\nGROUP BY 1\nORDER BY 1",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "chat_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "text_quote"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "quotes",
+          "timeColumn": "created_at",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "int8",
+              "name": "",
+              "params": [
+                "chat_id",
+                "=",
+                "-1001090867629"
+              ],
+              "type": "expression"
             }
           ]
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Other Quotes",
+      "title": "#Quotes",
       "type": "grafana-piechart-panel",
       "valueName": "total"
     }
