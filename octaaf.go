@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"octaaf/models"
+	"octaaf/scrapers"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	opentracing "github.com/opentracing/opentracing-go"
@@ -73,6 +74,11 @@ func (message *OctaafMessage) ReplyTo(r interface{}, messageID int) error {
 		msg.ReplyToMessageID = message.MessageID
 		_, err = Octaaf.Send(msg)
 		span.SetTag("type", "forward")
+	case scrapers.Location:
+		msg := tgbotapi.NewLocation(message.Chat.ID, resp.Lat, resp.Lng)
+		msg.ReplyToMessageID = message.MessageID
+		_, err = Octaaf.Send(msg)
+		span.SetTag("type", "location")
 	}
 
 	if err != nil {

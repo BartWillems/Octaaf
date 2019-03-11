@@ -107,8 +107,6 @@ func handle(m *tgbotapi.Message) {
 			doubt(message)
 		case "kalirank":
 			kaliRank(message)
-		case "iasip":
-			iasip(message)
 		case "remind_me":
 			remind(message)
 		case "care":

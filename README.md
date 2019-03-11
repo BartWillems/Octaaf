@@ -6,36 +6,35 @@ A telegram bot written in Go
 
 ## Commands
 
-- /all - Send a message to all active members in a group
-- /audio_quote - Like /quote, but for audio
-- /bodegem - A place that is real and exists
-- /care - Notify the participants that you don't give a hecky.
-- /changelog - View the Octaaf changelog
-- /count - Get your room's current message count
-- /checkrepublic - **ENTERPRISE ONLY:** fetch kali checkers
-- /doubt - When in doubt...
-- /iasip - Get a random It's Always Sunny In Philadelphia quote
-- /img - Search possible NSFW images
-- /img_sfw - Search possible SFW images
-- /img_quote - Like /quote, but for images
-- /kalirank - **ENTERPRISE ONLY:** Show the kali rankings
-- /m8ball - Let fate decide your future
-- /more - MORE IMAGES
-- /next_launch - Show the next 5 rocket launches
-- /pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
-- /presidential_order - Launch a new presidential order
-- /presidential_quote - Show a presidential quote
-- /quote - Get or store random kali quotes
-- /remind_me - Remind me in a given time
-- /roll - Praise kek
-- /search - Search stuff on DuckDuckGo with safe search on
-- /search_nsfw - Search dirty stuff on DuckDuckGo
-- /stallman - I'd just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux.
-- /vod_quot - Like /quote, but for videos
-- /weather - Get the weather of a city
-- /what - Explains what something is
-- /where - Find places on earth
-- /xkcd - Get a random XKCD comic
+- all - Send a message to all active members in a group
+- audio_quote - Like /quote, but for audio
+- bodegem - A place that is real and exists
+- care - Notify the participants that you don't give a hecky.
+- changelog - View the Octaaf changelog
+- count - Get your room's current message count
+- checkrepublic - **ENTERPRISE ONLY:** fetch kali checkers
+- doubt - When in doubt...
+- img - Search possible NSFW images
+- img_sfw - Search possible SFW images
+- img_quote - Like /quote, but for images
+- kalirank - **ENTERPRISE ONLY:** Show the kali rankings
+- m8ball - Let fate decide your future
+- more - MORE IMAGES
+- next_launch - Show the next 5 rocket launches
+- pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
+- presidential_order - Launch a new presidential order
+- presidential_quote - Show a presidential quote
+- quote - Get or store random kali quotes
+- remind_me - Remind me in a given time
+- roll - Praise kek
+- search - Search stuff on DuckDuckGo with safe search on
+- search_nsfw - Search dirty stuff on DuckDuckGo
+- stallman - I'd just like to interject for a moment. What you’re referring to as Linux, is in fact, GNU/Linux, or as I’ve recently taken to calling it, GNU plus Linux.
+- vod_quot - Like /quote, but for videos
+- weather - Get the weather of a city
+- what - Explains what something is
+- where - Find places on earth
+- xkcd - Get a random XKCD comic
 
 ## Developing
 
@@ -53,7 +52,6 @@ A telegram bot written in Go
 1. a google api key _(optional)_
 1. `cp config/settings.toml.dist config/settings.toml`
 1. Enter the correct values in the settings file
-1. _(Optional)_ <https://github.com/tools/godep>
 
 #### But I don't know how to computer 😨😨😨
 
@@ -65,9 +63,10 @@ A telegram bot written in Go
 
 ```bash
 # Deploying the latest stable version
-docker service create \
+docker create \
     --name octaaf \
     --network "host" \
+    --restart "always" \
     --env ENVIRONMENT="production" \
     --env TELEGRAM_API_KEY="12345678:AAAAAAAA...." \
     --env DATABASE_URI="postgres://username:password@127.0.0.1:5432/octaaf_development?sslmode=disable" \

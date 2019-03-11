@@ -21,7 +21,6 @@ import (
 
 	"github.com/disintegration/imaging"
 	humanize "github.com/dustin/go-humanize"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/gobuffalo/envy"
 	"github.com/olebedev/when"
 	"github.com/olebedev/when/rules/common"
@@ -188,10 +187,7 @@ func m8Ball(message *OctaafMessage) error {
 }
 
 func sendBodegem(message *OctaafMessage) error {
-	msg := tgbotapi.NewLocation(message.Chat.ID, 50.8614773, 4.211304)
-	msg.ReplyToMessageID = message.MessageID
-	_, err := Octaaf.Send(msg)
-	return err
+	return message.Reply(scrapers.Location{Lat: 50.8614773, Lng: 4.211304})
 }
 
 func where(message *OctaafMessage) error {
@@ -208,10 +204,7 @@ func where(message *OctaafMessage) error {
 		return message.Reply("This place does not exist 🙈🙈🙈🤔🤔�")
 	}
 
-	msg := tgbotapi.NewLocation(message.Chat.ID, location.Lat, location.Lng)
-	msg.ReplyToMessageID = message.MessageID
-	_, err := Octaaf.Send(msg)
-	return err
+	return message.Reply(location)
 }
 
 func what(message *OctaafMessage) error {
@@ -565,26 +558,6 @@ func kaliRank(message *OctaafMessage) error {
 	}
 
 	return message.Reply(msg)
-}
-
-func iasip(message *OctaafMessage) error {
-	server := "http://159.89.14.97:6969"
-
-	res, err := http.Get(server)
-	if err != nil {
-		message.LogError("IASIP retrieval failure: " + err.Error())
-		return message.Reply("Unable to fetch iasip quote...you goddamn bitch you..")
-	}
-
-	defer res.Body.Close()
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		message.LogError("IASIP retrieval failure: " + err.Error())
-		return message.Reply("Unable to fetch iasip quote...you goddamn bitch you..")
-	}
-
-	return message.Reply(string(body))
 }
 
 func care(message *OctaafMessage) error {

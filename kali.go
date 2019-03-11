@@ -50,11 +50,14 @@ func setKaliCount() {
 	count := models.MessageCount{
 		Count: KaliCount,
 		Diff:  0,
+		// Yesterday's time
+		CreatedAt: time.Now().AddDate(0, 0, -1),
+		UpdatedAt: time.Now().AddDate(0, 0, -1),
 	}
 
 	err := DB.Save(&count)
 	if err != nil {
-		log.Error("Unable to save today's kalicount: ", err)
+		log.Errorf("Unable to save today's kalicount: %v, count was: %v", err, count.Diff)
 	}
 }
 
@@ -101,7 +104,7 @@ func getKaliCheckers(message *OctaafMessage) error {
 			continue
 		}
 
-		response += fmt.Sprintf("*%v:* %v - @%v \n", index+1, stat.Count, username)
+		response += fmt.Sprintf("*%v:* %v - @%v \n", index+1, stat.Count, markdown.Escape(username))
 	}
 
 	return message.Reply(response)
