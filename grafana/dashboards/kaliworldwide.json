@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
+  "iteration": 1552398363366,
   "links": [],
   "panels": [
     {
@@ -384,7 +384,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-6M",
     "to": "now"
   },
   "timepicker": {
@@ -415,5 +415,5 @@
   "timezone": "",
   "title": "KaliWorldWide",
   "uid": "VdboQuCmz",
-  "version": 3
+  "version": 4
 }
