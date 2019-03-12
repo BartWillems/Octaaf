@@ -46,11 +46,11 @@ services:
     image: grafana/grafana:6.0.1
     environment:
       GF_SECURITY_ADMIN_PASSWORD: "4uCEmZweC9onJR9UbH3BGJVnK9G9U"
-      GF_INSTALL_PLUGINS: "grafana-piechart-panel"
+      GF_INSTALL_PLUGINS: "grafana-piechart-panel,grafana-worldmap-panel"
     ports:
       - "8030:3000"
     depends_on:
       - postgres
     volumes:
-      - ./assets/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./assets/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
