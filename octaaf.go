@@ -10,10 +10,55 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+type messageType string
+
 const (
 	development = "development"
 	production  = "production"
 )
+
+const (
+	audio     messageType = "audio"
+	animation messageType = "animation"
+	location  messageType = "location"
+	photo     messageType = "photo"
+	text      messageType = "text"
+	video     messageType = "video"
+	videonote messageType = "video_note"
+	voice     messageType = "voice"
+)
+
+func getMessageType(message *OctaafMessage) messageType {
+	if message.Audio != nil {
+		return audio
+	}
+
+	if message.Animation != nil {
+		return animation
+	}
+
+	if message.Location != nil {
+		return location
+	}
+
+	if message.Photo != nil {
+		return photo
+	}
+
+	if message.Video != nil {
+		return video
+	}
+
+	if message.VideoNote != nil {
+		return videonote
+	}
+
+	if message.Voice != nil {
+		return voice
+	}
+
+	return text
+}
 
 // OctaafMessage extends on the tgbotapi Message
 // This is so we can trace the message throughout the application

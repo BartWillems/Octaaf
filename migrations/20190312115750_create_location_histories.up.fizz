@@ -1,0 +1,9 @@
+create_table("location_histories") {
+	t.Column("id", "uuid", {primary: true})
+	t.Column("message_id", "integer", {})
+	t.Column("chat_id", "bigint", {})
+	t.Column("user_id", "integer", {})
+	t.Column("lat", "decimal", {})
+	t.Column("lng", "decimal", {})
+	t.Column("name", "text", {})
+}

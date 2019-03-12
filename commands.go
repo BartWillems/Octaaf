@@ -204,6 +204,15 @@ func where(message *OctaafMessage) error {
 		return message.Reply("This place does not exist 🙈🙈🙈🤔🤔�")
 	}
 
+	go DB.Save(&models.LocationHistory{
+		ChatID:    message.Chat.ID,
+		MessageID: message.MessageID,
+		UserID:    message.From.ID,
+		Lat:       location.Lat,
+		Lng:       location.Lng,
+		Name:      message.CommandArguments(),
+	})
+
 	return message.Reply(location)
 }
 

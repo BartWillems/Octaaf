@@ -1,0 +1,3 @@
+drop_index("quotes", "chat_id")
+drop_index("message_counts", "diff")
+drop_index("location_histories", "chat_id")
