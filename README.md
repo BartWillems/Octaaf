@@ -11,12 +11,13 @@ A telegram bot written in Go
 - bodegem - A place that is real and exists
 - care - Notify the participants that you don't give a hecky.
 - changelog - View the Octaaf changelog
-- count - Get your room's current message count
 - checkrepublic - **ENTERPRISE ONLY:** fetch kali checkers
+- count - Get your room's current message count
 - doubt - When in doubt...
-- img - Search possible NSFW images
-- img_sfw - Search possible SFW images
+- img - search possible nsfw images
 - img_quote - Like /quote, but for images
+- img_sfw - Search possible SFW images
+- issues - show open gitlab issues for this project
 - kalirank - **ENTERPRISE ONLY:** Show the kali rankings
 - m8ball - Let fate decide your future
 - more - MORE IMAGES

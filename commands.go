@@ -35,7 +35,34 @@ func changelog(message *OctaafMessage) error {
 		return message.Reply("Current version not found, check the changelog here: " + GitURI + "/tags")
 	}
 
-	return message.Reply(fmt.Sprintf("%v/tags/%v", GitURI, Version))
+	fetchSpan := message.Span.Tracer().StartSpan(
+		"Fetching release info...",
+		opentracing.ChildOf(message.Span.Context()),
+	)
+	releaseUrl := "https://gitlab.com/api/v4/projects/bartwillems%2Foctaaf/repository/tags/" + Version
+	res, err := http.Get(releaseUrl)
+
+	fetchSpan.Finish()
+
+	if err != nil {
+		fetchSpan.SetTag("error", true)
+		fetchSpan.SetBaggageItem("error", err.Error())
+		return message.Reply(fmt.Sprintf("Unable to fetch release info: %v", releaseUrl))
+	}
+
+	defer res.Body.Close()
+
+	releaseJSON, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		message.LogError("Changelog failure: " + err.Error())
+		return message.Reply("Unable to fetch release info")
+	}
+
+	release := gjson.ParseBytes(releaseJSON)
+
+	msg := fmt.Sprintf("*%v*\n%v", release.Get("release.tag_name").String(), release.Get("release.description").String())
+	return message.Reply(fmt.Sprintf("%v\n%v/tags/%v", msg, GitURI, Version))
 }
 
 func all(message *OctaafMessage) error {
@@ -520,7 +547,7 @@ func nextLaunch(message *OctaafMessage) error {
 		return message.Reply("Unable to fetch launch data")
 	}
 
-	launches := gjson.Get(string(launchJSON), "launches").Array()
+	launches := gjson.GetBytes(launchJSON, "launches").Array()
 
 	var msg = "*Next 5 launches:*"
 
@@ -542,6 +569,60 @@ func nextLaunch(message *OctaafMessage) error {
 
 		if len(vods) > 0 {
 			msg += "\n    " + markdown.Escape(vods[0].String())
+		}
+	}
+
+	return message.Reply(msg)
+}
+
+func gitlabIssues(message *OctaafMessage) error {
+	fetchSpan := message.Span.Tracer().StartSpan(
+		"Fetching gitlab issues...",
+		opentracing.ChildOf(message.Span.Context()),
+	)
+	res, err := http.Get("https://gitlab.com/api/v4/projects/bartwillems%2Foctaaf/issues?state=opened")
+
+	fetchSpan.Finish()
+
+	if err != nil {
+		fetchSpan.SetTag("error", true)
+		fetchSpan.SetBaggageItem("error", err.Error())
+		return message.Reply("Unable to fetch gitlab issues")
+	}
+
+	defer res.Body.Close()
+
+	issuesJSON, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		message.LogError("Issues failure: " + err.Error())
+		return message.Reply("Unable to fetch gitlab issues")
+	}
+
+	issues := gjson.ParseBytes(issuesJSON).Array()
+
+	var msg = "*Open Gitlab Issues:*"
+
+	layout := "2006-01-02T15:04:05.000Z"
+
+	for _, issue := range issues {
+		idStr := issue.Get("iid").String()
+		urlStr := issue.Get("web_url").String()
+		titleStr := issue.Get("title").String()
+		authorStr := issue.Get("author.name").String()
+		whenStr := issue.Get("created_at").String()
+		upvoteStr := issue.Get("upvotes").String()
+		downvoteStr := issue.Get("downvotes").String()
+		noteStr := issue.Get("user_notes_count").String()
+
+		msg += fmt.Sprintf("\n*#%v*: [%v](%v)\n   👍%v  👎%v  💬%v", idStr, titleStr, urlStr, upvoteStr, downvoteStr, noteStr)
+		msg += fmt.Sprintf("\n	  _Reported by %v_", authorStr)
+
+		when, err := time.Parse(layout, whenStr)
+		if err != nil {
+			msg += fmt.Sprintf("\n	  _Opened %v_", whenStr)
+		} else {
+			msg += fmt.Sprintf("\n	  _Opened %v_", markdown.Cursive(humanize.Time(when)))
 		}
 	}
 
