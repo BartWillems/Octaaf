@@ -103,6 +103,8 @@ func handle(m *tgbotapi.Message) {
 			quote(message)
 		case "next_launch":
 			nextLaunch(message)
+		case "issues":
+			gitlabIssues(message)
 		case "doubt":
 			doubt(message)
 		case "kalirank":
