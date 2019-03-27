@@ -13,7 +13,7 @@ test:
 
 build:
   stage: build
-  image: golang:1.11
+  image: golang:1.12
   artifacts:
     paths:
       - octaaf
