@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"octaaf/kcoin/rewards"
 	"octaaf/markdown"
 	"octaaf/models"
 	"strconv"
@@ -32,6 +33,7 @@ func kaliHandler(message *OctaafMessage) {
 	if IsCheckinTime && (strings.Contains(strings.ToLower(message.Text), "check") || strings.ContainsAny(message.Text, "✅✔️☑️")) {
 		log.Infof("Random checker found: %v", message.From.ID)
 		Redis.SAdd(KaliCheckersKey, message.From.ID)
+		go rewards.StoreUser(Redis, message.Chat.ID, message.From.ID, "checkin")
 		go message.Reply("👌")
 	}
 
@@ -126,4 +128,6 @@ func checkIn() {
 	sendGlobal("Checking complete.")
 	IsCheckinTime = false
 	saveKaliCheckers()
+
+	rewards.RewardUsers(Redis, "checkin")
 }

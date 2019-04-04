@@ -17,7 +17,7 @@ type walletError struct {
 func Wallet(message *tgbotapi.Message, span opentracing.Span) (kalicoin.Wallet, error) {
 	var wallet kalicoin.Wallet
 	var wError walletError
-	_, err := getClient().
+	_, err := GetClient().
 		Get("wallets/").
 		// TODO: Add Jaeger headers
 		Path("group/").

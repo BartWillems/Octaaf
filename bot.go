@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"octaaf/jaeger"
 	"octaaf/kcoin"
+	"octaaf/kcoin/rewards"
 	"octaaf/models"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	opentracing "github.com/opentracing/opentracing-go"
@@ -70,6 +72,14 @@ func handle(m *tgbotapi.Message) {
 	transactionSucceeded := true
 	if settings.Kalicoin.Enabled {
 		transactionSucceeded, err = kcoin.HandleTransaction(message.Message, message.Span)
+
+		if time.Now().Hour() == 13 && time.Now().Minute() == 37 && message.Text == "1337" {
+			go rewards.StoreUser(Redis, message.Chat.ID, message.From.ID, "kalivent")
+		}
+
+		if time.Now().Hour() == 16 && time.Now().Minute() == 20 && message.Text == "420" {
+			go rewards.StoreUser(Redis, message.Chat.ID, message.From.ID, "kalivent")
+		}
 	}
 
 	if !transactionSucceeded {
