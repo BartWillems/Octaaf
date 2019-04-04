@@ -11,7 +11,11 @@ ENV ENVIRONMENT="development" \
     JAEGER_AGENT_HOST="localhost" \
     JAEGER_AGENT_PORT="6831" \
     TRUMP_FONT_PATH="/usr/share/fonts/truetype/ubuntu/Ubuntu-LI.ttf" \
-    TZ="Europe/Brussels"
+    TZ="Europe/Brussels" \
+    KALICOIN_ENABLED="true" \
+    KALICOIN_URI="http://127.0.0.1:8000" \
+    KALICOIN_USERNAME="octaaf" \
+    KALICOIN_PASSWORD="secret"
 
 RUN apt update && \
     apt install -y --no-install-recommends fonts-ubuntu ca-certificates tzdata && \

@@ -3,6 +3,7 @@ package main
 import (
 	"octaaf/cache"
 	"octaaf/jaeger"
+	"octaaf/kcoin"
 	"octaaf/web"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -49,6 +50,10 @@ func main() {
 	err = initBot()
 	if err != nil {
 		log.Fatalf("Telegram connection error: %v", err)
+	}
+
+	if settings.Kalicoin.Enabled {
+		kcoin.InitConfig(settings.Kalicoin)
 	}
 
 	go loadReminders()

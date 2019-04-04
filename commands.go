@@ -39,15 +39,15 @@ func changelog(message *OctaafMessage) error {
 		"Fetching release info...",
 		opentracing.ChildOf(message.Span.Context()),
 	)
-	releaseUrl := "https://gitlab.com/api/v4/projects/bartwillems%2Foctaaf/repository/tags/" + Version
-	res, err := http.Get(releaseUrl)
+	releaseURL := "https://gitlab.com/api/v4/projects/bartwillems%2Foctaaf/repository/tags/" + Version
+	res, err := http.Get(releaseURL)
 
 	fetchSpan.Finish()
 
 	if err != nil {
 		fetchSpan.SetTag("error", true)
 		fetchSpan.SetBaggageItem("error", err.Error())
-		return message.Reply(fmt.Sprintf("Unable to fetch release info: %v", releaseUrl))
+		return message.Reply(fmt.Sprintf("Unable to fetch release info: %v", releaseURL))
 	}
 
 	defer res.Body.Close()

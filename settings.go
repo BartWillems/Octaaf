@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"octaaf/jaeger"
+	"octaaf/kcoin"
 	"octaaf/trump"
 
 	env "github.com/BartWillems/go-env"
@@ -15,6 +16,7 @@ import (
 type Settings struct {
 	Environment string `env:"ENVIRONMENT"`
 
+	Kalicoin kcoin.Config
 	Telegram telegram
 	Database database
 	Redis    redis

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"octaaf/jaeger"
+	"octaaf/kcoin"
 	"octaaf/models"
 	"os"
 	"os/signal"
@@ -65,60 +66,18 @@ func handle(m *tgbotapi.Message) {
 
 	go kaliHandler(message)
 
-	if message.IsCommand() {
-		message.Span.SetOperationName(fmt.Sprintf("Command /%v", message.Command()))
-		message.Span.SetTag("is-command", true)
-		message.Span.SetTag("telegram-command", message.Command())
-		message.Span.SetTag("telegram-command-arguments", message.CommandArguments())
-		switch message.Command() {
-		case "all":
-			all(message)
-		case "roll":
-			sendRoll(message)
-		case "m8ball":
-			m8Ball(message)
-		case "bodegem":
-			sendBodegem(message)
-		case "changelog":
-			changelog(message)
-		case "img", "img_sfw", "more", "img_censored":
-			sendImage(message)
-		case models.ImgQuote, models.VodQuote, models.AudioQuote:
-			msgQuote(message)
-		case "stallman":
-			sendStallman(message)
-		case "search", "search_nsfw":
-			search(message)
-		case "where":
-			where(message)
-		case "count":
-			count(message)
-		case "weather":
-			weather(message)
-		case "what":
-			what(message)
-		case "xkcd":
-			xkcd(message)
-		case "quote", "presidential_quote":
-			quote(message)
-		case "next_launch":
-			nextLaunch(message)
-		case "issues":
-			gitlabIssues(message)
-		case "doubt":
-			doubt(message)
-		case "kalirank":
-			kaliRank(message)
-		case "remind_me":
-			remind(message)
-		case "care":
-			care(message)
-		case "pollentiek":
-			pollentiek(message)
-		case "presidential_order":
-			presidentialOrder(message)
-		}
+	var err error
+	transactionSucceeded := true
+	if settings.Kalicoin.Enabled {
+		transactionSucceeded, err = kcoin.HandleTransaction(message.Message, message.Span)
 	}
+
+	if !transactionSucceeded {
+		message.Reply(err.Error())
+	} else if message.IsCommand() {
+		executeCommand(message)
+	}
+
 	if message.MessageID%1e5 == 0 {
 		message.Reply(fmt.Sprintf("💯💯💯💯 YOU HAVE MESSAGE %v 💯💯💯💯", message.MessageID))
 	}
@@ -130,6 +89,71 @@ func handle(m *tgbotapi.Message) {
 	)
 	Redis.SAdd(fmt.Sprintf("members_%v", message.Chat.ID), message.From.ID)
 	span.Finish()
+}
+
+func executeCommand(message *OctaafMessage) error {
+	message.Span.SetOperationName(fmt.Sprintf("Command /%v", message.Command()))
+	message.Span.SetTag("is-command", true)
+	message.Span.SetTag("telegram-command", message.Command())
+	message.Span.SetTag("telegram-command-arguments", message.CommandArguments())
+	switch message.Command() {
+	case "all":
+		return all(message)
+	case "roll":
+		return sendRoll(message)
+	case "m8ball":
+		return m8Ball(message)
+	case "bodegem":
+		return sendBodegem(message)
+	case "changelog":
+		return changelog(message)
+	case "img", "img_sfw", "more", "img_censored":
+		return sendImage(message)
+	case models.ImgQuote, models.VodQuote, models.AudioQuote:
+		return msgQuote(message)
+	case "stallman":
+		return sendStallman(message)
+	case "search", "search_nsfw":
+		return search(message)
+	case "where":
+		return where(message)
+	case "count":
+		return count(message)
+	case "weather":
+		return weather(message)
+	case "what":
+		return what(message)
+	case "xkcd":
+		return xkcd(message)
+	case "quote", "presidential_quote":
+		return quote(message)
+	case "next_launch":
+		return nextLaunch(message)
+	case "issues":
+		return gitlabIssues(message)
+	case "doubt":
+		return doubt(message)
+	case "kalirank":
+		return kaliRank(message)
+	case "remind_me":
+		return remind(message)
+	case "care":
+		return care(message)
+	case "pollentiek":
+		return pollentiek(message)
+	case "presidential_order":
+		return presidentialOrder(message)
+	case "wallet":
+		wallet, err := kcoin.Wallet(message.Message, message.Span)
+
+		if err != nil {
+			return message.Reply(err.Error())
+		}
+
+		return message.Reply(fmt.Sprintf("Remainging balance: %v", wallet.Capital))
+	}
+
+	return nil
 }
 
 func sendGlobal(message string) {

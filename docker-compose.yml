@@ -9,6 +9,11 @@ services:
     working_dir: /go/src/octaaf
     command: go run octaaf -mod vendor
     network_mode: host
+    environment:
+      KALICOIN_ENABLED: "true"
+      KALICOIN_URI: "http://127.0.0.1:8000"
+      KALICOIN_USERNAME: "octaaf"
+      KALICOIN_PASSWORD: "secret"
     ports:
       - "8080:8080"
     depends_on:
