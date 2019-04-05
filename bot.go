@@ -160,7 +160,7 @@ func executeCommand(message *OctaafMessage) error {
 			return message.Reply(err.Error())
 		}
 
-		return message.Reply(fmt.Sprintf("Remainging balance: %v", wallet.Capital))
+		return message.Reply(fmt.Sprintf("💰Balance: %v", wallet.Capital))
 	}
 
 	return nil
