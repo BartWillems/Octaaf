@@ -154,7 +154,7 @@ func executeCommand(message *OctaafMessage) error {
 	case "presidential_order":
 		return presidentialOrder(message)
 	case "wallet":
-		if settings.Kalicoin.Enabled {
+		if !settings.Kalicoin.Enabled {
 			return message.Reply("Kalicoin has been disabled by the administrator")
 		}
 		wallet, err := kcoin.Wallet(message.Message, message.Span)
