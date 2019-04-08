@@ -42,10 +42,11 @@ func HandleTransaction(message *tgbotapi.Message, span opentracing.Span) (bool, 
 	return true, nil
 }
 
+// CreateTransaction sends a transaction to the kalicoin
 func CreateTransaction(transactionKind interface{}, path string, span opentracing.Span) (kalicoin.Transaction, error) {
 	var transaction kalicoin.Transaction
 	_, err := GetClient().
-		Post("payments").
+		Post(path).
 		// TODO: Add Jaeger headers
 		BodyJSON(transactionKind).
 		Receive(&transaction, &transaction)

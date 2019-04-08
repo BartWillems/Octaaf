@@ -27,6 +27,8 @@ func RewardUsers(conn *goRedis.Client, event string) {
 			continue
 		}
 
+		log.Debugf("Rewarding users for group %d", groupID)
+
 		users := getRewardUsers(conn, groupID, event)
 
 		for _, user := range users {
@@ -35,6 +37,8 @@ func RewardUsers(conn *goRedis.Client, event string) {
 			if err != nil {
 				log.Errorf("Unable to reward user with id; %v, err: %v", user, err)
 			}
+
+			log.Debugf("Rewarding user %v", user)
 
 			if transaction.Status != kalicoin.Succeeded {
 				log.Errorf("Reward transaction error for user %v, error: %v", user, transaction.FailureReason)
