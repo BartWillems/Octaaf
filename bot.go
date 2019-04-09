@@ -85,7 +85,9 @@ func handle(m *tgbotapi.Message) {
 	if !transactionSucceeded {
 		message.Reply(err.Error())
 	} else if message.IsCommand() {
-		executeCommand(message)
+		if err := executeCommand(message); err != nil {
+			message.Reply(fmt.Sprint("Well, something unexpected went wrong here... ", err))
+		}
 	}
 
 	if message.MessageID%1e5 == 0 {
@@ -98,6 +100,7 @@ func handle(m *tgbotapi.Message) {
 		opentracing.ChildOf(message.Span.Context()),
 	)
 	Redis.SAdd(fmt.Sprintf("members_%v", message.Chat.ID), message.From.ID)
+	Redis.SAdd("groups", message.Chat.ID)
 	span.Finish()
 }
 

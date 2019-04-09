@@ -7,7 +7,6 @@ import (
 
 // RewardTransaction is a struct used for creating rewards
 type RewardTransaction struct {
-	*baseTransaction
 	GroupID  int64        `json:"group_id" db:"group_id" binding:"required"`
 	Receiver int          `json:"receiver" db:"receiver" binding:"required"`
 	Cause    nulls.String `json:"cause" db:"cause" binding:"required"`
@@ -15,12 +14,6 @@ type RewardTransaction struct {
 
 // Create maps a reward to a real transaction and creates it
 func (r *RewardTransaction) Create(tx *pop.Connection) (*Transaction, error) {
-	var wallet Wallet
-
-	if err := wallet.Get(tx, r.GroupID, nulls.NewInt(r.Receiver)); err != nil {
-		return nil, err
-	}
-
 	transaction := Transaction{
 		GroupID:  r.GroupID,
 		Receiver: nulls.NewInt(r.Receiver),
@@ -28,5 +21,6 @@ func (r *RewardTransaction) Create(tx *pop.Connection) (*Transaction, error) {
 		Type:     Reward,
 	}
 	err := tx.Create(&transaction)
+
 	return &transaction, err
 }

@@ -32,7 +32,7 @@ func MakePayment(message *tgbotapi.Message, span opentracing.Span) (kalicoin.Tra
 func ShouldPay(message *tgbotapi.Message) bool {
 	paymentType := getPaymentType(message)
 
-	_, ok := kalicoin.PriceTable[kalicoin.Payment][nulls.NewString(paymentType)]
+	_, ok := kalicoin.PriceTable[kalicoin.Payment][paymentType]
 
 	if !ok {
 		return false

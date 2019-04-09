@@ -9,6 +9,7 @@ import (
 	"math/rand"
 	"net/http"
 	"octaaf/cache"
+	"octaaf/kcoin/rewards"
 	"octaaf/markdown"
 	"octaaf/models"
 	"octaaf/scrapers"
@@ -163,6 +164,17 @@ func sendRoll(message *OctaafMessage) error {
 
 	if dubscount > -1 {
 		roll = points[dubscount] + " " + roll
+
+		if settings.Kalicoin.Enabled {
+			transaction, err := rewards.RewardRoll(message.Message, message.Span, dubscount)
+
+			if err != nil {
+				roll = fmt.Sprintf("%v, Unable to reward you: %v", roll, err)
+			} else {
+				roll = fmt.Sprintf("%v, you are rewarded with %v kalicoins", roll, transaction.Amount)
+			}
+		}
+
 	}
 	return message.Reply(roll)
 }

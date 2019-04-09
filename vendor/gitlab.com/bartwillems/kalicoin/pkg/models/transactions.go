@@ -57,25 +57,16 @@ func (t *Transactions) GetByType(tx *pop.Connection, tType TransactionType) erro
 	return tx.Where("type = ?", tType).All(&t)
 }
 
-type baseTransaction struct {
-	ID            int64             `json:"id" db:"id"`
-	Type          TransactionType   `json:"type" db:"type"`
-	Status        TransactionStatus `json:"status" db:"status"`
-	FailureReason nulls.String      `json:"failure_reason" db:"failure_reason"`
-	CreatedAt     time.Time         `json:"created_at" db:"created_at"`
-	UpdatedAt     time.Time         `json:"updated_at" db:"updated_at"`
-}
-
 // PriceTable is a hashmap of the payment types with their prices
-var PriceTable = map[TransactionType]map[nulls.String]uint32{
+var PriceTable = map[TransactionType]map[string]uint32{
 	Payment: {
-		nulls.NewString("roll"):  2,
-		nulls.NewString("all"):   10,
-		nulls.NewString("quote"): 10,
+		"roll":  2,
+		"all":   10,
+		"quote": 10,
 	},
 	Reward: {
-		nulls.NewString("checkin"):  100,
-		nulls.NewString("kalivent"): 20,
+		"checkin":  100,
+		"kalivent": 20,
 	},
 }
 
@@ -88,7 +79,7 @@ func (t *Transaction) getAmount() (uint32, error) {
 		return 0, errors.New("Invalid transaction type")
 	}
 
-	amount, ok := PriceTable[t.Type][t.Cause]
+	amount, ok := PriceTable[t.Type][t.Cause.String]
 
 	if !ok {
 		return 0, errors.New("Invalid transaction cause")
@@ -105,7 +96,36 @@ func (t *Transaction) getAmount() (uint32, error) {
 func (t *Transaction) BeforeCreate(tx *pop.Connection) error {
 	t.Status = Pending
 
-	if t.Type == Payment || t.Type == Reward {
+	err := tx.Transaction(func(tx *pop.Connection) error {
+		switch t.Type {
+
+		case Payment:
+			var wallet Wallet
+			return wallet.Get(tx, t.GroupID, t.Sender)
+
+		case Trade:
+			var senderWallet, receiverWallet Wallet
+			if err := senderWallet.Get(tx, t.GroupID, t.Sender); err != nil {
+				return err
+			}
+
+			if err := receiverWallet.Get(tx, t.GroupID, t.Receiver); err != nil {
+				return err
+			}
+
+		case Reward:
+			var wallet Wallet
+			return wallet.Get(tx, t.GroupID, t.Receiver)
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	if t.Type == Payment || t.Type == Reward && t.Amount == 0 {
 		amount, err := t.getAmount()
 
 		if err != nil {

@@ -34,9 +34,8 @@ require (
 	github.com/tidwall/match v1.0.1 // indirect
 	github.com/uber/jaeger-client-go v2.16.0+incompatible
 	github.com/vmihailenco/msgpack v4.0.1+incompatible
-	gitlab.com/bartwillems/kalicoin v0.0.0-20190403151730-5e4fb54d4494fbf3c26236031cfe68a060694b78
+	gitlab.com/bartwillems/kalicoin v0.1.0
 	golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b // indirect
-	google.golang.org/appengine v1.4.0
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
 	gopkg.in/robfig/cron.v2 v2.0.0-20150107220207-be2e0b0deed5
 )

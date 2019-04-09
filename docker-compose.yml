@@ -8,25 +8,26 @@ services:
       - .:/go/src/octaaf
     working_dir: /go/src/octaaf
     command: go run octaaf -mod vendor
-    network_mode: host
+    # network_mode: host
     environment:
       KALICOIN_ENABLED: "true"
-      KALICOIN_URI: "http://127.0.0.1:8000"
+      KALICOIN_URI: "http://kalicoin:8000"
       KALICOIN_USERNAME: "octaaf"
       KALICOIN_PASSWORD: "secret"
     ports:
       - "8080:8080"
     depends_on:
       - redis
-      - postgres
+      - octaaf-db
       - jaeger
-
+      - kalicoin
+  
   redis:
     image: redis:4.0
     ports:
       - "6379:6379"
 
-  postgres:
+  octaaf-db:
     image: postgres:10.5
     environment:
       POSTGRES_DB: "octaaf_development"
@@ -35,17 +36,9 @@ services:
       - 5432:5432
 
   jaeger:
-    image: jaegertracing/all-in-one:1.8
-    environment:
-      COLLECTOR_ZIPKIN_HTTP_PORT: "9411"
+    image: jaegertracing/all-in-one:latest
     ports:
-      - 5775:5775/udp
-      - 6831:6831/udp
-      - 6832:6832/udp
-      - 5778:5778
       - 16686:16686
-      - 14268:14268
-      - 9411:9411
 
   grafana:
     image: grafana/grafana:6.0.1
@@ -53,9 +46,32 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: "4uCEmZweC9onJR9UbH3BGJVnK9G9U"
       GF_INSTALL_PLUGINS: "grafana-piechart-panel,grafana-worldmap-panel"
     ports:
-      - "8030:3000"
+      - "3000:3000"
     depends_on:
-      - postgres
+      - octaaf-db
     volumes:
       - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/datasources:/etc/grafana/provisioning/datasources
+
+  kalicoin:
+    image: registry.gitlab.com/bartwillems/kalicoin:latest
+    # network_mode: host
+    environment:
+      ENVIRONMENT: "development"
+      DATABASE_URI: "postgres://kalicoin:@kalicoin-db:5432/kalicoin?sslmode=disable"
+      JAEGER_SERVICE_NAME: "kalicoin"
+      JAEGER_AGENT_HOST: "127.0.0.1"
+      JAEGER_AGENT_PORT: "6831"
+      AUTH_USERNAME: "octaaf"
+      AUTH_PASSWORD: "secret"
+      API_PORT: ":8000"
+    depends_on:
+      - kalicoin-db
+
+  kalicoin-db:
+    image: postgres:10.5
+    environment:
+      POSTGRES_DB: "kalicoin"
+      POSTGRES_USER: "kalicoin"
+    ports:
+      - 6666:5432

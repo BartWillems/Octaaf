@@ -17,6 +17,7 @@ A telegram bot written in Go
 - img - search possible nsfw images
 - img_quote - Like /quote, but for images
 - img_sfw - Search possible SFW images
+- img_censored - Search censored images
 - issues - show open gitlab issues for this project
 - kalirank - **ENTERPRISE ONLY:** Show the kali rankings
 - m8ball - Let fate decide your future
