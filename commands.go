@@ -62,7 +62,7 @@ func changelog(message *OctaafMessage) error {
 
 	release := gjson.ParseBytes(releaseJSON)
 
-	msg := fmt.Sprintf("*%v*\n%v", release.Get("release.tag_name").String(), release.Get("release.description").String())
+	msg := fmt.Sprintf("*%v*\n%v", markdown.Prune(release.Get("release.tag_name").String()), markdown.Prune(release.Get("release.description").String()))
 	return message.Reply(fmt.Sprintf("%v\n%v/tags/%v", msg, GitURI, Version))
 }
 
