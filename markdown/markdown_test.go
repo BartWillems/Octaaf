@@ -16,6 +16,16 @@ func Test_Escape(t *testing.T) {
 	assert.Equal(t, Escape("Quotes ` `"), "Quotes \\` \\`")
 }
 
+func Test_Prune(t *testing.T) {
+	assert.Equal(t, Prune(`*some string*`), `some string`)
+	assert.Equal(t, Prune(`*some string`), `some string`)
+	assert.Equal(t, Prune(`_some_ string`), `some string`)
+	assert.Equal(t, Prune(`some_ string*`), `some string`)
+	assert.Equal(t, Prune(`## some string`), ` some string`)
+	assert.Equal(t, Prune(`##__**`), ``)
+	assert.Equal(t, Prune("Quotes ` `"), "Quotes  ")
+}
+
 func Test_MDStyle(t *testing.T) {
 	assert.Equal(t, Cursive(`some_cursive_string`), `_some\_cursive\_string_`)
 	assert.Equal(t, Bold(`some bold* string`), `*some bold\* string*`)
