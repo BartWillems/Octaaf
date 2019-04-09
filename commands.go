@@ -563,7 +563,7 @@ func nextLaunch(message *OctaafMessage) error {
 		if len(vods) > 0 {
 			msg += fmt.Sprintf("\n*%v*: [%v](%v)", index+1, markdown.Escape(launch.Get("name").String()), markdown.Escape(vods[0].String()))
 		} else {
-			msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Escape(launch.Get("name").String()))
+			msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Bold(launch.Get("name").String()))
 		}
 
 		if err != nil {
