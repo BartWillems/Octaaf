@@ -552,23 +552,24 @@ func nextLaunch(message *OctaafMessage) error {
 	var msg = "*Next 5 launches:*"
 
 	layout := "January 2, 2006 15:04:05 MST"
+	//timezone
+	location, _ := time.LoadLocation("Europe/Brussels")
 
 	for index, launch := range launches {
 		whenStr := launch.Get("net").String()
 		when, err := time.Parse(layout, whenStr)
+		vods := launch.Get("vidURLs").Array()
 
-		msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Escape(launch.Get("name").String()))
+		if len(vods) > 0 {
+			msg += fmt.Sprintf("\n*%v*: [%v](%v)", index+1, markdown.Escape(launch.Get("name").String()), markdown.Escape(vods[0].String()))
+		} else {
+			msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Escape(launch.Get("name").String()))
+		}
 
 		if err != nil {
 			msg += fmt.Sprintf("\n	  %v", markdown.Cursive(whenStr))
 		} else {
-			msg += fmt.Sprintf("\n	  %v", markdown.Cursive(humanize.Time(when)))
-		}
-
-		vods := launch.Get("vidURLs").Array()
-
-		if len(vods) > 0 {
-			msg += "\n    " + markdown.Escape(vods[0].String())
+			msg += fmt.Sprintf("\n	  %v (%v)", markdown.Cursive(humanize.Time(when)), when.In(location).Format(layout))
 		}
 	}
 
