@@ -38,6 +38,21 @@ func Escape(input string) string {
 	return result
 }
 
+// Prune filters common markdown characters out of a string
+func Prune(input string) string {
+	result := ""
+
+	for _, char := range input {
+		switch char {
+		case '_', '*', '\\', '`', '#':
+			break
+		default:
+			result += string(char)
+		}
+	}
+	return result
+}
+
 func escape(input rune) string {
 	return `\` + string(input)
 }
