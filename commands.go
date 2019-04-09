@@ -553,7 +553,7 @@ func nextLaunch(message *OctaafMessage) error {
 
 	layout := "January 2, 2006 15:04:05 MST"
 	//timezone
-	location, _ := time.LoadLocation("Europe/Brussels")
+	location, _ := time.LoadLocation(envy.Get("TZ", "Europe/Brussels"))
 
 	for index, launch := range launches {
 		whenStr := launch.Get("net").String()
