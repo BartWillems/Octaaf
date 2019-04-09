@@ -564,23 +564,33 @@ func nextLaunch(message *OctaafMessage) error {
 	var msg = "*Next 5 launches:*"
 
 	layout := "January 2, 2006 15:04:05 MST"
+	//timezone
+	location, _ := time.LoadLocation(envy.Get("TZ", "Europe/Brussels"))
 
 	for index, launch := range launches {
 		whenStr := launch.Get("net").String()
 		when, err := time.Parse(layout, whenStr)
-
-		msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Escape(launch.Get("name").String()))
-
-		if err != nil {
-			msg += fmt.Sprintf("\n	  %v", markdown.Cursive(whenStr))
-		} else {
-			msg += fmt.Sprintf("\n	  %v", markdown.Cursive(humanize.Time(when)))
-		}
-
 		vods := launch.Get("vidURLs").Array()
+		missions := launch.Get("missions").Array()
 
 		if len(vods) > 0 {
-			msg += "\n    " + markdown.Escape(vods[0].String())
+			msg += fmt.Sprintf("\n*%v*: [%v](%v)", index+1, markdown.Escape(launch.Get("name").String()), markdown.Escape(vods[0].String()))
+		} else {
+			msg += fmt.Sprintf("\n*%v*: %v", index+1, markdown.Bold(launch.Get("name").String()))
+		}
+
+		if err != nil {
+			msg += fmt.Sprintf("\n    %v", markdown.Escape(whenStr))
+		} else {
+			msg += fmt.Sprintf("\n    %v (%v)", markdown.Escape(humanize.Time(when)), when.In(location).Format(layout))
+		}
+
+		if len(missions) > 0 {
+			msg += fmt.Sprintf("\n    Mission: `%v`", markdown.Escape(missions[0].Get("typeName").String()))
+			msg += fmt.Sprintf("\n    Rocket: `%v (%v)`", markdown.Escape(launch.Get("rocket.name").String()), markdown.Escape(launch.Get("rocket.agencies.0.name").String()))
+			msg += fmt.Sprintf("\n    Agency: `%v`", markdown.Escape(missions[0].Get("agencies.0.abbrev").String()))
+			msg += fmt.Sprintf("\n    LSP: `%v`", markdown.Escape(launch.Get("lsp.name").String()))
+			msg += fmt.Sprintf("\n    Pad: [%v](%v)", markdown.Escape(launch.Get("location.pads.0.name").String()), markdown.Escape(launch.Get("location.pads.0.mapURL").String()))
 		}
 	}
 
