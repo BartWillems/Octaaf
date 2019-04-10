@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"math"
 
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/pop"
@@ -37,7 +38,7 @@ func (r *RollReward) Create(tx *pop.Connection) (*Transaction, error) {
 
 // GetAmount returns the amount of kalicoins a user should receive for his /roll attempt
 func (r *RollReward) GetAmount() uint32 {
-	return (r.Multiplier.UInt32 + 1) * 10 * PriceTable[Payment]["roll"]
+	return uint32(math.Pow(10, float64(r.Multiplier.UInt32+1))) * PriceTable[Payment]["roll"]
 }
 
 // GetCause returns the name for a certain multiplier

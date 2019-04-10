@@ -5,6 +5,8 @@ import (
 	"octaaf/jaeger"
 	"octaaf/kcoin"
 	"octaaf/kcoin/rewards"
+	"octaaf/kcoin/trades"
+	"octaaf/markdown"
 	"octaaf/models"
 	"os"
 	"os/signal"
@@ -15,6 +17,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	opentracing "github.com/opentracing/opentracing-go"
 	log "github.com/sirupsen/logrus"
+	kalicoin "gitlab.com/bartwillems/kalicoin/pkg/models"
 )
 
 // Octaaf is the global bot endpoint
@@ -167,6 +170,23 @@ func executeCommand(message *OctaafMessage) error {
 		}
 
 		return message.Reply(fmt.Sprintf("💰Balance: %v", wallet.Capital))
+
+	case "pay":
+		transaction, err := trades.MakeTrade(message.Message, message.Span)
+
+		if err != nil {
+			return message.Reply(err.Error())
+		}
+
+		if transaction.Status != kalicoin.Succeeded {
+			return message.Reply(transaction.FailureReason)
+		}
+
+		return message.Reply(fmt.Sprintf(
+			"Succesfully paid @%v %v kalicoin(s)!",
+			markdown.Escape(message.ReplyToMessage.From.UserName),
+			transaction.Amount,
+		))
 	}
 
 	return nil

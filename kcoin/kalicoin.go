@@ -44,6 +44,10 @@ func HandleTransaction(message *tgbotapi.Message, span opentracing.Span) (bool, 
 
 // CreateTransaction sends a transaction to the kalicoin
 func CreateTransaction(transactionKind interface{}, path string, span opentracing.Span) (kalicoin.Transaction, error) {
+	if !config.Enabled {
+		return kalicoin.Transaction{}, errors.New("kalicoin is not enabled")
+	}
+
 	var transaction kalicoin.Transaction
 	_, err := GetClient().
 		Post(path).

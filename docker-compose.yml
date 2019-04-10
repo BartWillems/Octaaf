@@ -8,12 +8,12 @@ services:
       - .:/go/src/octaaf
     working_dir: /go/src/octaaf
     command: go run octaaf -mod vendor
-    # network_mode: host
     environment:
       KALICOIN_ENABLED: "true"
       KALICOIN_URI: "http://kalicoin:8000"
       KALICOIN_USERNAME: "octaaf"
       KALICOIN_PASSWORD: "secret"
+      JAEGER_AGENT_HOST: "jaeger"
     ports:
       - "8080:8080"
     depends_on:
@@ -55,12 +55,11 @@ services:
 
   kalicoin:
     image: registry.gitlab.com/bartwillems/kalicoin:latest
-    # network_mode: host
     environment:
       ENVIRONMENT: "development"
       DATABASE_URI: "postgres://kalicoin:@kalicoin-db:5432/kalicoin?sslmode=disable"
       JAEGER_SERVICE_NAME: "kalicoin"
-      JAEGER_AGENT_HOST: "127.0.0.1"
+      JAEGER_AGENT_HOST: "jaeger"
       JAEGER_AGENT_PORT: "6831"
       AUTH_USERNAME: "octaaf"
       AUTH_PASSWORD: "secret"

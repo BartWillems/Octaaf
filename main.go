@@ -89,7 +89,7 @@ func main() {
 		settings.Jaeger.ServiceName,
 		settings.Jaeger.AgentHost,
 		settings.Jaeger.AgentPort,
-		settings.Environment == development)
+	)
 
 	if err != nil {
 		log.Fatalf("Jaeger init error: %v", err)

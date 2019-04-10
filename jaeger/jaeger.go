@@ -21,7 +21,7 @@ type Config struct {
 var Tracer opentracing.Tracer
 
 // Init creates a connection to the jaeger agent and returns a closer
-func Init(serviceName string, agentHost string, agentPort int, shouldLog bool) (io.Closer, error) {
+func Init(serviceName string, agentHost string, agentPort int) (io.Closer, error) {
 	cfg := &jaegercfg.Configuration{
 		Sampler: &jaegercfg.SamplerConfig{
 			Type:  "const",
@@ -29,7 +29,7 @@ func Init(serviceName string, agentHost string, agentPort int, shouldLog bool) (
 		},
 		Reporter: &jaegercfg.ReporterConfig{
 			// Only log the spans in development mode
-			LogSpans:           shouldLog,
+			LogSpans:           false,
 			LocalAgentHostPort: fmt.Sprintf("%v:%v", agentHost, agentPort),
 		},
 	}

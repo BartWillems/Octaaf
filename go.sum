@@ -407,6 +407,8 @@ gitlab.com/bartwillems/kalicoin v0.0.0-20190403151730-5e4fb54d4494fbf3c26236031c
 gitlab.com/bartwillems/kalicoin v0.0.0-20190403151730-5e4fb54d4494fbf3c26236031cfe68a060694b78/go.mod h1:C245Dv4Qwq6mHX6L4pkxVAG+/DuqfvJybRL7/rJuQeA=
 gitlab.com/bartwillems/kalicoin v0.1.0 h1:TvDC8XVF17ULKrEDTVTxw0npfsotRnRPUZOahK9Pb9Y=
 gitlab.com/bartwillems/kalicoin v0.1.0/go.mod h1:C245Dv4Qwq6mHX6L4pkxVAG+/DuqfvJybRL7/rJuQeA=
+gitlab.com/bartwillems/kalicoin v0.1.2 h1:IybvTR8lg4iXckKPeRwiIzxfyLueM9NFg2zrzDedtDA=
+gitlab.com/bartwillems/kalicoin v0.1.2/go.mod h1:C245Dv4Qwq6mHX6L4pkxVAG+/DuqfvJybRL7/rJuQeA=
 go.uber.org/atomic v1.3.2 h1:2Oa65PReHzfn29GpvgsYwloV9AVFHPDk8tYxt2c2tr4=
 go.uber.org/atomic v1.3.2/go.mod h1:gD2HeocX3+yG+ygLZcrzQJaqmWj9AIm7n08wl/qW/PE=
 golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=

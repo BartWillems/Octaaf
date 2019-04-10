@@ -23,6 +23,7 @@ A telegram bot written in Go
 - m8ball - Let fate decide your future
 - more - MORE IMAGES
 - next_launch - Show the next 5 rocket launches
+- pay - Pay some kalicoins to another chat member by replying, eg: `/pay 20 3D printing services`
 - pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
 - presidential_order - Launch a new presidential order
 - presidential_quote - Show a presidential quote
