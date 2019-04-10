@@ -37,7 +37,7 @@ func MakeTrade(message *tgbotapi.Message, span opentracing.Span) (kalicoin.Trans
 	transaction, err := kcoin.CreateTransaction(trade, "trades", span)
 
 	if err != nil {
-		log.Errorf("Error: %v", err)
+		log.Errorf("Trade Error: %v", err)
 		return transaction, err
 	}
 

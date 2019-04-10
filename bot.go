@@ -179,7 +179,7 @@ func executeCommand(message *OctaafMessage) error {
 		}
 
 		if transaction.Status != kalicoin.Succeeded {
-			return message.Reply(transaction.FailureReason)
+			return message.Reply(transaction.FailureReason.String)
 		}
 
 		return message.Reply(fmt.Sprintf(

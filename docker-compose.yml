@@ -64,6 +64,8 @@ services:
       AUTH_USERNAME: "octaaf"
       AUTH_PASSWORD: "secret"
       API_PORT: ":8000"
+    ports:
+      - 8000:8000
     depends_on:
       - kalicoin-db
 
