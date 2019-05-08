@@ -30,9 +30,9 @@ deploy-unstable:
     - build
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker pull "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}" || true
-    - docker build --cache-from "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}" --tag "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}" .
-    - docker push "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME}"
+    - docker pull "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME/\//-}" || true
+    - docker build --cache-from "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME/\//-}" --tag "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME/\//-}" .
+    - docker push "${CONTAINER_IMAGE}:unstable-${CI_COMMIT_REF_NAME/\//-}"
   except:
     variables:
       - $CI_COMMIT_TAG =~ /^release-.*$/
@@ -47,8 +47,8 @@ deploy-stable:
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull "${CONTAINER_IMAGE}:latest" || true
-    - docker build --cache-from "${CONTAINER_IMAGE}:latest" --tag "${CONTAINER_IMAGE}:${CI_COMMIT_TAG}" --tag "${CONTAINER_IMAGE}:latest" .
-    - docker push "${CONTAINER_IMAGE}:${CI_COMMIT_TAG}"
+    - docker build --cache-from "${CONTAINER_IMAGE}:latest" --tag "${CONTAINER_IMAGE}:${CI_COMMIT_TAG/\//-}" --tag "${CONTAINER_IMAGE}:latest" .
+    - docker push "${CONTAINER_IMAGE}:${CI_COMMIT_TAG/\//-}"
     - docker push "${CONTAINER_IMAGE}:latest"
   only:
     variables:
