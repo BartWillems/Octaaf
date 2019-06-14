@@ -187,6 +187,20 @@ func executeCommand(message *OctaafMessage) error {
 			markdown.Escape(message.ReplyToMessage.From.UserName),
 			transaction.Amount,
 		))
+
+	case "pricetable":
+		pricetable := markdown.Bold("Rewards:\n")
+		for reward, price := range kalicoin.PriceTable[kalicoin.Reward] {
+			pricetable += fmt.Sprintf("\t%v: %v\n", reward, price)
+		}
+		pricetable += markdown.Bold("\nCostly commands:\n")
+		for cmd, price := range kalicoin.PriceTable[kalicoin.Payment] {
+			pricetable += fmt.Sprintf("\t/%v: %v\n", cmd, price)
+		}
+
+		pricetable += markdown.Bold("\nCasino:\n")
+		pricetable += "\t/roll: " + markdown.Quote("(10^factor) x cost ") + "where factor is dubs, trips, ..."
+		return message.Reply(pricetable)
 	}
 
 	return nil

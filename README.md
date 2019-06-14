@@ -27,6 +27,7 @@ A telegram bot written in Go
 - pollentiek - Shows your political orientation, by doing machine learning, AI and blockchain in the cloud with microservices.
 - presidential_order - Launch a new presidential order
 - presidential_quote - Show a presidential quote
+- pricetable - Show the kalicoin pricetable
 - quote - Get or store random kali quotes
 - remind_me - Remind me in a given time
 - roll - Praise kek
